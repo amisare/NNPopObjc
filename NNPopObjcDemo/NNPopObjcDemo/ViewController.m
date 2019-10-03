@@ -10,6 +10,7 @@
 #import <NNPopObjc/NNPopObjc.h>
 #import "NNDemoProtocol.h"
 #import "NNDemoCpp.h"
+#import "NNDemoC.h"
 #import "NNDemoObjc.h"
 #import "NNDemoSwift.h"
 
@@ -37,6 +38,8 @@
     
     printf("\n");
     
+    [NNDemoC sayHelloPop];
+    [[NNDemoC new] sayHelloPop];
     [NNDemoCpp sayHelloPop];
     [[NNDemoCpp new] sayHelloPop];
     [NNDemoObjc sayHelloPop];

@@ -16,17 +16,16 @@
 #define NNPopObjcLog(format, ...)
 #endif
 
-NS_INLINE NNProtocolRelation * nn_protocolRelation(Class class, SEL sel) {
+NS_INLINE NSMutableArray <NNProtocolRelation *> * nn_protocolRelations(Class class, SEL sel) {
     
     // Result
-    NNProtocolRelation *protocolRelation = [NNProtocolRelation new];
+    NSMutableArray <NNProtocolRelation *> *protocolRelations = [NSMutableArray new];
     
     // Loop class
     Class currentClass = class;
     
-    struct objc_method_description description = (struct objc_method_description){NULL, NULL};
     
-    while (currentClass && description.name == NULL) {
+    while (currentClass) {
         
         // Get protocol list
         unsigned int count = 0;
@@ -35,38 +34,40 @@ NS_INLINE NNProtocolRelation * nn_protocolRelation(Class class, SEL sel) {
         // Check each protocol
         for (unsigned int i = 0; i < count; i++) {
             
+            // Get method description
+            struct objc_method_description description = (struct objc_method_description){NULL, NULL};
+            
             // Required method
             description = protocol_getMethodDescription(protocols[i], sel, YES, class_isMetaClass(currentClass) ^ 1);
             if (description.name != NULL) {
-                protocolRelation.clazz = currentClass;
-                protocolRelation.protocol = protocols[i];
-                protocolRelation.methodDescription = description;
-                break;
+                NNProtocolRelation *protocolRelation =
+                [[NNProtocolRelation alloc] initWithProtocol:protocols[i]
+                                                       clazz:currentClass
+                                           methodDescription:description];
+                [protocolRelations addObject:protocolRelation];
+                continue;
             }
             
             // Optional method
             description = protocol_getMethodDescription(protocols[i], sel, NO, class_isMetaClass(currentClass) ^ 1);
             if (description.name != NULL) {
-                protocolRelation.clazz = currentClass;
-                protocolRelation.protocol = protocols[i];
-                protocolRelation.methodDescription = description;
-                break;
+                NNProtocolRelation *protocolRelation =
+                [[NNProtocolRelation alloc] initWithProtocol:protocols[i]
+                                                       clazz:currentClass
+                                           methodDescription:description];
+                [protocolRelations addObject:protocolRelation];
+                continue;
             }
         }
         
         // release
         free(protocols);
         
-        // Found in protocol
-        if (description.name != NULL) {
-            return protocolRelation;
-        }
-        
         // Get superClass and continue
         currentClass = class_getSuperclass(currentClass);
     }
     
-    return nil;
+    return protocolRelations;
 }
 
 NS_INLINE void nn_swizzedMark(id self, SEL _cmd) {

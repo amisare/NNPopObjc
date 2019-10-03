@@ -7,6 +7,7 @@
 //
 
 #import "NNDemoProtocol.h"
+#import "NNDemoCpp.h"
 #import "NNDemoObjc.h"
 #import "NNDemoSwift.h"
 #import "NNDemoLog.h"
@@ -41,6 +42,27 @@
 
 - (void)sayHelloPop {
     DLog(@"objc: object say hello pop");
+}
+
+- (NSString *)whoImI {
+    DLog(@"%@: %s", [self class], sel_getName(_cmd));
+    return [NSString stringWithFormat:@"%@", [self class]];
+}
+
+- (void)setWhoImI:(NSString *)whoImI {
+    DLog(@"%@: %s:%@", [self class], sel_getName(_cmd), whoImI);
+}
+@end
+
+
+@nn_extension(NNDemoProtocol, NNDemoCpp)
+
++ (void)sayHelloPop {
+    DLog(@"cpp: class say hello pop");
+}
+
+- (void)sayHelloPop {
+    DLog(@"cpp: object say hello pop");
 }
 
 - (NSString *)whoImI {

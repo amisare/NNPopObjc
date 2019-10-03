@@ -16,10 +16,12 @@ NS_INLINE BOOL nn_forwardInvocation(NSInvocation *anInvocation) {
     Class clazz = object_getClass(anInvocation.target);
     
     // Get identifier
-    NNProtocolRelation *protocolRelation = nn_protocolRelation(clazz, anInvocation.selector);
-    if (!protocolRelation) {
+    NSMutableArray <NNProtocolRelation *> *protocolRelations = nn_protocolRelations(clazz, anInvocation.selector);
+    if (!protocolRelations.count) {
         return false;
     }
+    
+    NNProtocolRelation *protocolRelation = protocolRelations.lastObject;
     
     // Get implementationClazz
     // Implementation class name array @[procotolName_clazzName, procotolName_NSObject]
