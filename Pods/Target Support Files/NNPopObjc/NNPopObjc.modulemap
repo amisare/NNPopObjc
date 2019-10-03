@@ -1,0 +1,6 @@
+framework module NNPopObjc {
+  umbrella header "NNPopObjc-umbrella.h"
+
+  export *
+  module * { export * }
+}
