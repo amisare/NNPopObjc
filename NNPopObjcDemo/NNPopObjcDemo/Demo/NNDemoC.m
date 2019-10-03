@@ -1,5 +1,5 @@
 //
-//  NNDemoCpp.h
+//  NNDemoC.m
 //  NNPopObjcDemo
 //
 //  Created by GuHaijun on 2019/10/3.
@@ -8,10 +8,6 @@
 
 #import "NNDemoC.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
-@interface NNDemoCpp : NNDemoC
+@implementation NNDemoC
 
 @end
-
-NS_ASSUME_NONNULL_END

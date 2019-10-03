@@ -16,10 +16,11 @@
 		676979D12345C7A200E13282 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979D02345C7A200E13282 /* main.m */; };
 		676979DB2345C7A200E13282 /* NNPopObjcDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979DA2345C7A200E13282 /* NNPopObjcDemoTests.m */; };
 		676979E62345C7A200E13282 /* NNPopObjcDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979E52345C7A200E13282 /* NNPopObjcDemoUITests.m */; };
-		67697A042345C8B600E13282 /* NNDemoCpp.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979FB2345C8B600E13282 /* NNDemoCpp.m */; };
 		67697A052345C8B600E13282 /* NNDemoProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979FC2345C8B600E13282 /* NNDemoProtocol.m */; };
 		67697A062345C8B600E13282 /* NNDemoObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979FD2345C8B600E13282 /* NNDemoObjc.m */; };
 		67697A072345C8B600E13282 /* NNDemoSwift.m in Sources */ = {isa = PBXBuildFile; fileRef = 67697A022345C8B600E13282 /* NNDemoSwift.m */; };
+		67697A0B2345D08700E13282 /* NNDemoC.m in Sources */ = {isa = PBXBuildFile; fileRef = 67697A0A2345D08700E13282 /* NNDemoC.m */; };
+		67697A112345D12100E13282 /* NNDemoCpp.m in Sources */ = {isa = PBXBuildFile; fileRef = 67697A102345D12100E13282 /* NNDemoCpp.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,16 +58,18 @@
 		676979E12345C7A200E13282 /* NNPopObjcDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NNPopObjcDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		676979E52345C7A200E13282 /* NNPopObjcDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNPopObjcDemoUITests.m; sourceTree = "<group>"; };
 		676979E72345C7A200E13282 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		676979FB2345C8B600E13282 /* NNDemoCpp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNDemoCpp.m; sourceTree = "<group>"; };
 		676979FC2345C8B600E13282 /* NNDemoProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNDemoProtocol.m; sourceTree = "<group>"; };
 		676979FD2345C8B600E13282 /* NNDemoObjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNDemoObjc.m; sourceTree = "<group>"; };
 		676979FE2345C8B600E13282 /* NNDemoSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNDemoSwift.h; sourceTree = "<group>"; };
 		676979FF2345C8B600E13282 /* NNDemoLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNDemoLog.h; sourceTree = "<group>"; };
-		67697A002345C8B600E13282 /* NNDemoCpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNDemoCpp.h; sourceTree = "<group>"; };
 		67697A012345C8B600E13282 /* NNDemoProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNDemoProtocol.h; sourceTree = "<group>"; };
 		67697A022345C8B600E13282 /* NNDemoSwift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNDemoSwift.m; sourceTree = "<group>"; };
 		67697A032345C8B600E13282 /* NNDemoObjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNDemoObjc.h; sourceTree = "<group>"; };
 		67697A082345C97A00E13282 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		67697A092345D08700E13282 /* NNDemoC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNDemoC.h; sourceTree = "<group>"; };
+		67697A0A2345D08700E13282 /* NNDemoC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNDemoC.m; sourceTree = "<group>"; };
+		67697A0F2345D12100E13282 /* NNDemoCpp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNDemoCpp.h; sourceTree = "<group>"; };
+		67697A102345D12100E13282 /* NNDemoCpp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNDemoCpp.m; sourceTree = "<group>"; };
 		9800FE6F500BD0D25B0C6180 /* Pods-NNPopObjcDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NNPopObjcDemo.release.xcconfig"; path = "Target Support Files/Pods-NNPopObjcDemo/Pods-NNPopObjcDemo.release.xcconfig"; sourceTree = "<group>"; };
 		B1AAC29DB22B62E90A706662 /* Pods-NNPopObjcDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NNPopObjcDemo.debug.xcconfig"; path = "Target Support Files/Pods-NNPopObjcDemo/Pods-NNPopObjcDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -160,8 +163,10 @@
 			children = (
 				67697A012345C8B600E13282 /* NNDemoProtocol.h */,
 				676979FC2345C8B600E13282 /* NNDemoProtocol.m */,
-				67697A002345C8B600E13282 /* NNDemoCpp.h */,
-				676979FB2345C8B600E13282 /* NNDemoCpp.m */,
+				67697A092345D08700E13282 /* NNDemoC.h */,
+				67697A0A2345D08700E13282 /* NNDemoC.m */,
+				67697A0F2345D12100E13282 /* NNDemoCpp.h */,
+				67697A102345D12100E13282 /* NNDemoCpp.m */,
 				67697A032345C8B600E13282 /* NNDemoObjc.h */,
 				676979FD2345C8B600E13282 /* NNDemoObjc.m */,
 				676979FE2345C8B600E13282 /* NNDemoSwift.h */,
@@ -368,11 +373,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67697A0B2345D08700E13282 /* NNDemoC.m in Sources */,
 				67697A072345C8B600E13282 /* NNDemoSwift.m in Sources */,
+				67697A112345D12100E13282 /* NNDemoCpp.m in Sources */,
 				67697A062345C8B600E13282 /* NNDemoObjc.m in Sources */,
 				676979C62345C7A000E13282 /* ViewController.m in Sources */,
 				676979C02345C7A000E13282 /* AppDelegate.m in Sources */,
-				67697A042345C8B600E13282 /* NNDemoCpp.m in Sources */,
 				676979D12345C7A200E13282 /* main.m in Sources */,
 				67697A052345C8B600E13282 /* NNDemoProtocol.m in Sources */,
 			);

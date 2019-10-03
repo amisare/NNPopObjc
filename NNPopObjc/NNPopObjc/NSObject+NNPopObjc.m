@@ -37,13 +37,13 @@ NS_INLINE BOOL nn_forwardInvocation(NSInvocation *anInvocation) {
     
     // Swizz method
     Method method = nil;
-    if (class_isMetaClass(clazz)) {
+    if (class_isMetaClass(protocolRelation.clazz)) {
         method = class_getClassMethod(implementationClazz, anInvocation.selector);
     }
     else {
         method = class_getInstanceMethod(implementationClazz, anInvocation.selector);
     }
-    BOOL isAddMethod = class_addMethod(clazz,
+    BOOL isAddMethod = class_addMethod(protocolRelation.clazz,
                                        method_getName(method),
                                        method_getImplementation(method),
                                        method_getTypeEncoding(method));
