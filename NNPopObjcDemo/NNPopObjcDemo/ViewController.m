@@ -48,7 +48,9 @@
     [[NNDemoSwift new] sayHelloPop];
     
     printf("\n");
-
+    
+    [[NNDemoC new] whoImI];
+    [[NNDemoC new] setWhoImI:@"NNDemoC"];
     [[NNDemoCpp new] whoImI];
     [[NNDemoCpp new] setWhoImI:@"NNDemoCpp"];
     [[NNDemoObjc new] whoImI];

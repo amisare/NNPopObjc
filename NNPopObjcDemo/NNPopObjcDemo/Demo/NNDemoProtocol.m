@@ -23,12 +23,12 @@
 }
 
 - (NSString *)whoImI {
-    DLog(@"%@: %s", [self class], sel_getName(_cmd));
+    DLog(@"c: %s", sel_getName(_cmd));
     return [NSString stringWithFormat:@"%@", [self class]];
 }
 
 - (void)setWhoImI:(NSString *)whoImI {
-    DLog(@"%@: %s:%@", [self class], sel_getName(_cmd), whoImI);
+    DLog(@"c: %s:%@", sel_getName(_cmd), whoImI);
 }
 
 @end
@@ -45,12 +45,12 @@
 }
 
 - (NSString *)whoImI {
-    DLog(@"%@: %s", [self class], sel_getName(_cmd));
+    DLog(@"objc: %s", sel_getName(_cmd));
     return [NSString stringWithFormat:@"%@", [self class]];
 }
 
 - (void)setWhoImI:(NSString *)whoImI {
-    DLog(@"%@: %s:%@", [self class], sel_getName(_cmd), whoImI);
+    DLog(@"objc: %s:%@", sel_getName(_cmd), whoImI);
 }
 @end
 
@@ -65,14 +65,14 @@
     DLog(@"cpp: object say hello pop");
 }
 
-- (NSString *)whoImI {
-    DLog(@"%@: %s", [self class], sel_getName(_cmd));
-    return [NSString stringWithFormat:@"%@", [self class]];
-}
-
-- (void)setWhoImI:(NSString *)whoImI {
-    DLog(@"%@: %s:%@", [self class], sel_getName(_cmd), whoImI);
-}
+//- (NSString *)whoImI {
+//    DLog(@"cpp: %s", sel_getName(_cmd));
+//    return [NSString stringWithFormat:@"%@", [self class]];
+//}
+//
+//- (void)setWhoImI:(NSString *)whoImI {
+//    DLog(@"cpp: %s:%@", sel_getName(_cmd), whoImI);
+//}
 @end
 
 @nn_extension(NNDemoProtocol, NNDemoSwift)
@@ -86,12 +86,12 @@
 }
 
 - (NSString *)whoImI {
-    DLog(@"%@: %s", [self class], sel_getName(_cmd));
+    DLog(@"swift: %s", sel_getName(_cmd));
     return [NSString stringWithFormat:@"%@", [self class]];
 }
 
 - (void)setWhoImI:(NSString *)whoImI {
-    DLog(@"%@: %s:%@", [self class], sel_getName(_cmd), whoImI);
+    DLog(@"swift: %s:%@", sel_getName(_cmd), whoImI);
 }
 
 @end

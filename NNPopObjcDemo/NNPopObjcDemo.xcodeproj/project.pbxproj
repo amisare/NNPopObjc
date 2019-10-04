@@ -328,16 +328,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NNPopObjcDemo/Pods-NNPopObjcDemo-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/NNPopObjc/NNPopObjc.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-NNPopObjcDemo/Pods-NNPopObjcDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NNPopObjc.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-NNPopObjcDemo/Pods-NNPopObjcDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

@@ -18,9 +18,9 @@ FOUNDATION_EXPORT const unsigned char NNPopObjcVersionString[];
 
 #define nn_extension(protocol, clazz) \
 \
-interface protocol##_##clazz : clazz <protocol> \
+interface __NNPopObjc##_##protocol##_##clazz : NSObject <protocol> \
 \
 @end \
 \
-@implementation protocol##_##clazz \
+@implementation __NNPopObjc##_##protocol##_##clazz \
 \

@@ -9,53 +9,46 @@
 #import "NSObject+NNPopObjc.h"
 #import <objc/runtime.h>
 #import "NNPopObjcInternal.h"
-#import "NNProtocolRelation.h"
 
 NS_INLINE BOOL nn_forwardInvocation(NSInvocation *anInvocation) {
     
     Class clazz = object_getClass(anInvocation.target);
     
-    // Get identifier
-    NSMutableArray <NNProtocolRelation *> *protocolRelations = nn_protocolRelations(clazz, anInvocation.selector);
-    if (!protocolRelations.count) {
+    Protocol *protocol = nn_findProtocol(clazz, anInvocation.selector);
+    if (nil == protocol) {
         return false;
     }
     
-    NNProtocolRelation *protocolRelation = protocolRelations.lastObject;
+    unsigned int protocolClassCount = 0;
+    Class *protocolClazzList = nn_copyProtocolClassList(protocol, &protocolClassCount, class_isMetaClass(clazz) ? NN_CopyProtocolClassListTypeMetaClass : NN_CopyProtocolClassListTypeClass);
     
-    // Get implementationClazz
-    // Implementation class name array @[procotolName_clazzName, procotolName_NSObject]
-    Class implementationClazz = nil;
-    for (NSString *clazzSuffix in @[NSStringFromClass(protocolRelation.clazz),
-                                    @"NSObject"]) {
-        implementationClazz = NSClassFromString([NSString stringWithFormat:@"%s_%@", protocol_getName(protocolRelation.protocol), clazzSuffix]);
-        if (implementationClazz && class_conformsToProtocol(implementationClazz, protocolRelation.protocol)) {
-            break;
-        }
-    }
-    if (!implementationClazz) {
-        return false;
-    }
+    unsigned int popObjcProtocolClazzListCount = 0;
+    Class *popProtocolObjcClazzList = (Class *)malloc((1 + protocolClassCount) * sizeof(Class));
+    unsigned int rootProtocolClazzCount = 0;
+    Class *rootProtocolClazzList = (Class *)malloc((1 + protocolClassCount) * sizeof(Class));
+    unsigned int subProtocolClazzCount = 0;
+    Class *subProtocolClazzList = (Class *)malloc((1 + protocolClassCount) * sizeof(Class));
     
-    // Swizz method
-    Method method = nil;
-    if (class_isMetaClass(protocolRelation.clazz)) {
-        method = class_getClassMethod(implementationClazz, anInvocation.selector);
-    }
-    else {
-        method = class_getInstanceMethod(implementationClazz, anInvocation.selector);
-    }
-    BOOL isAddMethod = class_addMethod(protocolRelation.clazz,
-                                       method_getName(method),
-                                       method_getImplementation(method),
-                                       method_getTypeEncoding(method));
-    if (!method || !isAddMethod) {
+    nn_separateProtocolClassList(protocol, protocolClazzList, protocolClassCount,
+                                 &rootProtocolClazzList, &rootProtocolClazzCount,
+                                 &subProtocolClazzList, &subProtocolClazzCount,
+                                 &popProtocolObjcClazzList, &popObjcProtocolClazzListCount);
+
+    nn_completeProtocolClassList(rootProtocolClazzList, rootProtocolClazzCount, protocol,anInvocation.selector, YES);
+    nn_completeProtocolClassList(subProtocolClazzList, subProtocolClazzCount, protocol,anInvocation.selector, NO);
+    
+    free(protocolClazzList);
+    free(popProtocolObjcClazzList);
+    free(rootProtocolClazzList);
+    free(subProtocolClazzList);
+    
+    if (![anInvocation.target respondsToSelector:anInvocation.selector]) {
+        [anInvocation.target doesNotRecognizeSelector:anInvocation.selector];
         return false;
     }
     
     // Invoke method
     [anInvocation invoke];
-    
     return true;
 }
 

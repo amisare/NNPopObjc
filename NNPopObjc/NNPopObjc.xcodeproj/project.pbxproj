@@ -10,7 +10,6 @@
 		676979A22345C78300E13282 /* NNPopObjc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 676979982345C78200E13282 /* NNPopObjc.framework */; };
 		676979A72345C78300E13282 /* NNPopObjcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979A62345C78300E13282 /* NNPopObjcTests.m */; };
 		676979A92345C78300E13282 /* NNPopObjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6769799B2345C78200E13282 /* NNPopObjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		676979F82345C86B00E13282 /* NNProtocolRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979F72345C86B00E13282 /* NNProtocolRelation.m */; };
 		676979F92345C86B00E13282 /* NSObject+NNPopObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979F62345C86B00E13282 /* NSObject+NNPopObjc.m */; };
 /* End PBXBuildFile section */
 
@@ -32,10 +31,8 @@
 		676979A62345C78300E13282 /* NNPopObjcTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNPopObjcTests.m; sourceTree = "<group>"; };
 		676979A82345C78300E13282 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		676979F32345C86A00E13282 /* NNPopObjcInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNPopObjcInternal.h; sourceTree = "<group>"; };
-		676979F42345C86A00E13282 /* NNProtocolRelation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNProtocolRelation.h; sourceTree = "<group>"; };
 		676979F52345C86B00E13282 /* NSObject+NNPopObjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+NNPopObjc.h"; sourceTree = "<group>"; };
 		676979F62345C86B00E13282 /* NSObject+NNPopObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+NNPopObjc.m"; sourceTree = "<group>"; };
-		676979F72345C86B00E13282 /* NNProtocolRelation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNProtocolRelation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,8 +79,6 @@
 				676979F32345C86A00E13282 /* NNPopObjcInternal.h */,
 				676979F52345C86B00E13282 /* NSObject+NNPopObjc.h */,
 				676979F62345C86B00E13282 /* NSObject+NNPopObjc.m */,
-				676979F42345C86A00E13282 /* NNProtocolRelation.h */,
-				676979F72345C86B00E13282 /* NNProtocolRelation.m */,
 				6769799C2345C78200E13282 /* Info.plist */,
 			);
 			path = NNPopObjc;
@@ -206,7 +201,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				676979F82345C86B00E13282 /* NNProtocolRelation.m in Sources */,
 				676979F92345C86B00E13282 /* NSObject+NNPopObjc.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
