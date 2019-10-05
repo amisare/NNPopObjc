@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		64822FE41B7344A877526D23 /* Pods_NNPopObjcDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1268B790C55A451BBFC4410E /* Pods_NNPopObjcDemo.framework */; };
+		67456E2F23481BEF00783A6A /* NNPopObjc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67456E2E23481BEF00783A6A /* NNPopObjc.framework */; };
 		676979C02345C7A000E13282 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979BF2345C7A000E13282 /* AppDelegate.m */; };
 		676979C62345C7A000E13282 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979C52345C7A000E13282 /* ViewController.m */; };
 		676979C92345C7A000E13282 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 676979C72345C7A000E13282 /* Main.storyboard */; };
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		1268B790C55A451BBFC4410E /* Pods_NNPopObjcDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NNPopObjcDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		67456E2E23481BEF00783A6A /* NNPopObjc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NNPopObjc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		676979BB2345C7A000E13282 /* NNPopObjcDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NNPopObjcDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		676979BE2345C7A000E13282 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		676979BF2345C7A000E13282 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67456E2F23481BEF00783A6A /* NNPopObjc.framework in Frameworks */,
 				64822FE41B7344A877526D23 /* Pods_NNPopObjcDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -125,6 +128,7 @@
 		676979BD2345C7A000E13282 /* NNPopObjcDemo */ = {
 			isa = PBXGroup;
 			children = (
+				676979FF2345C8B600E13282 /* NNDemoLog.h */,
 				676979FA2345C8B600E13282 /* Demo */,
 				676979BE2345C7A000E13282 /* AppDelegate.h */,
 				676979BF2345C7A000E13282 /* AppDelegate.m */,
@@ -171,7 +175,6 @@
 				676979FD2345C8B600E13282 /* NNDemoObjc.m */,
 				676979FE2345C8B600E13282 /* NNDemoSwift.h */,
 				67697A022345C8B600E13282 /* NNDemoSwift.m */,
-				676979FF2345C8B600E13282 /* NNDemoLog.h */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -179,6 +182,7 @@
 		D03380877EFB636E7BD0B681 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				67456E2E23481BEF00783A6A /* NNPopObjc.framework */,
 				1268B790C55A451BBFC4410E /* Pods_NNPopObjcDemo.framework */,
 			);
 			name = Frameworks;

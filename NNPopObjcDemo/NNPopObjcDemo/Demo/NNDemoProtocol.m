@@ -15,83 +15,81 @@
 @nn_extension(NNDemoProtocol, NSObject)
 
 + (void)sayHelloPop {
-    DLog(@"%@: class say hello pop", self);
+    DLog(@"+[%@ %s] say hello pop", self, sel_getName(_cmd));
 }
 
 - (void)sayHelloPop {
-    DLog(@"%@: object say hello pop", [self class]);
+    DLog(@"-[%@ %s] say hello pop", [self class], sel_getName(_cmd));
 }
 
 - (NSString *)whoImI {
-    DLog(@"c: %s", sel_getName(_cmd));
-    return [NSString stringWithFormat:@"%@", [self class]];
+    NSString *whoImI = [NSString stringWithFormat:@"-[%@ %s] I am %@", [self class], sel_getName(_cmd), nil];
+    return whoImI;
 }
 
 - (void)setWhoImI:(NSString *)whoImI {
-    DLog(@"c: %s:%@", sel_getName(_cmd), whoImI);
+    DLog(@"-[%@ %s%@]", [self class], sel_getName(_cmd), whoImI);
 }
 
 @end
-
-
-@nn_extension(NNDemoProtocol, NNDemoObjc)
-
-+ (void)sayHelloPop {
-    DLog(@"objc: class say hello pop");
-}
-
-- (void)sayHelloPop {
-    DLog(@"objc: object say hello pop");
-}
-
-- (NSString *)whoImI {
-    DLog(@"objc: %s", sel_getName(_cmd));
-    return [NSString stringWithFormat:@"%@", [self class]];
-}
-
-- (void)setWhoImI:(NSString *)whoImI {
-    DLog(@"objc: %s:%@", sel_getName(_cmd), whoImI);
-}
-@end
-
 
 @nn_extension(NNDemoProtocol, NNDemoCpp)
 
 + (void)sayHelloPop {
-    DLog(@"cpp: class say hello pop");
+    DLog(@"+[%@ %s] cpp say hello pop", self, sel_getName(_cmd));
 }
 
 - (void)sayHelloPop {
-    DLog(@"cpp: object say hello pop");
+    DLog(@"-[%@ %s] cpp say hello pop", [self class], sel_getName(_cmd));
 }
 
-//- (NSString *)whoImI {
-//    DLog(@"cpp: %s", sel_getName(_cmd));
-//    return [NSString stringWithFormat:@"%@", [self class]];
-//}
-//
-//- (void)setWhoImI:(NSString *)whoImI {
-//    DLog(@"cpp: %s:%@", sel_getName(_cmd), whoImI);
-//}
+- (NSString *)whoImI {
+    NSString *whoImI = [NSString stringWithFormat:@"-[%@ %s] I am %@", [self class], sel_getName(_cmd), self.name];
+    return whoImI;
+}
+
+- (void)setWhoImI:(NSString *)whoImI {
+    self.name = whoImI;
+}
+@end
+
+@nn_extension(NNDemoProtocol, NNDemoObjc)
+
++ (void)sayHelloPop {
+    DLog(@"+[%@ %s] objc say hello pop", self, sel_getName(_cmd));
+}
+
+- (void)sayHelloPop {
+    DLog(@"-[%@ %s] objc say hello pop", [self class], sel_getName(_cmd));
+}
+
+- (NSString *)whoImI {
+    NSString *whoImI = [NSString stringWithFormat:@"-[%@ %s] I am %@", [self class], sel_getName(_cmd), self.name];
+    return whoImI;
+}
+
+- (void)setWhoImI:(NSString *)whoImI {
+    self.name = whoImI;
+}
 @end
 
 @nn_extension(NNDemoProtocol, NNDemoSwift)
 
 + (void)sayHelloPop {
-    DLog(@"swift: class say hello pop");
+    DLog(@"+[%@ %s] swift say hello pop", self, sel_getName(_cmd));
 }
 
 - (void)sayHelloPop {
-    DLog(@"swift: object say hello pop");
+    DLog(@"-[%@ %s] swift say hello pop", [self class], sel_getName(_cmd));
 }
 
 - (NSString *)whoImI {
-    DLog(@"swift: %s", sel_getName(_cmd));
-    return [NSString stringWithFormat:@"%@", [self class]];
+    NSString *whoImI = [NSString stringWithFormat:@"-[%@ %s] I am %@", [self class], sel_getName(_cmd), self.name];
+    return whoImI;
 }
 
 - (void)setWhoImI:(NSString *)whoImI {
-    DLog(@"swift: %s:%@", sel_getName(_cmd), whoImI);
+    self.name = whoImI;
 }
 
 @end
