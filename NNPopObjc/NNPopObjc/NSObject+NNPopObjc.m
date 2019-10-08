@@ -8,14 +8,16 @@
 
 #import "NSObject+NNPopObjc.h"
 #import <objc/runtime.h>
-#import "NNPopObjcInternal.h"
+#import "NNPopObjc-Define.h"
+#import "NNPopObjc-Swizzle.h"
+#import "NNPopObjc-Protocol.h"
 
 NS_INLINE BOOL nn_forwardInvocation(NSInvocation *anInvocation) {
     
     Class clazz = object_getClass(anInvocation.target);
     
-    Protocol *protocol = nn_findProtocol(clazz, anInvocation.selector);
-    if (nil == protocol) {
+    Protocol *protocol = nn_getProtocol(clazz, anInvocation.selector);
+    if (protocol == nil) {
         return false;
     }
     
@@ -34,21 +36,22 @@ NS_INLINE BOOL nn_forwardInvocation(NSInvocation *anInvocation) {
                                  &subProtocolClazzList, &subProtocolClazzCount,
                                  &popProtocolObjcClazzList, &popObjcProtocolClazzListCount);
 
-    nn_completeProtocolClassList(rootProtocolClazzList, rootProtocolClazzCount, protocol,anInvocation.selector, YES);
-    nn_completeProtocolClassList(subProtocolClazzList, subProtocolClazzCount, protocol,anInvocation.selector, NO);
+    nn_implementProtocolClassList(rootProtocolClazzList, rootProtocolClazzCount, protocol,anInvocation.selector, YES);
+    nn_implementProtocolClassList(subProtocolClazzList, subProtocolClazzCount, protocol,anInvocation.selector, NO);
     
     free(protocolClazzList);
     free(popProtocolObjcClazzList);
     free(rootProtocolClazzList);
     free(subProtocolClazzList);
     
+    // Check method implement
     if (![anInvocation.target respondsToSelector:anInvocation.selector]) {
-        [anInvocation.target doesNotRecognizeSelector:anInvocation.selector];
         return false;
     }
     
     // Invoke method
     [anInvocation invoke];
+    
     return true;
 }
 

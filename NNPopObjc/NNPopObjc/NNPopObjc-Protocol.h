@@ -1,26 +1,29 @@
 //
-//  NNPopObjcInternal.h
+//  NNPopObjc-Protocol.h
 //  NNPopObjc
 //
-//  Created by GuHaijun on 2019/10/3.
+//  Created by 顾海军 on 2019/10/8.
 //  Copyright © 2019 GuHaiJun. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <objc/runtime.h>
+#ifndef NNPopObjc_Protocol_h
+#define NNPopObjc_Protocol_h
 
-#ifdef DEBUG
-#define NNPopObjcLog(format, ...)      {NSLog((@"NNPopObjc: [Line %04d] %s " format), __LINE__, __PRETTY_FUNCTION__, ##__VA_ARGS__);}
-#else
-#define NNPopObjcLog(format, ...)
-#endif
+#include <Foundation/Foundation.h>
+#include <objc/runtime.h>
+#import "NNPopObjc-Define.h"
 
-#define NNPopObjcPrefix     @"__NNPopObjc"
 
-NS_INLINE Protocol * nn_findProtocol(Class clazz, SEL sel) {
+NS_INLINE Protocol * _Nullable
+nn_getProtocol(Class _Nullable clazz, SEL _Nullable sel) {
     
     // Result
-    Protocol *protocol = nil;
+    Protocol *result = nil;
+    
+    // Check params
+    if (clazz == nil || sel == nil) {
+        return result;
+    }
     
     // Loop class
     Class currentClazz = clazz;
@@ -35,19 +38,19 @@ NS_INLINE Protocol * nn_findProtocol(Class clazz, SEL sel) {
         for (unsigned int i = 0; i < count; i++) {
             
             // Get method description
-            struct objc_method_description description = (struct objc_method_description){NULL, NULL};
+            struct objc_method_description methodDescription = (struct objc_method_description){NULL, NULL};
             
             // Required method
-            description = protocol_getMethodDescription(protocols[i], sel, YES, class_isMetaClass(currentClazz) ^ 1);
-            if (description.name != NULL) {
-                protocol = protocols[i];
+            methodDescription = protocol_getMethodDescription(protocols[i], sel, YES, class_isMetaClass(currentClazz) ^ 1);
+            if (sel_isEqual(methodDescription.name, sel)) {
+                result = protocols[i];
                 break;
             }
             
             // Optional method
-            description = protocol_getMethodDescription(protocols[i], sel, NO, class_isMetaClass(currentClazz) ^ 1);
-            if (description.name != NULL) {
-                protocol = protocols[i];
+            methodDescription = protocol_getMethodDescription(protocols[i], sel, NO, class_isMetaClass(currentClazz) ^ 1);
+            if (sel_isEqual(methodDescription.name, sel)) {
+                result = protocols[i];
                 break;
             }
         }
@@ -56,8 +59,8 @@ NS_INLINE Protocol * nn_findProtocol(Class clazz, SEL sel) {
         free(protocols);
         
         // Found protocol
-        if (protocol) {
-            return protocol;
+        if (result) {
+            return result;
         }
         
         // Get superClass and continue
@@ -67,32 +70,6 @@ NS_INLINE Protocol * nn_findProtocol(Class clazz, SEL sel) {
     return nil;
 }
 
-NS_INLINE void nn_swizzedMark(id self, SEL _cmd) {
-    NNPopObjcLog(@"%@ %s methods have been swizzed", self, sel_getName(_cmd));
-}
-
-NS_INLINE void nn_swizzleSelector(Class clazz, SEL originalSelector, SEL swizzledSelector) {
-    
-    // Prevent multiple swizz
-    NSString *swizzedMarkName = [NSString stringWithFormat:@"%@_%@", @"nn_swizzedMark", @(sel_getName(swizzledSelector))];
-    SEL swizzedMarkSelector = NSSelectorFromString(swizzedMarkName);
-    if ([clazz respondsToSelector:swizzedMarkSelector]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        [clazz performSelector:swizzedMarkSelector];
-#pragma clang diagnostic pop
-        return;
-    }
-    class_addMethod(clazz, swizzedMarkSelector, (IMP)nn_swizzedMark, "v@:");
-    
-    // Swizz method
-    Method originalMethod = class_getClassMethod(clazz, originalSelector);
-    Method swizzedMethod = class_getClassMethod(clazz, swizzledSelector);
-    
-    IMP originalImplementation = class_replaceMethod(clazz, method_getName(originalMethod), method_getImplementation(swizzedMethod), method_getTypeEncoding(originalMethod));
-    
-    class_replaceMethod(clazz, method_getName(swizzedMethod), originalImplementation, method_getTypeEncoding(originalMethod));
-}
 
 NS_INLINE Class _Nullable
 nn_rootProtocolClass(Protocol * _Nullable protocol, Class _Nullable clazz) {
@@ -111,13 +88,16 @@ nn_rootProtocolClass(Protocol * _Nullable protocol, Class _Nullable clazz) {
         // Get superClass and continue
         currentClazz = class_getSuperclass(currentClazz);
     }
+    
     return result;
 }
+
 
 NS_INLINE Class _Nonnull * _Nullable
 nn_copyClassList(unsigned int * _Nullable outCount) {
     return objc_copyClassList(outCount);
 }
+
 
 NS_INLINE Class _Nonnull * _Nullable
 nn_copyMetaClassList(unsigned int * _Nullable outCount) {
@@ -129,9 +109,10 @@ nn_copyMetaClassList(unsigned int * _Nullable outCount) {
     if (clazzCount > 0) {
         result = (Class *)malloc((1 + clazzCount) * sizeof(Class));
         for (NSInteger i = 0; i < clazzCount; i++) {
-            Class clazz = object_getClass(clazzes[i]);
-            if (clazz) {
-                result[metaClazzCount++] = clazz;
+            Class clazz = clazzes[i];
+            Class metaClazz = object_getClass(clazz);
+            if (metaClazz) {
+                result[metaClazzCount++] = metaClazz;
             }
         }
         result[metaClazzCount] = nil;
@@ -141,10 +122,12 @@ nn_copyMetaClassList(unsigned int * _Nullable outCount) {
     return result;
 }
 
+
 typedef enum : NSUInteger {
     NN_CopyProtocolClassListTypeClass,
     NN_CopyProtocolClassListTypeMetaClass,
 } NN_CopyProtocolClassListType;
+
 
 NS_INLINE Class _Nonnull * _Nullable
 nn_copyProtocolClassList(Protocol * _Nullable protocol,
@@ -190,14 +173,14 @@ nn_copyProtocolClassList(Protocol * _Nullable protocol,
     return result;
 }
 
-
+/// Removes each object in another given inRightClazzList from the inLeftClazzList, if present.
 NS_INLINE Class _Nonnull * _Nullable
-nn_copyClassListMinus(
-                      Class _Nonnull * _Nullable inLeftClazzList,
+nn_copyClassListMinus(Class _Nonnull * _Nullable inLeftClazzList,
                       unsigned int inLeftClazzCount,
                       Class _Nonnull * _Nullable inRightClazzList,
                       unsigned int inRightClazzCount,
-                      unsigned int * outCount) {
+                      unsigned int * _Nullable outCount) {
+    
     Class *result = nil;
     if (inLeftClazzList == nil  || inLeftClazzCount == 0) {
         return nil;
@@ -205,8 +188,10 @@ nn_copyClassListMinus(
     
     if (inRightClazzList == nil || inRightClazzCount == 0) {
         result = (Class *)malloc((1 + inLeftClazzCount) * sizeof(Class));
-        memcpy(result, inLeftClazzList, inLeftClazzCount);
+        memcpy(result, inLeftClazzList, inLeftClazzCount * sizeof(Class));
         result[inLeftClazzCount] = nil;
+        
+        if (outCount) *outCount = inLeftClazzCount;
         return result;
     }
     
@@ -231,62 +216,63 @@ nn_copyClassListMinus(
     
     result = (Class *)malloc((1 + c) * sizeof(Class));
     memcpy(result, t, (1 + c) * sizeof(Class));
-    
     free(t);
+    
     if (outCount) *outCount = c;
     return result;
 }
 
+/// Get class prefixed with "__NNPopObjc" from inClazzList
 NS_INLINE Class _Nonnull * _Nullable
 nn_copyPopObjcClassList(Class _Nonnull * _Nullable inClazzList,
                         unsigned int inClazzCount,
                         unsigned int * _Nullable outCount) {
     Class *result = nil;
-     
-     if (inClazzList == nil || inClazzCount == 0) {
-         return result;
-     }
-
-     Class *t = (Class *)malloc((1 + inClazzCount) * sizeof(Class));
-     unsigned int c = 0;
-     for (unsigned int i = 0; i < inClazzCount; i++) {
-         Class clazz = inClazzList[i];
-         if (clazz) {
-             if ([NSStringFromClass(clazz) containsString:@"__NNPopObjc"]) {
-                 t[c++] = clazz;
-             }
-         }
-     }
-     t[c] = nil;
-     
-     result = (Class *)malloc((1 + c) * sizeof(Class));
-     memcpy(result, t, (1 + c) * sizeof(Class));
-     
-     free(t);
     
-     if (outCount) *outCount = c;
-     return result;
+    if (inClazzList == nil || inClazzCount == 0) {
+        return result;
+    }
+    
+    Class *t = (Class *)malloc((1 + inClazzCount) * sizeof(Class));
+    unsigned int c = 0;
+    for (unsigned int i = 0; i < inClazzCount; i++) {
+        Class clazz = inClazzList[i];
+        if (clazz) {
+            if ([NSStringFromClass(clazz) containsString:NNPopObjcPrefix]) {
+                t[c++] = clazz;
+            }
+        }
+    }
+    t[c] = nil;
+    
+    result = (Class *)malloc((1 + c) * sizeof(Class));
+    memcpy(result, t, (1 + c) * sizeof(Class));
+    free(t);
+    
+    if (outCount) *outCount = c;
+    return result;
 }
 
-
+/// Get class conformed to protocol from inClazzList
 NS_INLINE Class _Nonnull * _Nullable
 nn_copyRootProtocolClassList(Protocol * _Nullable protocol,
                              Class _Nonnull * _Nullable inClazzList,
                              unsigned int inClazzCount,
-                             unsigned int * outCount) {
+                             unsigned int * _Nullable outCount) {
     
     Class *result = nil;
     
     if (protocol == nil || inClazzList == nil || inClazzCount == 0) {
         return result;
     }
-
+    
     Class *t = (Class *)malloc((1 + inClazzCount) * sizeof(Class));
     unsigned int c = 0;
     for (unsigned int i = 0; i < inClazzCount; i++) {
         Class rootClazz = nn_rootProtocolClass(protocol, inClazzList[i]);;
         if (rootClazz) {
             unsigned int isFind = false;
+            // To prevent the repeat
             for (unsigned int j = 0; j < c; j++) {
                 if (rootClazz == t[j]) {
                     isFind = true;
@@ -302,7 +288,6 @@ nn_copyRootProtocolClassList(Protocol * _Nullable protocol,
     
     result = (Class *)malloc((1 + c) * sizeof(Class));
     memcpy(result, t, (1 + c) * sizeof(Class));
-    
     free(t);
     
     if (outCount) *outCount = c;
@@ -312,33 +297,33 @@ nn_copyRootProtocolClassList(Protocol * _Nullable protocol,
 
 NS_INLINE void
 nn_separateProtocolClassList(Protocol * _Nullable protocol,
-                             Class * _Nullable inClazzList,
+                             Class _Nonnull * _Nullable inClazzList,
                              unsigned int inClazzCount,
-                             Class ** _Nullable outRootClazzList,
+                             Class _Nonnull *_Nonnull* _Nullable outRootClazzList,
                              unsigned int * _Nullable outRootClazzCount,
-                             Class ** _Nullable outSubClazzList,
+                             Class _Nonnull *_Nonnull* _Nullable outSubClazzList,
                              unsigned int * _Nullable outSubClazzCount,
-                             Class ** _Nullable outPopObjcClazzList,
+                             Class _Nonnull *_Nonnull* _Nullable outPopObjcClazzList,
                              unsigned int * _Nullable outPopObjcClazzCount) {
-
+    
     unsigned int _outPopObjcClazzCount = 0;
     Class *_outPopObjcClazzList = nil;
     unsigned int _outRootClazzCount = 0;
     Class *_outRootClazzList = nil;
     unsigned int _outSubClazzCount = 0;
     Class *_outSubClazzList = nil;
-
+    
     // Store the classes, Except the PopObjc classes
     unsigned int _exceptPopObjcClazzCount = 0;
     Class *_exceptPopObjcClazzList = nil;
-
+    
     if (!inClazzList || !inClazzCount) {
         if (outRootClazzCount) *outRootClazzCount = 0;
         if (outSubClazzCount) *outSubClazzCount = 0;
         if (outPopObjcClazzCount) *outPopObjcClazzCount = 0;
         return;
     }
-
+    
     // Get NNPopObjc class
     {
         _outPopObjcClazzList = nn_copyPopObjcClassList(inClazzList, inClazzCount, &_outPopObjcClazzCount);
@@ -346,24 +331,24 @@ nn_separateProtocolClassList(Protocol * _Nullable protocol,
         if (outPopObjcClazzList) memcpy(*outPopObjcClazzList, _outPopObjcClazzList, _outPopObjcClazzCount * sizeof(Class));
         if (outPopObjcClazzCount) *outPopObjcClazzCount = _outPopObjcClazzCount;
     }
-
-
+    
+    
     if (!protocol) {
         free(_outPopObjcClazzList);
         if (outRootClazzCount) *outRootClazzCount = 0;
         if (outSubClazzCount) *outSubClazzCount = 0;
         return;
     }
-
+    
     _exceptPopObjcClazzList = nn_copyClassListMinus(inClazzList, inClazzCount, _outPopObjcClazzList, _outPopObjcClazzCount, &_exceptPopObjcClazzCount);
-
+    
     // Get root class
     {
         _outRootClazzList = nn_copyRootProtocolClassList(protocol, _exceptPopObjcClazzList, _exceptPopObjcClazzCount, &_outRootClazzCount);
         if (outRootClazzList) memcpy(*outRootClazzList, _outRootClazzList, _outRootClazzCount * sizeof(Class));
         if (outRootClazzCount) *outRootClazzCount = _outRootClazzCount;
     }
-
+    
     {
         _outSubClazzList = nn_copyClassListMinus(_exceptPopObjcClazzList, _exceptPopObjcClazzCount, _outRootClazzList, _outRootClazzCount, &_outSubClazzCount);
         if (outSubClazzList) memcpy(*outSubClazzList, _outSubClazzList, _outSubClazzCount * sizeof(Class));
@@ -376,18 +361,22 @@ nn_separateProtocolClassList(Protocol * _Nullable protocol,
 }
 
 NS_INLINE void
-nn_completeProtocolClassList(Class *inClazzList,
-                          unsigned int inClazzCount,
-                          Protocol *protocol,
-                          SEL selector,
-                          BOOL isRootProtocolClazz) {
+nn_implementProtocolClassList(Class _Nonnull * _Nullable inClazzList,
+                             unsigned int inClazzCount,
+                             Protocol * _Nullable protocol,
+                             SEL _Nullable selector,
+                             BOOL isRootProtocolClazz) {
+    
+    if (inClazzList == nil || inClazzCount == 0 || protocol == nil || selector == nil) {
+        return;
+    }
     
     for (unsigned int i = 0; i < inClazzCount; i++) {
         
         Class clazz = inClazzList[i];
         
         NSArray<NSString *> *clazzSuffixes = isRootProtocolClazz ?
-        @[NSStringFromClass(clazz), @"NSObject"] :
+        @[NSStringFromClass(clazz), NNPopObjcRootSuffix] :
         @[NSStringFromClass(clazz)];
         
         // Get implementationClazz
@@ -395,7 +384,7 @@ nn_completeProtocolClassList(Class *inClazzList,
         
         for (NSString *clazzSuffix in clazzSuffixes) {
             implementationClazz = NSClassFromString([NSString stringWithFormat:@"%@_%s_%@",
-                                                     @"__NNPopObjc",
+                                                     NNPopObjcPrefix,
                                                      protocol_getName(protocol),
                                                      clazzSuffix]);
             if (implementationClazz && class_conformsToProtocol(implementationClazz, protocol)) {
@@ -425,3 +414,5 @@ nn_completeProtocolClassList(Class *inClazzList,
                         method_getTypeEncoding(method));
     }
 }
+
+#endif /* NNPopObjc_Protocol_h */
