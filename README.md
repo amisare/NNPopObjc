@@ -11,7 +11,9 @@
 
 ## 使用
 
-- 申明协议并实现扩展
+### 声明协议
+
+- 声明协议
 
 ```
 @protocol NNDemoProtocol <NSObject>
@@ -23,6 +25,11 @@
 
 @end
 
+```
+
+- 扩展协议
+
+```
 @nn_extension(NNDemoProtocol, NSObject)
 
 + (void)sayHelloPop {
@@ -45,7 +52,9 @@
 @end
 ```
 
-- 创建类并遵守协议
+### 创建类
+
+- 声明类并遵守协议
 
 ```
 @interface NNDemoObjc : NSObject <NNDemoProtocol>
@@ -54,10 +63,17 @@
 
 @end
 
+```
+
+- 实现类
+
+```
 @implementation NNDemoObjc
 
 @end
 ```
+
+### 使用类
 
 - 调用
 
@@ -70,7 +86,7 @@ DLog(@"%@", objc.whoImI);
     
 ```
 
-- 结果输出
+- 输出结果
 
 ```
 +[NNDemoObjc sayHelloPop] objc say hello pop
