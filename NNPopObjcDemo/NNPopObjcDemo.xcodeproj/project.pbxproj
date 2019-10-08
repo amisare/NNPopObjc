@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		64822FE41B7344A877526D23 /* Pods_NNPopObjcDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1268B790C55A451BBFC4410E /* Pods_NNPopObjcDemo.framework */; };
-		67456E2F23481BEF00783A6A /* NNPopObjc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67456E2E23481BEF00783A6A /* NNPopObjc.framework */; };
 		676979C02345C7A000E13282 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979BF2345C7A000E13282 /* AppDelegate.m */; };
 		676979C62345C7A000E13282 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979C52345C7A000E13282 /* ViewController.m */; };
 		676979C92345C7A000E13282 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 676979C72345C7A000E13282 /* Main.storyboard */; };
@@ -81,7 +80,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				67456E2F23481BEF00783A6A /* NNPopObjc.framework in Frameworks */,
 				64822FE41B7344A877526D23 /* Pods_NNPopObjcDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

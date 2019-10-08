@@ -11,6 +11,14 @@
 		676979A72345C78300E13282 /* NNPopObjcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979A62345C78300E13282 /* NNPopObjcTests.m */; };
 		676979A92345C78300E13282 /* NNPopObjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6769799B2345C78200E13282 /* NNPopObjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		676979F92345C86B00E13282 /* NSObject+NNPopObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979F62345C86B00E13282 /* NSObject+NNPopObjc.m */; };
+		7A48A1CD234C23E20018F07E /* NNPopObjc-Protocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A48A1CB234C23E20018F07E /* NNPopObjc-Protocol.h */; };
+		7A5E1C12234C5AD6005A7D1B /* NNTestProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5E1C11234C5AD6005A7D1B /* NNTestProtocol.m */; };
+		7AA532DF234C5F0300490F7D /* NNTestClassA.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA532DE234C5F0300490F7D /* NNTestClassA.m */; };
+		7AA532E2234C619F00490F7D /* NNTestClassAA.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA532E1234C619F00490F7D /* NNTestClassAA.m */; };
+		7AA532E5234C61AA00490F7D /* NNTestClassAB.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA532E4234C61AA00490F7D /* NNTestClassAB.m */; };
+		7AA532E8234C61D000490F7D /* NNTestClassB.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA532E7234C61D000490F7D /* NNTestClassB.m */; };
+		7AA532EB234C620C00490F7D /* NNTestClassBA.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA532EA234C620C00490F7D /* NNTestClassBA.m */; };
+		7AA532EE234C621500490F7D /* NNTestClassBB.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA532ED234C621500490F7D /* NNTestClassBB.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,9 +38,25 @@
 		676979A12345C78300E13282 /* NNPopObjcTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NNPopObjcTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		676979A62345C78300E13282 /* NNPopObjcTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNPopObjcTests.m; sourceTree = "<group>"; };
 		676979A82345C78300E13282 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		676979F32345C86A00E13282 /* NNPopObjcInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNPopObjcInternal.h; sourceTree = "<group>"; };
 		676979F52345C86B00E13282 /* NSObject+NNPopObjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+NNPopObjc.h"; sourceTree = "<group>"; };
 		676979F62345C86B00E13282 /* NSObject+NNPopObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+NNPopObjc.m"; sourceTree = "<group>"; };
+		7A48A1CB234C23E20018F07E /* NNPopObjc-Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NNPopObjc-Protocol.h"; sourceTree = "<group>"; };
+		7A48A1CF234C32C90018F07E /* NNPopObjc-Define.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NNPopObjc-Define.h"; sourceTree = "<group>"; };
+		7A48A1D0234C343C0018F07E /* NNPopObjc-Swizzle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NNPopObjc-Swizzle.h"; sourceTree = "<group>"; };
+		7A5E1C10234C5AD6005A7D1B /* NNTestProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNTestProtocol.h; sourceTree = "<group>"; };
+		7A5E1C11234C5AD6005A7D1B /* NNTestProtocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNTestProtocol.m; sourceTree = "<group>"; };
+		7AA532DD234C5F0300490F7D /* NNTestClassA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNTestClassA.h; sourceTree = "<group>"; };
+		7AA532DE234C5F0300490F7D /* NNTestClassA.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNTestClassA.m; sourceTree = "<group>"; };
+		7AA532E0234C619F00490F7D /* NNTestClassAA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNTestClassAA.h; sourceTree = "<group>"; };
+		7AA532E1234C619F00490F7D /* NNTestClassAA.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNTestClassAA.m; sourceTree = "<group>"; };
+		7AA532E3234C61AA00490F7D /* NNTestClassAB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNTestClassAB.h; sourceTree = "<group>"; };
+		7AA532E4234C61AA00490F7D /* NNTestClassAB.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNTestClassAB.m; sourceTree = "<group>"; };
+		7AA532E6234C61D000490F7D /* NNTestClassB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNTestClassB.h; sourceTree = "<group>"; };
+		7AA532E7234C61D000490F7D /* NNTestClassB.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNTestClassB.m; sourceTree = "<group>"; };
+		7AA532E9234C620C00490F7D /* NNTestClassBA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNTestClassBA.h; sourceTree = "<group>"; };
+		7AA532EA234C620C00490F7D /* NNTestClassBA.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNTestClassBA.m; sourceTree = "<group>"; };
+		7AA532EC234C621500490F7D /* NNTestClassBB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNTestClassBB.h; sourceTree = "<group>"; };
+		7AA532ED234C621500490F7D /* NNTestClassBB.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNTestClassBB.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +100,9 @@
 			isa = PBXGroup;
 			children = (
 				6769799B2345C78200E13282 /* NNPopObjc.h */,
-				676979F32345C86A00E13282 /* NNPopObjcInternal.h */,
+				7A48A1CF234C32C90018F07E /* NNPopObjc-Define.h */,
+				7A48A1D0234C343C0018F07E /* NNPopObjc-Swizzle.h */,
+				7A48A1CB234C23E20018F07E /* NNPopObjc-Protocol.h */,
 				676979F52345C86B00E13282 /* NSObject+NNPopObjc.h */,
 				676979F62345C86B00E13282 /* NSObject+NNPopObjc.m */,
 				6769799C2345C78200E13282 /* Info.plist */,
@@ -89,6 +115,20 @@
 			children = (
 				676979A62345C78300E13282 /* NNPopObjcTests.m */,
 				676979A82345C78300E13282 /* Info.plist */,
+				7A5E1C10234C5AD6005A7D1B /* NNTestProtocol.h */,
+				7A5E1C11234C5AD6005A7D1B /* NNTestProtocol.m */,
+				7AA532DD234C5F0300490F7D /* NNTestClassA.h */,
+				7AA532DE234C5F0300490F7D /* NNTestClassA.m */,
+				7AA532E0234C619F00490F7D /* NNTestClassAA.h */,
+				7AA532E1234C619F00490F7D /* NNTestClassAA.m */,
+				7AA532E3234C61AA00490F7D /* NNTestClassAB.h */,
+				7AA532E4234C61AA00490F7D /* NNTestClassAB.m */,
+				7AA532E6234C61D000490F7D /* NNTestClassB.h */,
+				7AA532E7234C61D000490F7D /* NNTestClassB.m */,
+				7AA532E9234C620C00490F7D /* NNTestClassBA.h */,
+				7AA532EA234C620C00490F7D /* NNTestClassBA.m */,
+				7AA532EC234C621500490F7D /* NNTestClassBB.h */,
+				7AA532ED234C621500490F7D /* NNTestClassBB.m */,
 			);
 			path = NNPopObjcTests;
 			sourceTree = "<group>";
@@ -100,6 +140,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A48A1CD234C23E20018F07E /* NNPopObjc-Protocol.h in Headers */,
 				676979A92345C78300E13282 /* NNPopObjc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,7 +250,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7AA532EE234C621500490F7D /* NNTestClassBB.m in Sources */,
+				7AA532DF234C5F0300490F7D /* NNTestClassA.m in Sources */,
+				7AA532EB234C620C00490F7D /* NNTestClassBA.m in Sources */,
 				676979A72345C78300E13282 /* NNPopObjcTests.m in Sources */,
+				7AA532E2234C619F00490F7D /* NNTestClassAA.m in Sources */,
+				7A5E1C12234C5AD6005A7D1B /* NNTestProtocol.m in Sources */,
+				7AA532E5234C61AA00490F7D /* NNTestClassAB.m in Sources */,
+				7AA532E8234C61D000490F7D /* NNTestClassB.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
