@@ -6,19 +6,17 @@
 [![GitHub license](https://img.shields.io/github/license/amisare/NNPopObjc.svg)](https://github.com/amisare/NNPopObjc/blob/master/LICENSE)
 
 
-NNPopObjc is inspired by protocol oriented programming, it provides extensibility for the protocol.
+NNPopObjc 是受面向协议编程的启发，为协议提供了实现扩展的功能。
 
-[NNPopObjc 中文文档](README_zh_CN.md)
+## 文档
 
-## Documents
+* 阅读 [NNPopObjc Guide](Docs/usage_zh_CN.md) 文档。
 
-* Read the [NNPopObjc Guide](Docs/usage_en.md) document.
+## 快速开始
 
-## Quick Start
+### 声明协议
 
-### Declaring a Procotol
-
-Declaring the Procotol in a `.h` file
+在 `.h` 文件中声明协议
 
 ```objective-c
 @protocol NNDemoProtocol <NSObject>
@@ -31,9 +29,9 @@ Declaring the Procotol in a `.h` file
 @end
 ```
 
-### Extending the Procotol
+### 扩展协议
 
-Extending the Procotol needs in a `.m` file
+扩展协议需要在 `.m` 中实现
 
 ```objective-c
 @nn_extension(NNDemoProtocol, NSObject)
@@ -58,9 +56,9 @@ Extending the Procotol needs in a `.m` file
 @end
 ```
 
-### Adopting the Procotol
+### 遵守协议
 
-- Creating a Class
+- 创建类
 
 ```objective-c
 @interface NNDemoObjc : NSObject <NNDemoProtocol>
@@ -70,7 +68,7 @@ Extending the Procotol needs in a `.m` file
 @end
 ```
 
-- Implementing the Class
+- 实现类
 
 ```
 @implementation NNDemoObjc
@@ -78,9 +76,9 @@ Extending the Procotol needs in a `.m` file
 @end
 ```
 
-### Using the Class
+### 使用类
 
-- Calling the Methods
+- 调用方法
 
 ```objective-c
 [NNDemoObjc sayHelloPop];
@@ -90,7 +88,7 @@ objc.whoImI = @"objc";
 DLog(@"%@", objc.whoImI);
 ```
 
-- Outputting
+- 输出日志
 
 ```objective-c
 +[NNDemoObjc sayHelloPop] say hello pop
@@ -99,13 +97,13 @@ DLog(@"%@", objc.whoImI);
 ```
 
 
-## Installation
+## 安装
 
-NNPopObjc supports CocoaPods for installing the library in a project.
+NNPopObjc 支持 CocoaPods 方式集成。
 
-### Installation with CocoaPods
+### 安装 CocoaPods
 
-You can install it with the following command:
+使用以下命令安装：
 
 ```bash
 $ gem install cocoapods
@@ -113,7 +111,7 @@ $ gem install cocoapods
 
 ### Podfile
 
-To integrate NNPopObjc into your Xcode project using CocoaPods, specify it in your `Podfile`:
+将 NNPopObjc 添加到 `Podfile` ，通过 CocoaPods 集成 NNPopObjc 到 Xcode 项目：
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
@@ -124,19 +122,19 @@ pod 'NNPopObjc', '~> 0.0.3'
 end
 ```
 
-Then, run the following command:
+执行命令：
 
 ```bash
 pod install
 ```
 
-#### If installation failed with error：
+#### 如安装失败，提示：
 
 ```bash
 [!] Unable to find a specification for `NNPopObjc`
 ```
 
-try install with the following command:
+尝试使用命令：
 
 ```bash
 pod install --repo-update
