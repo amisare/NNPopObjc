@@ -36,8 +36,8 @@ NS_INLINE BOOL nn_forwardInvocation(NSInvocation *anInvocation) {
                                  &subProtocolClazzList, &subProtocolClazzCount,
                                  &popProtocolObjcClazzList, &popObjcProtocolClazzListCount);
 
-    nn_implementProtocolClassList(rootProtocolClazzList, rootProtocolClazzCount, protocol,anInvocation.selector, YES);
-    nn_implementProtocolClassList(subProtocolClazzList, subProtocolClazzCount, protocol,anInvocation.selector, NO);
+    nn_implementProtocolClassList(rootProtocolClazzList, rootProtocolClazzCount, protocol, anInvocation.selector, YES);
+    nn_implementProtocolClassList(subProtocolClazzList, subProtocolClazzCount, protocol, anInvocation.selector, NO);
     
     free(protocolClazzList);
     free(popProtocolObjcClazzList);
