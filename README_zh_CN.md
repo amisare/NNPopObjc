@@ -6,7 +6,7 @@
 [![GitHub license](https://img.shields.io/github/license/amisare/NNPopObjc.svg)](https://github.com/amisare/NNPopObjc/blob/master/LICENSE)
 
 
-NNPopObjc 是受面向协议编程的启发，为协议提供了实现扩展的功能。
+NNPopObjc 受面向协议编程的启发，为协议提供了实现扩展的功能。
 
 ## 文档
 
