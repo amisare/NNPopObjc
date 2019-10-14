@@ -13,7 +13,7 @@
 #include <objc/runtime.h>
 #import "NNPopObjc-Define.h"
 
-
+/// Gets a class that conformed to protocol.
 NS_INLINE Protocol * _Nullable
 nn_getProtocol(Class _Nullable clazz, SEL _Nullable sel) {
     
@@ -70,7 +70,7 @@ nn_getProtocol(Class _Nullable clazz, SEL _Nullable sel) {
     return nil;
 }
 
-
+/// Gets a root class that conformed to protocol.
 NS_INLINE Class _Nullable
 nn_rootProtocolClass(Protocol * _Nullable protocol, Class _Nullable clazz) {
     
@@ -92,13 +92,13 @@ nn_rootProtocolClass(Protocol * _Nullable protocol, Class _Nullable clazz) {
     return result;
 }
 
-
+/// Creates and returns a list of pointers to all registered class definitions.
 NS_INLINE Class _Nonnull * _Nullable
 nn_copyClassList(unsigned int * _Nullable outCount) {
     return objc_copyClassList(outCount);
 }
 
-
+/// Creates and returns a list of pointers to all registered meta class definitions.
 NS_INLINE Class _Nonnull * _Nullable
 nn_copyMetaClassList(unsigned int * _Nullable outCount) {
     unsigned int clazzCount = 0;
@@ -129,6 +129,7 @@ typedef enum : NSUInteger {
 } NN_CopyProtocolClassListType;
 
 
+/// Creates and returns a list of pointers to all registered class definitions that conformed to protocol.
 NS_INLINE Class _Nonnull * _Nullable
 nn_copyProtocolClassList(Protocol * _Nullable protocol,
                          unsigned int * _Nullable outCount,
@@ -222,7 +223,7 @@ nn_copyClassListMinus(Class _Nonnull * _Nullable inLeftClazzList,
     return result;
 }
 
-/// Get class prefixed with "__NNPopObjc" from inClazzList
+/// Creates and returns a list of pointers to class prefixed with "__NNPopObjc" from inClazzList
 NS_INLINE Class _Nonnull * _Nullable
 nn_copyPopObjcClassList(Class _Nonnull * _Nullable inClazzList,
                         unsigned int inClazzCount,
@@ -253,7 +254,7 @@ nn_copyPopObjcClassList(Class _Nonnull * _Nullable inClazzList,
     return result;
 }
 
-/// Get class conformed to protocol from inClazzList
+/// Creates and returns a list of pointers to class that conformed to protocol from inClazzList
 NS_INLINE Class _Nonnull * _Nullable
 nn_copyRootProtocolClassList(Protocol * _Nullable protocol,
                              Class _Nonnull * _Nullable inClazzList,
@@ -293,7 +294,6 @@ nn_copyRootProtocolClassList(Protocol * _Nullable protocol,
     if (outCount) *outCount = c;
     return result;
 }
-
 
 NS_INLINE void
 nn_separateProtocolClassList(Protocol * _Nullable protocol,
