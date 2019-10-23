@@ -36,14 +36,15 @@ Declaring the Procotol in a `.h` file
 Extending the Procotol needs in a `.m` file
 
 ```objective-c
+///Extending the Procotol for default implemention.
 @nn_extension(NNDemoProtocol, NSObject)
 
 + (void)sayHelloPop {
-    DLog(@"+[%@ %s] say hello pop", self, sel_getName(_cmd));
+    DLog(@"+[%@ %s] code say hello pop", self, sel_getName(_cmd));
 }
 
 - (void)sayHelloPop {
-    DLog(@"-[%@ %s] say hello pop", [self class], sel_getName(_cmd));
+    DLog(@"-[%@ %s] code say hello pop", [self class], sel_getName(_cmd));
 }
 
 - (NSString *)whoImI {
@@ -53,6 +54,20 @@ Extending the Procotol needs in a `.m` file
 
 - (void)setWhoImI:(NSString *)whoImI {
     DLog(@"-[%@ %s%@]", [self class], sel_getName(_cmd), whoImI);
+}
+
+@end
+
+///Extending the Procotol for NNDemoObjc
+@nn_extension(NNDemoProtocol, NNDemoObjc)
+
+- (NSString *)whoImI {
+    NSString *whoImI = [NSString stringWithFormat:@"-[%@ %s] I am %@", [self class], sel_getName(_cmd), self.name];
+    return whoImI;
+}
+
+- (void)setWhoImI:(NSString *)whoImI {
+    self.name = whoImI;
 }
 
 @end
@@ -93,8 +108,8 @@ DLog(@"%@", objc.whoImI);
 - Outputting
 
 ```objective-c
-+[NNDemoObjc sayHelloPop] say hello pop
--[NNDemoObjc sayHelloPop] say hello pop
++[NNDemoObjc sayHelloPop] code say hello pop
+-[NNDemoObjc sayHelloPop] code say hello pop
 -[NNDemoObjc whoImI] I am objc
 ```
 

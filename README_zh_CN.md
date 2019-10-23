@@ -34,14 +34,15 @@ NNPopObjc 受面向协议编程的启发，为协议提供了实现扩展的功�
 扩展协议需要在 `.m` 中实现
 
 ```objective-c
+/// 默认协议扩展
 @nn_extension(NNDemoProtocol, NSObject)
 
 + (void)sayHelloPop {
-    DLog(@"+[%@ %s] say hello pop", self, sel_getName(_cmd));
+    DLog(@"+[%@ %s] code say hello pop", self, sel_getName(_cmd));
 }
 
 - (void)sayHelloPop {
-    DLog(@"-[%@ %s] say hello pop", [self class], sel_getName(_cmd));
+    DLog(@"-[%@ %s] code say hello pop", [self class], sel_getName(_cmd));
 }
 
 - (NSString *)whoImI {
@@ -51,6 +52,20 @@ NNPopObjc 受面向协议编程的启发，为协议提供了实现扩展的功�
 
 - (void)setWhoImI:(NSString *)whoImI {
     DLog(@"-[%@ %s%@]", [self class], sel_getName(_cmd), whoImI);
+}
+
+@end
+
+/// 对 NNDemoObjc 类的协议扩展
+@nn_extension(NNDemoProtocol, NNDemoObjc)
+
+- (NSString *)whoImI {
+    NSString *whoImI = [NSString stringWithFormat:@"-[%@ %s] I am %@", [self class], sel_getName(_cmd), self.name];
+    return whoImI;
+}
+
+- (void)setWhoImI:(NSString *)whoImI {
+    self.name = whoImI;
 }
 
 @end
@@ -90,9 +105,9 @@ DLog(@"%@", objc.whoImI);
 
 - 输出日志
 
-```objective-c
-+[NNDemoObjc sayHelloPop] say hello pop
--[NNDemoObjc sayHelloPop] say hello pop
+```objective-cc
++[NNDemoObjc sayHelloPop] code say hello pop
+-[NNDemoObjc sayHelloPop] code say hello pop
 -[NNDemoObjc whoImI] I am objc
 ```
 
