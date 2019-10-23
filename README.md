@@ -135,7 +135,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 
 target 'TargetName' do
-pod 'NNPopObjc', '~> 0.0.4'
+pod 'NNPopObjc', '~> 0.0.5'
 end
 ```
 
