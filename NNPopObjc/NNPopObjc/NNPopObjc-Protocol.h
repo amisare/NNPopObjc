@@ -17,7 +17,7 @@
 ///
 /// @param clazz A class
 /// @param sel A selector
-NS_INLINE Protocol * _Nullable nn_getProtocol(Class _Nullable clazz, SEL _Nullable sel) {
+NS_INLINE Protocol * _Nullable nn_pop_getProtocol(Class _Nullable clazz, SEL _Nullable sel) {
     
     // Result
     Protocol *result = nil;
@@ -76,7 +76,7 @@ NS_INLINE Protocol * _Nullable nn_getProtocol(Class _Nullable clazz, SEL _Nullab
 ///
 /// @param protocol A protocol that root class adpoted.
 /// @param clazz A class that it is sub class of root or the root self.
-NS_INLINE Class _Nullable nn_rootProtocolClass(Protocol * _Nullable protocol, Class _Nullable clazz) {
+NS_INLINE Class _Nullable nn_pop_rootProtocolClass(Protocol * _Nullable protocol, Class _Nullable clazz) {
     
     Class result = nil;
     
@@ -102,7 +102,7 @@ NS_INLINE Class _Nullable nn_rootProtocolClass(Protocol * _Nullable protocol, Cl
 /// this function in the list. It can be \c nil.
 ///
 /// @note The implementation of this method call objc_copyClassList directly.
-NS_INLINE Class _Nonnull * _Nullable nn_copyClassList(unsigned int * _Nullable outCount) {
+NS_INLINE Class _Nonnull * _Nullable nn_pop_copyClassList(unsigned int * _Nullable outCount) {
     return objc_copyClassList(outCount);
 }
 
@@ -110,9 +110,9 @@ NS_INLINE Class _Nonnull * _Nullable nn_copyClassList(unsigned int * _Nullable o
 ///
 /// @param outCount An integer pointer used to store the number of classes returned by
 /// this function in the list. It can be \c nil.
-NS_INLINE Class _Nonnull * _Nullable nn_copyMetaClassList(unsigned int * _Nullable outCount) {
+NS_INLINE Class _Nonnull * _Nullable nn_pop_copyMetaClassList(unsigned int * _Nullable outCount) {
     unsigned int clazzCount = 0;
-    Class *clazzes = nn_copyClassList(&clazzCount);
+    Class *clazzes = nn_pop_copyClassList(&clazzCount);
     
     Class *result = nil;
     unsigned int metaClazzCount = 0;
@@ -134,9 +134,9 @@ NS_INLINE Class _Nonnull * _Nullable nn_copyMetaClassList(unsigned int * _Nullab
 
 
 typedef enum : NSUInteger {
-    NN_CopyProtocolClassListTypeClass,
-    NN_CopyProtocolClassListTypeMetaClass,
-} NN_CopyProtocolClassListType;
+    NN_POP_CopyProtocolClassListTypeClass,
+    NN_POP_CopyProtocolClassListTypeMetaClass,
+} NN_POP_CopyProtocolClassListType;
 
 /// Creates and returns a list of pointers to all registered class definitions that conformed to protocol.
 ///
@@ -144,9 +144,9 @@ typedef enum : NSUInteger {
 /// @param outCount An integer pointer used to store the number of classes returned by
 /// this function in the list. It can be \c nil.
 /// @param clazzType Class Type class or meta class.
-NS_INLINE Class _Nonnull * _Nullable nn_copyProtocolClassList(Protocol * _Nullable protocol,
-                                                              unsigned int * _Nullable outCount,
-                                                              NN_CopyProtocolClassListType clazzType) {
+NS_INLINE Class _Nonnull * _Nullable nn_pop_copyProtocolClassList(Protocol * _Nullable protocol,
+                                                                  unsigned int * _Nullable outCount,
+                                                                  NN_POP_CopyProtocolClassListType clazzType) {
     
     Class *result = nil;
     
@@ -157,7 +157,7 @@ NS_INLINE Class _Nonnull * _Nullable nn_copyProtocolClassList(Protocol * _Nullab
     
     // Get all classes
     unsigned int clazzCount = 0;
-    Class *clazzes = (clazzType == NN_CopyProtocolClassListTypeMetaClass) ? nn_copyMetaClassList(&clazzCount) : nn_copyClassList(&clazzCount);
+    Class *clazzes = (clazzType == NN_POP_CopyProtocolClassListTypeMetaClass) ? nn_pop_copyMetaClassList(&clazzCount) : nn_pop_copyClassList(&clazzCount);
     
     // Get protocol class count
     unsigned int protocolClazzCount = 0;
@@ -195,11 +195,11 @@ NS_INLINE Class _Nonnull * _Nullable nn_copyProtocolClassList(Protocol * _Nullab
 /// @param inRightClazzCount Right operating class count
 /// @param outCount An integer pointer used to store the number of classes returned by
 /// this function in the list. It can be \c nil.
-NS_INLINE Class _Nonnull * _Nullable nn_copyClassListMinus(Class _Nonnull * _Nullable inLeftClazzList,
-                                                           unsigned int inLeftClazzCount,
-                                                           Class _Nonnull * _Nullable inRightClazzList,
-                                                           unsigned int inRightClazzCount,
-                                                           unsigned int * _Nullable outCount) {
+NS_INLINE Class _Nonnull * _Nullable nn_pop_copyClassListMinus(Class _Nonnull * _Nullable inLeftClazzList,
+                                                               unsigned int inLeftClazzCount,
+                                                               Class _Nonnull * _Nullable inRightClazzList,
+                                                               unsigned int inRightClazzCount,
+                                                               unsigned int * _Nullable outCount) {
     
     Class *result = nil;
     if (inLeftClazzList == nil  || inLeftClazzCount == 0) {
@@ -248,9 +248,9 @@ NS_INLINE Class _Nonnull * _Nullable nn_copyClassListMinus(Class _Nonnull * _Nul
 /// @param inClazzCount Input class count
 /// @param outCount An integer pointer used to store the number of classes returned by
 /// this function in the list. It can be \c nil.
-NS_INLINE Class _Nonnull * _Nullable nn_copyPopObjcClassList(Class _Nonnull * _Nullable inClazzList,
-                                                             unsigned int inClazzCount,
-                                                             unsigned int * _Nullable outCount) {
+NS_INLINE Class _Nonnull * _Nullable nn_pop_copyPopObjcClassList(Class _Nonnull * _Nullable inClazzList,
+                                                                 unsigned int inClazzCount,
+                                                                 unsigned int * _Nullable outCount) {
     Class *result = nil;
     
     if (inClazzList == nil || inClazzCount == 0) {
@@ -284,10 +284,10 @@ NS_INLINE Class _Nonnull * _Nullable nn_copyPopObjcClassList(Class _Nonnull * _N
 /// @param inClazzCount Input class count
 /// @param outCount An integer pointer used to store the number of classes returned by
 /// this function in the list. It can be \c nil.
-NS_INLINE Class _Nonnull * _Nullable nn_copyRootProtocolClassList(Protocol * _Nullable protocol,
-                                                                  Class _Nonnull * _Nullable inClazzList,
-                                                                  unsigned int inClazzCount,
-                                                                  unsigned int * _Nullable outCount) {
+NS_INLINE Class _Nonnull * _Nullable nn_pop_copyRootProtocolClassList(Protocol * _Nullable protocol,
+                                                                      Class _Nonnull * _Nullable inClazzList,
+                                                                      unsigned int inClazzCount,
+                                                                      unsigned int * _Nullable outCount) {
     
     Class *result = nil;
     
@@ -298,7 +298,7 @@ NS_INLINE Class _Nonnull * _Nullable nn_copyRootProtocolClassList(Protocol * _Nu
     Class *t = (Class *)malloc((1 + inClazzCount) * sizeof(Class));
     unsigned int c = 0;
     for (unsigned int i = 0; i < inClazzCount; i++) {
-        Class rootClazz = nn_rootProtocolClass(protocol, inClazzList[i]);;
+        Class rootClazz = nn_pop_rootProtocolClass(protocol, inClazzList[i]);;
         if (rootClazz) {
             unsigned int isFind = false;
             // To prevent the repeat
@@ -337,15 +337,15 @@ NS_INLINE Class _Nonnull * _Nullable nn_copyRootProtocolClassList(Protocol * _Nu
 /// @param outPopObjcClazzList Sub classes that adopts the procotol
 /// @param outPopObjcClazzCount An integer pointer used to store the number of
 /// sub classes that implements the procotol
-NS_INLINE void nn_separateProtocolClassList(Protocol * _Nullable protocol,
-                                            Class _Nonnull * _Nullable inClazzList,
-                                            unsigned int inClazzCount,
-                                            Class _Nonnull *_Nonnull* _Nullable outRootClazzList,
-                                            unsigned int * _Nullable outRootClazzCount,
-                                            Class _Nonnull *_Nonnull* _Nullable outSubClazzList,
-                                            unsigned int * _Nullable outSubClazzCount,
-                                            Class _Nonnull *_Nonnull* _Nullable outPopObjcClazzList,
-                                            unsigned int * _Nullable outPopObjcClazzCount) {
+NS_INLINE void nn_pop_separateProtocolClassList(Protocol * _Nullable protocol,
+                                                Class _Nonnull * _Nullable inClazzList,
+                                                unsigned int inClazzCount,
+                                                Class _Nonnull *_Nonnull* _Nullable outRootClazzList,
+                                                unsigned int * _Nullable outRootClazzCount,
+                                                Class _Nonnull *_Nonnull* _Nullable outSubClazzList,
+                                                unsigned int * _Nullable outSubClazzCount,
+                                                Class _Nonnull *_Nonnull* _Nullable outPopObjcClazzList,
+                                                unsigned int * _Nullable outPopObjcClazzCount) {
     
     unsigned int _outPopObjcClazzCount = 0;
     Class *_outPopObjcClazzList = nil;
@@ -367,7 +367,7 @@ NS_INLINE void nn_separateProtocolClassList(Protocol * _Nullable protocol,
     
     // Get NNPopObjc class
     {
-        _outPopObjcClazzList = nn_copyPopObjcClassList(inClazzList, inClazzCount, &_outPopObjcClazzCount);
+        _outPopObjcClazzList = nn_pop_copyPopObjcClassList(inClazzList, inClazzCount, &_outPopObjcClazzCount);
         
         if (outPopObjcClazzList) memcpy(*outPopObjcClazzList, _outPopObjcClazzList, _outPopObjcClazzCount * sizeof(Class));
         if (outPopObjcClazzCount) *outPopObjcClazzCount = _outPopObjcClazzCount;
@@ -381,17 +381,17 @@ NS_INLINE void nn_separateProtocolClassList(Protocol * _Nullable protocol,
         return;
     }
     
-    _exceptPopObjcClazzList = nn_copyClassListMinus(inClazzList, inClazzCount, _outPopObjcClazzList, _outPopObjcClazzCount, &_exceptPopObjcClazzCount);
+    _exceptPopObjcClazzList = nn_pop_copyClassListMinus(inClazzList, inClazzCount, _outPopObjcClazzList, _outPopObjcClazzCount, &_exceptPopObjcClazzCount);
     
     // Get root class
     {
-        _outRootClazzList = nn_copyRootProtocolClassList(protocol, _exceptPopObjcClazzList, _exceptPopObjcClazzCount, &_outRootClazzCount);
+        _outRootClazzList = nn_pop_copyRootProtocolClassList(protocol, _exceptPopObjcClazzList, _exceptPopObjcClazzCount, &_outRootClazzCount);
         if (outRootClazzList) memcpy(*outRootClazzList, _outRootClazzList, _outRootClazzCount * sizeof(Class));
         if (outRootClazzCount) *outRootClazzCount = _outRootClazzCount;
     }
     
     {
-        _outSubClazzList = nn_copyClassListMinus(_exceptPopObjcClazzList, _exceptPopObjcClazzCount, _outRootClazzList, _outRootClazzCount, &_outSubClazzCount);
+        _outSubClazzList = nn_pop_copyClassListMinus(_exceptPopObjcClazzList, _exceptPopObjcClazzCount, _outRootClazzList, _outRootClazzCount, &_outSubClazzCount);
         if (outSubClazzList) memcpy(*outSubClazzList, _outSubClazzList, _outSubClazzCount * sizeof(Class));
         if (outSubClazzCount) *outSubClazzCount = _outSubClazzCount;
     }
@@ -408,11 +408,11 @@ NS_INLINE void nn_separateProtocolClassList(Protocol * _Nullable protocol,
 /// @param protocol A procotol that descripts selector
 /// @param selector A selector
 /// @param isRootProtocolClazz Input classes are root class or not
-NS_INLINE void nn_implementProtocolClassList(Class _Nonnull * _Nullable inClazzList,
-                                             unsigned int inClazzCount,
-                                             Protocol * _Nullable protocol,
-                                             SEL _Nullable selector,
-                                             BOOL isRootProtocolClazz) {
+NS_INLINE void nn_pop_implementProtocolClassList(Class _Nonnull * _Nullable inClazzList,
+                                                 unsigned int inClazzCount,
+                                                 Protocol * _Nullable protocol,
+                                                 SEL _Nullable selector,
+                                                 BOOL isRootProtocolClazz) {
     
     if (inClazzList == nil || inClazzCount == 0 || protocol == nil || selector == nil) {
         return;

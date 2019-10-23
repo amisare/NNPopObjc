@@ -26,7 +26,7 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
 }
 
-- (void)test_nn_getProtocol {
+- (void)test_nn_pop_getProtocol {
     
     Protocol *targetProcotol = objc_getProtocol("NNTestProtocol");
     
@@ -34,7 +34,7 @@
     {
         Class clazz = [NNTestClassA class];
         XCTAssertTrue(!class_isMetaClass(clazz));
-        Protocol *procotol = nn_getProtocol(clazz, NSSelectorFromString(@"sayHelloPop"));
+        Protocol *procotol = nn_pop_getProtocol(clazz, NSSelectorFromString(@"sayHelloPop"));
         XCTAssertTrue(protocol_isEqual(procotol, targetProcotol));
     }
     
@@ -42,60 +42,60 @@
     {
         Class clazz = object_getClass([NNTestClassA class]);
         XCTAssertTrue(class_isMetaClass(clazz));
-        Protocol *procotol = nn_getProtocol(clazz, NSSelectorFromString(@"sayHelloPop"));
+        Protocol *procotol = nn_pop_getProtocol(clazz, NSSelectorFromString(@"sayHelloPop"));
         XCTAssertTrue(protocol_isEqual(procotol, targetProcotol));
     }
 }
 
-- (void)test_nn_rootProtocolClass {
+- (void)test_nn_pop_rootProtocolClass {
 
     Protocol *targetProcotol = objc_getProtocol("NNTestProtocol");
     
     {
         Class rootClazz = NSClassFromString(@"NNTestClassA");
-        Class clazz = nn_rootProtocolClass(targetProcotol, NSClassFromString(@"NNTestClassA"));
+        Class clazz = nn_pop_rootProtocolClass(targetProcotol, NSClassFromString(@"NNTestClassA"));
         XCTAssertTrue(clazz == rootClazz);
     }
     
     {
         Class rootClazz = NSClassFromString(@"NNTestClassA");
-        Class clazz = nn_rootProtocolClass(targetProcotol, NSClassFromString(@"NNTestClassAA"));
+        Class clazz = nn_pop_rootProtocolClass(targetProcotol, NSClassFromString(@"NNTestClassAA"));
         XCTAssertTrue(clazz == rootClazz);
     }
     
     {
         Class rootClazz = NSClassFromString(@"NNTestClassA");
-        Class clazz = nn_rootProtocolClass(targetProcotol, NSClassFromString(@"NNTestClassAB"));
+        Class clazz = nn_pop_rootProtocolClass(targetProcotol, NSClassFromString(@"NNTestClassAB"));
         XCTAssertTrue(clazz == rootClazz);
     }
     
     {
         Class rootClazz = NSClassFromString(@"NNTestClassB");
-        Class clazz = nn_rootProtocolClass(targetProcotol, NSClassFromString(@"NNTestClassB"));
+        Class clazz = nn_pop_rootProtocolClass(targetProcotol, NSClassFromString(@"NNTestClassB"));
         XCTAssertTrue(clazz == rootClazz);
     }
     
     {
         Class rootClazz = NSClassFromString(@"NNTestClassB");
-        Class clazz = nn_rootProtocolClass(targetProcotol, NSClassFromString(@"NNTestClassBA"));
+        Class clazz = nn_pop_rootProtocolClass(targetProcotol, NSClassFromString(@"NNTestClassBA"));
         XCTAssertTrue(clazz == rootClazz);
     }
     
     {
         Class rootClazz = NSClassFromString(@"NNTestClassB");
-        Class clazz = nn_rootProtocolClass(targetProcotol, NSClassFromString(@"NNTestClassBB"));
+        Class clazz = nn_pop_rootProtocolClass(targetProcotol, NSClassFromString(@"NNTestClassBB"));
         XCTAssertTrue(clazz == rootClazz);
     }
 }
 
-- (void)test_nn_copyProtocolClassList {
+- (void)test_nn_pop_copyProtocolClassList {
     
     Protocol *targetProcotol = objc_getProtocol("NNTestProtocol");
     
     // Class
     {
         unsigned int count = 0;
-        Class *clazzes = nn_copyProtocolClassList(targetProcotol, &count, NN_CopyProtocolClassListTypeClass);
+        Class *clazzes = nn_pop_copyProtocolClassList(targetProcotol, &count, NN_POP_CopyProtocolClassListTypeClass);
         
         XCTAssertTrue(count == 5);
         
@@ -121,7 +121,7 @@
     // MetaClass
     {
         unsigned int count = 0;
-        Class *clazzes = nn_copyProtocolClassList(targetProcotol, &count, NN_CopyProtocolClassListTypeMetaClass);
+        Class *clazzes = nn_pop_copyProtocolClassList(targetProcotol, &count, NN_POP_CopyProtocolClassListTypeMetaClass);
         
         XCTAssertTrue(count == 5);
         
@@ -144,7 +144,7 @@
     }
 }
 
-- (void)test_nn_copyClassListMinus {
+- (void)test_nn_pop_copyClassListMinus {
     
     {
         Class classA[5] = {0};
@@ -162,7 +162,7 @@
         classB[4] = NSClassFromString(@"NNTestClassBA");
         
         unsigned int count = 0;
-        Class *c = nn_copyClassListMinus(classA, 5, classB, 5, &count);
+        Class *c = nn_pop_copyClassListMinus(classA, 5, classB, 5, &count);
         
         XCTAssertTrue(count == 0);
         XCTAssertTrue(c[0] == nil);
@@ -184,7 +184,7 @@
         classB[4] = NSClassFromString(@"NNTestClassBA");
         
         unsigned int count = 0;
-        Class *c = nn_copyClassListMinus(classA, 3, classB, 5, &count);
+        Class *c = nn_pop_copyClassListMinus(classA, 3, classB, 5, &count);
         
         XCTAssertTrue(count == 0);
         XCTAssertTrue(c[0] == nil);
@@ -206,7 +206,7 @@
         classB[2] = NSClassFromString(@"NNTestClassBA");
         
         unsigned int count = 0;
-        Class *c = nn_copyClassListMinus(classA, 5, classB, 3, &count);
+        Class *c = nn_pop_copyClassListMinus(classA, 5, classB, 3, &count);
         
         XCTAssertTrue(count == 2);
         XCTAssertTrue(c[0] == NSClassFromString(@"NNTestClassA"));
@@ -222,7 +222,7 @@
         classB[2] = NSClassFromString(@"NNTestClassBA");
         
         unsigned int count = 0;
-        Class *c = nn_copyClassListMinus(nil, 5, classB, 3, &count);
+        Class *c = nn_pop_copyClassListMinus(nil, 5, classB, 3, &count);
         
         XCTAssertTrue(count == 0);
         XCTAssertTrue(c == nil);
@@ -239,7 +239,7 @@
         classA[4] = NSClassFromString(@"NNTestClassBA");
         
         unsigned int count = 0;
-        Class *c = nn_copyClassListMinus(classA, 5, nil, 3, &count);
+        Class *c = nn_pop_copyClassListMinus(classA, 5, nil, 3, &count);
         
         XCTAssertTrue(count == 5);
         XCTAssertTrue(c[0] == NSClassFromString(@"__NNPopObjc_NNTestProtocol_NSObject"));
@@ -253,16 +253,16 @@
     
 }
 
-- (void)test_nn_copyPopObjcClassList {
+- (void)test_nn_pop_copyPopObjcClassList {
     
     Protocol *rocotol = objc_getProtocol("NNTestProtocol");
     
     // Class
     {
         unsigned int clazzesCount = 0;
-        Class *clazzes = nn_copyProtocolClassList(rocotol, &clazzesCount, NN_CopyProtocolClassListTypeClass);
+        Class *clazzes = nn_pop_copyProtocolClassList(rocotol, &clazzesCount, NN_POP_CopyProtocolClassListTypeClass);
         unsigned int procotolClazzesCount = 0;
-        Class *popObjcClazzes = nn_copyPopObjcClassList(clazzes, clazzesCount, &procotolClazzesCount);
+        Class *popObjcClazzes = nn_pop_copyPopObjcClassList(clazzes, clazzesCount, &procotolClazzesCount);
         
         XCTAssertTrue(procotolClazzesCount == 2);
         
@@ -287,9 +287,9 @@
     // MetaClass
     {
         unsigned int clazzesCount = 0;
-        Class *clazzes = nn_copyProtocolClassList(rocotol, &clazzesCount, NN_CopyProtocolClassListTypeMetaClass);
+        Class *clazzes = nn_pop_copyProtocolClassList(rocotol, &clazzesCount, NN_POP_CopyProtocolClassListTypeMetaClass);
         unsigned int procotolClazzesCount = 0;
-        Class *popObjcClazzes = nn_copyPopObjcClassList(clazzes, clazzesCount, &procotolClazzesCount);
+        Class *popObjcClazzes = nn_pop_copyPopObjcClassList(clazzes, clazzesCount, &procotolClazzesCount);
         
         XCTAssertTrue(procotolClazzesCount == 2);
         
@@ -312,16 +312,16 @@
     }
 }
 
-- (void)test_nn_copyRootProtocolClassList {
+- (void)test_nn_pop_copyRootProtocolClassList {
     
     Protocol *rocotol = objc_getProtocol("NNTestProtocol");
     
     // Class
     {
         unsigned int clazzesCount = 0;
-        Class *clazzes = nn_copyProtocolClassList(rocotol, &clazzesCount, NN_CopyProtocolClassListTypeClass);
+        Class *clazzes = nn_pop_copyProtocolClassList(rocotol, &clazzesCount, NN_POP_CopyProtocolClassListTypeClass);
         unsigned int procotolClazzesCount = 0;
-        Class *rootClazzes = nn_copyRootProtocolClassList(rocotol, clazzes, clazzesCount, &procotolClazzesCount);
+        Class *rootClazzes = nn_pop_copyRootProtocolClassList(rocotol, clazzes, clazzesCount, &procotolClazzesCount);
         
         XCTAssertTrue(procotolClazzesCount == 3);
         
@@ -347,9 +347,9 @@
     // MetaClass
     {
         unsigned int clazzesCount = 0;
-        Class *clazzes = nn_copyProtocolClassList(rocotol, &clazzesCount, NN_CopyProtocolClassListTypeMetaClass);
+        Class *clazzes = nn_pop_copyProtocolClassList(rocotol, &clazzesCount, NN_POP_CopyProtocolClassListTypeMetaClass);
         unsigned int procotolClazzesCount = 0;
-        Class *rootClazzes = nn_copyRootProtocolClassList(rocotol, clazzes, clazzesCount, &procotolClazzesCount);
+        Class *rootClazzes = nn_pop_copyRootProtocolClassList(rocotol, clazzes, clazzesCount, &procotolClazzesCount);
         
         XCTAssertTrue(procotolClazzesCount == 3);
         
@@ -373,7 +373,7 @@
     }
 }
 
-- (void)test_nn_separateProtocolClassList {
+- (void)test_nn_pop_separateProtocolClassList {
     
     // Class
     {
@@ -382,7 +382,7 @@
         Protocol *protocol = objc_getProtocol("NNTestProtocol");
         
         unsigned int protocolClassCount = 0;
-        Class *protocolClazzList = nn_copyProtocolClassList(protocol, &protocolClassCount, class_isMetaClass(clazz) ? NN_CopyProtocolClassListTypeMetaClass : NN_CopyProtocolClassListTypeClass);
+        Class *protocolClazzList = nn_pop_copyProtocolClassList(protocol, &protocolClassCount, class_isMetaClass(clazz) ? NN_POP_CopyProtocolClassListTypeMetaClass : NN_POP_CopyProtocolClassListTypeClass);
         
         unsigned int popObjcProtocolClazzListCount = 0;
         Class *popProtocolObjcClazzList = (Class *)malloc((1 + protocolClassCount) * sizeof(Class));
@@ -391,7 +391,7 @@
         unsigned int subProtocolClazzCount = 0;
         Class *subProtocolClazzList = (Class *)malloc((1 + protocolClassCount) * sizeof(Class));
         
-        nn_separateProtocolClassList(protocol, protocolClazzList, protocolClassCount,
+        nn_pop_separateProtocolClassList(protocol, protocolClazzList, protocolClassCount,
                                      &rootProtocolClazzList, &rootProtocolClazzCount,
                                      &subProtocolClazzList, &subProtocolClazzCount,
                                      &popProtocolObjcClazzList, &popObjcProtocolClazzListCount);
@@ -450,7 +450,7 @@
         Protocol *protocol = objc_getProtocol("NNTestProtocol");
         
         unsigned int protocolClassCount = 0;
-        Class *protocolClazzList = nn_copyProtocolClassList(protocol, &protocolClassCount, class_isMetaClass(clazz) ? NN_CopyProtocolClassListTypeMetaClass : NN_CopyProtocolClassListTypeClass);
+        Class *protocolClazzList = nn_pop_copyProtocolClassList(protocol, &protocolClassCount, class_isMetaClass(clazz) ? NN_POP_CopyProtocolClassListTypeMetaClass : NN_POP_CopyProtocolClassListTypeClass);
         
         unsigned int popObjcProtocolClazzListCount = 0;
         Class *popProtocolObjcClazzList = (Class *)malloc((1 + protocolClassCount) * sizeof(Class));
@@ -459,7 +459,7 @@
         unsigned int subProtocolClazzCount = 0;
         Class *subProtocolClazzList = (Class *)malloc((1 + protocolClassCount) * sizeof(Class));
         
-        nn_separateProtocolClassList(protocol, protocolClazzList, protocolClassCount,
+        nn_pop_separateProtocolClassList(protocol, protocolClazzList, protocolClassCount,
                                      &rootProtocolClazzList, &rootProtocolClazzCount,
                                      &subProtocolClazzList, &subProtocolClazzCount,
                                      &popProtocolObjcClazzList, &popObjcProtocolClazzListCount);
