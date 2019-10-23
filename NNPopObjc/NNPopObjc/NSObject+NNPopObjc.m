@@ -16,18 +16,27 @@ NS_INLINE BOOL nn_forwardInvocation(NSInvocation *anInvocation) {
     
     Class clazz = object_getClass(anInvocation.target);
     
+    // Get the protocol that descripts sel and adopted by the class or super class.
     Protocol *protocol = nn_getProtocol(clazz, anInvocation.selector);
     if (protocol == nil) {
+        // Not found
         return false;
     }
     
+    // According the clazz type, gets all classes or meta classes that adopt the protocol.
     unsigned int protocolClassCount = 0;
     Class *protocolClazzList = nn_copyProtocolClassList(protocol, &protocolClassCount, class_isMetaClass(clazz) ? NN_CopyProtocolClassListTypeMetaClass : NN_CopyProtocolClassListTypeClass);
     
+    // Group the classes
+    // Classes that implements the procotol
     unsigned int popObjcProtocolClazzListCount = 0;
     Class *popProtocolObjcClazzList = (Class *)malloc((1 + protocolClassCount) * sizeof(Class));
+    
+    // Root classes that only adopts the procotol
     unsigned int rootProtocolClazzCount = 0;
     Class *rootProtocolClazzList = (Class *)malloc((1 + protocolClassCount) * sizeof(Class));
+    
+    // Sub classes that only adopts the procotol
     unsigned int subProtocolClazzCount = 0;
     Class *subProtocolClazzList = (Class *)malloc((1 + protocolClassCount) * sizeof(Class));
     
@@ -35,10 +44,13 @@ NS_INLINE BOOL nn_forwardInvocation(NSInvocation *anInvocation) {
                                  &rootProtocolClazzList, &rootProtocolClazzCount,
                                  &subProtocolClazzList, &subProtocolClazzCount,
                                  &popProtocolObjcClazzList, &popObjcProtocolClazzListCount);
-
+    
+    // Add the implemented protocol methods to root classes (or corresponding meta classes).
     nn_implementProtocolClassList(rootProtocolClazzList, rootProtocolClazzCount, protocol, anInvocation.selector, YES);
+    // Add the implemented protocol methods to sub classes (or corresponding meta classes).
     nn_implementProtocolClassList(subProtocolClazzList, subProtocolClazzCount, protocol, anInvocation.selector, NO);
     
+    // Free memory
     free(protocolClazzList);
     free(popProtocolObjcClazzList);
     free(rootProtocolClazzList);

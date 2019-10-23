@@ -13,13 +13,17 @@
 #import <objc/runtime.h>
 #import "NNPopObjc-Define.h"
 
-NS_INLINE void
-nn_swizzledMark(id self, SEL _cmd) {
+
+/// Only used as a mark for swizzle
+NS_INLINE void nn_swizzledMark(id self, SEL _cmd) {
     NNPopObjcLog(@"%@ %s methods have been swizzed", self, sel_getName(_cmd));
 }
 
-NS_INLINE void
-nn_swizzleSelector(Class clazz, SEL originalSelector, SEL swizzledSelector) {
+/// Swizzle class method
+/// @param clazz A class
+/// @param originalSelector Original selector
+/// @param swizzledSelector Swizzled selector
+NS_INLINE void nn_swizzleSelector(Class clazz, SEL originalSelector, SEL swizzledSelector) {
     
     // Prevent multiple swizz
     NSString *swizzedMarkName = [NSString stringWithFormat:@"%@_%@", @"nn_swizzedMark", @(sel_getName(swizzledSelector))];
