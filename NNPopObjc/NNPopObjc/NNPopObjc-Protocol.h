@@ -430,35 +430,44 @@ NS_INLINE void nn_pop_implementProtocolClassList(Class _Nonnull * _Nullable inCl
         Class implementationClazz = nil;
         
         for (NSString *clazzSuffix in clazzSuffixes) {
+            
             implementationClazz = NSClassFromString([NSString stringWithFormat:@"%@_%s_%@",
                                                      NNPopObjcPrefix,
                                                      protocol_getName(protocol),
                                                      clazzSuffix]);
             if (implementationClazz && class_conformsToProtocol(implementationClazz, protocol)) {
-                break;
+                
+                // Get method
+                Method method = nil;
+                if (class_isMetaClass(clazz)) {
+                    method = class_getClassMethod(implementationClazz, selector);
+                }
+                else {
+                    method = class_getInstanceMethod(implementationClazz, selector);
+                }
+                if (!method) {
+                    continue;
+                }
+                
+                // Add method
+                if (class_addMethod(clazz,
+                                    method_getName(method),
+                                    method_getImplementation(method),
+                                    method_getTypeEncoding(method))) {
+                    break;
+                }
             }
         }
-        if (!implementationClazz) {
-            continue;
-        }
         
-        // Get method
-        Method method = nil;
-        if (class_isMetaClass(clazz)) {
-            method = class_getClassMethod(implementationClazz, selector);
-        }
-        else {
-            method = class_getInstanceMethod(implementationClazz, selector);
-        }
-        if (!method) {
-            continue;
-        }
-        
-        // Add method
-        class_addMethod(clazz,
-                        method_getName(method),
-                        method_getImplementation(method),
-                        method_getTypeEncoding(method));
+        NSCAssert(class_respondsToSelector(clazz, selector),
+                  ([NSString stringWithFormat:@"Failed to add a '%@' %@ method for '%@'. To fix this, you need at least provide a '%@' %@ method implementation in '@nn_extension(%@, NSObject)'",
+                    @(sel_getName(selector)),
+                    (class_isMetaClass(clazz) ? @"class" : @"instance"),
+                    @(class_getName(clazz)),
+                    @(sel_getName(selector)),
+                    (class_isMetaClass(clazz) ? @"class" : @"instance"),
+                    @(protocol_getName(protocol))])
+                  );
     }
 }
 
