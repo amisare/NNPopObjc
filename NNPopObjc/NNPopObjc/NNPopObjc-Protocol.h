@@ -406,15 +406,15 @@ NS_INLINE void nn_pop_separateProtocolClassList(Protocol * _Nullable protocol,
 /// @param inClazzList Input class list
 /// @param inClazzCount Input class count
 /// @param protocol A procotol that descripts selector
-/// @param selector A selector
+/// @param sel A selector
 /// @param isRootProtocolClazz Input classes are root class or not
 NS_INLINE void nn_pop_implementProtocolClassList(Class _Nonnull * _Nullable inClazzList,
                                                  unsigned int inClazzCount,
                                                  Protocol * _Nullable protocol,
-                                                 SEL _Nullable selector,
+                                                 SEL _Nullable sel,
                                                  BOOL isRootProtocolClazz) {
     
-    if (inClazzList == nil || inClazzCount == 0 || protocol == nil || selector == nil) {
+    if (inClazzList == nil || inClazzCount == 0 || protocol == nil || sel == nil) {
         return;
     }
     
@@ -440,10 +440,10 @@ NS_INLINE void nn_pop_implementProtocolClassList(Class _Nonnull * _Nullable inCl
                 // Get method
                 Method method = nil;
                 if (class_isMetaClass(clazz)) {
-                    method = class_getClassMethod(implementationClazz, selector);
+                    method = class_getClassMethod(implementationClazz, sel);
                 }
                 else {
-                    method = class_getInstanceMethod(implementationClazz, selector);
+                    method = class_getInstanceMethod(implementationClazz, sel);
                 }
                 if (!method) {
                     continue;
@@ -459,12 +459,59 @@ NS_INLINE void nn_pop_implementProtocolClassList(Class _Nonnull * _Nullable inCl
             }
         }
         
-        NSCAssert(class_respondsToSelector(clazz, selector),
+        // Failed to add method, try to super protocol
+        if (class_respondsToSelector(clazz, sel) == false) {
+            
+            unsigned int protocolCount = 0;
+             __unsafe_unretained Protocol **protocols = protocol_copyProtocolList(protocol, &protocolCount);
+
+            Protocol *superProtocol = nil;
+            unsigned int superProtocolCount = 0;
+            
+            // Check each protocol
+            for (unsigned int i = 0; i < protocolCount; i++) {
+                
+                // Get method description
+                struct objc_method_description methodDescription = (struct objc_method_description){NULL, NULL};
+                
+                // Required method
+                methodDescription = protocol_getMethodDescription(protocols[i], sel, YES, class_isMetaClass(clazz) ^ 1);
+                if (sel_isEqual(methodDescription.name, sel)) {
+                    superProtocol = protocols[i];
+                    superProtocolCount++;
+                    continue;
+                }
+                
+                // Optional method
+                methodDescription = protocol_getMethodDescription(protocols[i], sel, NO, class_isMetaClass(clazz) ^ 1);
+                if (sel_isEqual(methodDescription.name, sel)) {
+                    superProtocol = protocols[i];
+                    superProtocolCount++;
+                    continue;
+                }
+            }
+            
+            // release protocols
+            free(protocols);
+            
+            // check super protocol count
+            // The same method is not allowed to be declared in multiple parent protocols.
+            NSCAssert(superProtocolCount == 1,
+                      ([NSString stringWithFormat:@"The same method cannot be declared in multiple parent protocols, which causes the program to be ambiguous."])
+                      );
+            
+            // Found protocol
+            if (superProtocol) {
+                nn_pop_implementProtocolClassList(&clazz, 1, superProtocol, sel, isRootProtocolClazz);
+            }
+        }
+        
+        NSCAssert(class_respondsToSelector(clazz, sel),
                   ([NSString stringWithFormat:@"Failed to add a '%@' %@ method for '%@'. To fix this, you need at least provide a '%@' %@ method implementation in '@nn_extension(%@, NSObject)'",
-                    @(sel_getName(selector)),
+                    @(sel_getName(sel)),
                     (class_isMetaClass(clazz) ? @"class" : @"instance"),
                     @(class_getName(clazz)),
-                    @(sel_getName(selector)),
+                    @(sel_getName(sel)),
                     (class_isMetaClass(clazz) ? @"class" : @"instance"),
                     @(protocol_getName(protocol))])
                   );

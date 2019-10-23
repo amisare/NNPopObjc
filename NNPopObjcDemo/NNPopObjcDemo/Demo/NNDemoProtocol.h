@@ -13,9 +13,15 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol NNDemoProtocol <NSObject>
 
 @optional
-@property (nonatomic, strong) NSString* whoImI;
-- (void)sayHelloPop;
 + (void)sayHelloPop;
+- (void)sayHelloPop;
+
+@end
+
+@protocol NNDemoWhoImIProtocol <NNDemoProtocol>
+
+@optional
+@property (nonatomic, strong) NSString* whoImI;
 
 @end
 

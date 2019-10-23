@@ -22,6 +22,10 @@
     DLog(@"-[%@ %s] code say hello pop", [self class], sel_getName(_cmd));
 }
 
+@end
+
+@nn_extension(NNDemoWhoImIProtocol, NSObject)
+
 - (NSString *)whoImI {
     NSString *whoImI = [NSString stringWithFormat:@"-[%@ %s] I am %@", [self class], sel_getName(_cmd), nil];
     return whoImI;
@@ -33,7 +37,7 @@
 
 @end
 
-@nn_extension(NNDemoProtocol, NNDemoCpp)
+@nn_extension(NNDemoWhoImIProtocol, NNDemoCpp)
 
 + (void)sayHelloPop {
     DLog(@"+[%@ %s] cpp say hello pop", self, sel_getName(_cmd));
@@ -51,9 +55,10 @@
 - (void)setWhoImI:(NSString *)whoImI {
     self.name = whoImI;
 }
+
 @end
 
-@nn_extension(NNDemoProtocol, NNDemoObjc)
+@nn_extension(NNDemoWhoImIProtocol, NNDemoObjc)
 
 - (NSString *)whoImI {
     NSString *whoImI = [NSString stringWithFormat:@"-[%@ %s] I am %@", [self class], sel_getName(_cmd), self.name];
@@ -66,7 +71,7 @@
 
 @end
 
-@nn_extension(NNDemoProtocol, NNDemoSwift)
+@nn_extension(NNDemoWhoImIProtocol, NNDemoSwift)
 
 + (void)sayHelloPop {
     DLog(@"+[%@ %s] swift say hello pop", self, sel_getName(_cmd));
