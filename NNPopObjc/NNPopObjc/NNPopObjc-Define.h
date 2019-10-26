@@ -15,7 +15,6 @@
 #define NNPopObjcLog(format, ...)
 #endif
 
-#define NNPopObjcPrefix         @"__NNPopObjc"
-#define NNPopObjcRootSuffix     @"NSObject"
+#define nn_pop_root_class_suffix        NSObject
 
 #endif /* NNPopObjc_Define_h */

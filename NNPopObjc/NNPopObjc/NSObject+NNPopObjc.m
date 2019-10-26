@@ -8,9 +8,11 @@
 
 #import "NSObject+NNPopObjc.h"
 #import <objc/runtime.h>
+
 #import "NNPopObjc-Define.h"
 #import "NNPopObjc-Swizzle.h"
 #import "NNPopObjc-Protocol.h"
+#import "NNPopObjcProphet.h"
 
 NS_INLINE BOOL __nn_pop_forwardInvocation(NSInvocation *anInvocation) {
     

@@ -9,9 +9,45 @@
 #ifndef NNPopObjc_Protocol_h
 #define NNPopObjc_Protocol_h
 
-#include <Foundation/Foundation.h>
-#include <objc/runtime.h>
+#import <Foundation/Foundation.h>
+#import <objc/runtime.h>
+#include <mach-o/getsect.h>
+#include <mach-o/ldsyms.h>
+
+#import "NNPopObjc.h"
 #import "NNPopObjc-Define.h"
+#import "NNPopObjcProphet.h"
+
+#if defined(__cplusplus)
+#define BH_EXTERN extern "C" __attribute__((visibility("default")))
+#else
+#define BH_EXTERN extern __attribute__((visibility("default")))
+#endif
+
+
+NS_INLINE Protocol * __unsafe_unretained _Nonnull * _Nullable nn_pop_copyPopProtocolList(unsigned int * _Nullable outCount) {
+    __unsafe_unretained Protocol **result = nil;
+    
+    NSArray *sectionItems = nn_pop_readSection();
+    unsigned int count = (unsigned int)sectionItems.count;
+    if (count == 0) {
+        return nil;
+    }
+    
+    result = (__unsafe_unretained Protocol **)malloc((count + 1) * sizeof(Protocol *));
+    
+    count = 0;
+    for (NSDictionary *item in sectionItems) {
+        NSString *protocolName = item[@"protocol"];
+        Protocol *protocol = objc_getProtocol([protocolName cStringUsingEncoding:NSUTF8StringEncoding]);
+        result[count++] = protocol;
+    }
+    result[count] = nil;
+    
+    if (outCount) *outCount = count;
+    
+    return result;
+}
 
 /// Gets the protocol that descripts sel and adopted by the class or super class.
 ///
@@ -26,15 +62,15 @@ NS_INLINE Protocol * _Nullable nn_pop_getProtocol(Class _Nullable clazz, SEL _Nu
     if (clazz == nil || sel == nil) {
         return result;
     }
+
+    // Get protocol list
+    unsigned int count = 0;
+    __unsafe_unretained Protocol **protocols = nn_pop_copyPopProtocolList(&count);
     
     // Loop class
     Class currentClazz = clazz;
     
     while (currentClazz) {
-        
-        // Get protocol list
-        unsigned int count = 0;
-        __unsafe_unretained Protocol **protocols = class_copyProtocolList(currentClazz, &count);
         
         // Check each protocol
         for (unsigned int i = 0; i < count; i++) {
@@ -57,19 +93,19 @@ NS_INLINE Protocol * _Nullable nn_pop_getProtocol(Class _Nullable clazz, SEL _Nu
             }
         }
         
-        // release
-        free(protocols);
-        
         // Found protocol
         if (result) {
-            return result;
+            break;
         }
         
         // Get superClass and continue
         currentClazz = class_getSuperclass(currentClazz);
     }
     
-    return nil;
+    // release
+    free(protocols);
+    
+    return result;
 }
 
 /// Gets a root class that conformed to protocol.
@@ -262,7 +298,7 @@ NS_INLINE Class _Nonnull * _Nullable nn_pop_copyPopObjcClassList(Class _Nonnull 
     for (unsigned int i = 0; i < inClazzCount; i++) {
         Class clazz = inClazzList[i];
         if (clazz) {
-            if ([NSStringFromClass(clazz) containsString:NNPopObjcPrefix]) {
+            if ([NSStringFromClass(clazz) containsString:@(nn_pop_stringify(nn_pop_extension_prefix))]) {
                 t[c++] = clazz;
             }
         }
@@ -423,16 +459,15 @@ NS_INLINE void nn_pop_implementProtocolClassList(Class _Nonnull * _Nullable inCl
         Class clazz = inClazzList[i];
         
         NSArray<NSString *> *clazzSuffixes = isRootProtocolClazz ?
-        @[NSStringFromClass(clazz), NNPopObjcRootSuffix] :
+        @[NSStringFromClass(clazz), @(nn_pop_stringify(nn_pop_root_class_suffix))] :
         @[NSStringFromClass(clazz)];
         
         // Get implementationClazz
         Class implementationClazz = nil;
         
         for (NSString *clazzSuffix in clazzSuffixes) {
-            
             implementationClazz = NSClassFromString([NSString stringWithFormat:@"%@_%s_%@",
-                                                     NNPopObjcPrefix,
+                                                     @(nn_pop_stringify(nn_pop_extension_prefix)),
                                                      protocol_getName(protocol),
                                                      clazzSuffix]);
             if (implementationClazz && class_conformsToProtocol(implementationClazz, protocol)) {
