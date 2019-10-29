@@ -30,8 +30,8 @@
     self.logTextView.text = @"";
     self.logTextView.editable = NO;
     
-//    [self redirectSTD:STDOUT_FILENO];
-//    [self redirectSTD:STDERR_FILENO];
+    [self redirectSTD:STDOUT_FILENO];
+    [self redirectSTD:STDERR_FILENO];
     
     [self popDemo];
  }
