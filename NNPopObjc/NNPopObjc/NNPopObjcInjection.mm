@@ -203,7 +203,7 @@ void nn_pop_injectProtocols (nn_pop_protocol_t *protocols, unsigned int protocol
         return;
     }
     
-    Class *clazzes = (Class *)malloc(sizeof(Class) * (classCount + 1));
+    Class *clazzes = (Class *)calloc((classCount + 1), sizeof(Class));
     if (!clazzes) {
         fprintf(stderr, "ERROR: Could not allocate space for %u clazzes\n", classCount);
         return;
@@ -274,7 +274,7 @@ void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^l
     unsigned long sectionItemCount = size / sizeof(nn_pop_extension_section_item);
     nn_pop_extension_section_item *sectionItems = (nn_pop_extension_section_item *)sectionData;
     
-    nn_pop_protocol_t *protocols = (nn_pop_protocol_t *)malloc((sectionItemCount + 1) * sizeof(nn_pop_protocol_t));
+    nn_pop_protocol_t *protocols = (nn_pop_protocol_t *)calloc((sectionItemCount + 1), sizeof(nn_pop_protocol_t));
     if (protocols == NULL) {
         pthread_mutex_unlock(&nn_pop_inject_lock);
         return;
@@ -293,7 +293,7 @@ void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^l
         _protocol->extension.base = NULL;
         _protocol->extension.special = NULL;
         
-        nn_pop_extension_node_t *_extension = (nn_pop_extension_node_t *)malloc(1 * sizeof(nn_pop_extension_node_t));
+        nn_pop_extension_node_t *_extension = (nn_pop_extension_node_t *)calloc(1, sizeof(nn_pop_extension_node_t));
         if (!_extension) {
             continue;
         }
@@ -332,7 +332,7 @@ void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^l
     }
     unsigned int protocolCount = protocolBaseIndex + 1;
     protocols = (nn_pop_protocol_t *)realloc(protocols, (protocolCount + 1) * sizeof(nn_pop_protocol_t));
-    protocols[protocolCount] = (nn_pop_protocol_t){0};
+    memset((protocols + protocolCount), 0, sizeof(nn_pop_protocol_t));
     
     if (loaded) {
         loaded(protocols, protocolCount);
