@@ -42,6 +42,7 @@ typedef struct {
 
 
 #define nn_pop_extension_prefix                 __NNPopObjc_
+#define nn_pop_segment_name                     __DATA
 #define nn_pop_section_name                     __nn_pop_objc__
 
 #define nn_pop_stringify(VALUE) \
@@ -53,7 +54,7 @@ typedef struct {
 #define nn_pop_stringify_(VALUE) # VALUE
 #define nn_pop_concat_(A, B) A ## B
 
-#define nn_pop_section(section_name) __attribute((used, section("__DATA,"section_name" ")))
+#define nn_pop_section(section_name) __attribute((used, section(nn_pop_stringify(nn_pop_segment_name) "," section_name )))
 
 #define nn_pop_extension_name_(prefix, protocol, clazz) \
         nn_pop_concat(prefix, \

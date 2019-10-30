@@ -176,8 +176,8 @@ void nn_pop_injectProtocols (nn_pop_protocol_t *protocols, unsigned int protocol
         if (a == b)
             return 0;
         
-        const nn_pop_protocol_t *p_a = a;
-        const nn_pop_protocol_t *p_b = b;
+        const nn_pop_protocol_t *p_a = (nn_pop_protocol_t *)a;
+        const nn_pop_protocol_t *p_b = (nn_pop_protocol_t *)b;
         
         int (^protocolInjectionPriority)(const nn_pop_protocol_t *) = ^(const nn_pop_protocol_t *protocol){
             int runningTotal = 0;
@@ -256,14 +256,16 @@ void nn_pop_injectProtocols (nn_pop_protocol_t *protocols, unsigned int protocol
 }
 
 
-void __nn_pop_loadSection(const nn_pop_mach_header *mhp, char *sectname, void (^loaded)(nn_pop_protocol_t *protocols, unsigned int protocol_count)) {
+void __nn_pop_loadSection(const mach_header *mhp, char *sectname, void (^loaded)(nn_pop_protocol_t *protocols, unsigned int protocol_count)) {
     
     if (pthread_mutex_lock(&nn_pop_inject_lock) != 0) {
         fprintf(stderr, "ERROR: Could not synchronize on special protocol data\n");
     }
     
+    nn_pop_mach_header *_mhp = (nn_pop_mach_header *)mhp;
+    
     unsigned long size = 0;
-    uintptr_t *sectionData = (uintptr_t*)getsectiondata(mhp, SEG_DATA, sectname, &size);
+    uintptr_t *sectionData = (uintptr_t*)getsectiondata(_mhp, nn_pop_stringify(nn_pop_segment_name), sectname, &size);
     if (size == 0) {
         pthread_mutex_unlock(&nn_pop_inject_lock);
         return;
@@ -308,8 +310,8 @@ void __nn_pop_loadSection(const nn_pop_mach_header *mhp, char *sectname, void (^
     }
     
     qsort_b(protocols, sectionItemCount, sizeof(nn_pop_protocol_t), ^int(const void *a, const void *b) {
-        const nn_pop_protocol_t *_a = a;
-        const nn_pop_protocol_t *_b = b;
+        const nn_pop_protocol_t *_a = (nn_pop_protocol_t *)a;
+        const nn_pop_protocol_t *_b = (nn_pop_protocol_t *)b;
         
         const char *p_a = protocol_getName(_a->protocol);
         const char *p_b = protocol_getName(_b->protocol);
@@ -329,7 +331,7 @@ void __nn_pop_loadSection(const nn_pop_mach_header *mhp, char *sectname, void (^
         protocolForwardIndex++;
     }
     unsigned int protocolCount = protocolBaseIndex + 1;
-    protocols = realloc(protocols, (protocolCount + 1) * sizeof(nn_pop_protocol_t));
+    protocols = (nn_pop_protocol_t *)realloc(protocols, (protocolCount + 1) * sizeof(nn_pop_protocol_t));
     protocols[protocolCount] = (nn_pop_protocol_t){0};
     
     if (loaded) {
@@ -342,7 +344,7 @@ void __nn_pop_loadSection(const nn_pop_mach_header *mhp, char *sectname, void (^
 }
 
 
-void __nn_pop_dyld_callback(const nn_pop_mach_header *mhp, intptr_t vmaddr_slide) {
+void __nn_pop_dyld_callback(const mach_header *mhp, intptr_t vmaddr_slide) {
     __nn_pop_loadSection(mhp, nn_pop_stringify(nn_pop_section_name), ^(nn_pop_protocol_t *protocols, unsigned int protocol_count) {
         nn_pop_injectProtocols(protocols, protocol_count);
     });
@@ -350,9 +352,6 @@ void __nn_pop_dyld_callback(const nn_pop_mach_header *mhp, intptr_t vmaddr_slide
 
 
 __attribute__((constructor)) void __nn_pop_prophet() {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincompatible-pointer-types"
     _dyld_register_func_for_add_image(__nn_pop_dyld_callback);
-#pragma clang diagnostic pop
 }
 

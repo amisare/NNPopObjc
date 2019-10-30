@@ -23,6 +23,6 @@
     "ios": "7.0"
   },
   "requires_arc": true,
-  "source_files": "NNPopObjc/NNPopObjc/*.{h,m}",
+  "source_files": "NNPopObjc/NNPopObjc/*.{h,m,mm}",
   "public_header_files": "NNPopObjc/NNPopObjc/NNPopObjc.h"
 }
