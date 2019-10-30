@@ -256,7 +256,7 @@ void nn_pop_injectProtocols (nn_pop_protocol_t *protocols, unsigned int protocol
 }
 
 
-void __nn_pop_loadSection(const mach_header *mhp, char *sectname, void (^loaded)(nn_pop_protocol_t *protocols, unsigned int protocol_count)) {
+void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^loaded)(nn_pop_protocol_t *protocols, unsigned int protocol_count)) {
     
     if (pthread_mutex_lock(&nn_pop_inject_lock) != 0) {
         fprintf(stderr, "ERROR: Could not synchronize on special protocol data\n");
