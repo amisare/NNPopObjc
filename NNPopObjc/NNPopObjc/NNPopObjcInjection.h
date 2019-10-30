@@ -22,7 +22,7 @@ nn_pop_mach_header;
 
 typedef struct nn_pop_extension_node nn_pop_extension_node_t;
 
-typedef struct nn_pop_extension_node {
+struct nn_pop_extension_node {
     const char *extension_prefix;
     Class special_clazz;
     Class extension_clazz;
