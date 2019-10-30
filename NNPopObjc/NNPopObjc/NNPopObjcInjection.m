@@ -59,9 +59,9 @@ void __nn_pop_freeProtocols(nn_pop_protocol_t *protocols, unsigned int protocol_
     
     for (unsigned int i = 0; i < protocol_count; i++) {
         // free default extension
-        __nn_pop_extension_free(&protocols[i].extension.base);
+        __nn_pop_extension_free(&(protocols[i].extension.base));
         // free special extension
-        __nn_pop_extension_free(&protocols[i].extension.special);
+        __nn_pop_extension_free(&(protocols[i].extension.special));
     }
     
     free(protocols);
@@ -92,7 +92,7 @@ Class __nn_pop_rootProtocolClass(Protocol *protocol, Class clazz) {
 }
 
 
-BOOL nn_pop_isExtensionClass(Class clazz, nn_pop_protocol_t *protocols, nn_pop_protocol_t *protocol_count) {
+BOOL nn_pop_isExtensionClass(Class clazz, nn_pop_protocol_t *protocols, unsigned int protocol_count) {
     
     __block BOOL result = false;
     
@@ -278,27 +278,32 @@ void __nn_pop_loadSection(const nn_pop_mach_header *mhp, char *sectname, void (^
         return;
     }
     
-    for (unsigned int i = 0; i < sectionItemCount; i++) {
-        Protocol *protocol = objc_getProtocol(sectionItems[i].extension_protocol);
+    for (unsigned int sectionIndex = 0, protocolIndex = 0; sectionIndex < sectionItemCount; sectionIndex++) {
+        
+        nn_pop_extension_section_item *_sectionItem = &sectionItems[sectionIndex];
+        
+        Protocol *protocol = objc_getProtocol(_sectionItem->extension_protocol);
         if (!protocol) {
             continue;
         }
-        protocols[i].protocol = protocol;
-        protocols[i].extension.base = NULL;
-        protocols[i].extension.special = NULL;
-        nn_pop_extension_node_t *extension = (nn_pop_extension_node_t *)malloc(1 * sizeof(nn_pop_extension_node_t));
-        if (!extension) {
+        nn_pop_protocol_t *_protocol = &protocols[protocolIndex++];
+        _protocol->protocol = protocol;
+        _protocol->extension.base = NULL;
+        _protocol->extension.special = NULL;
+        
+        nn_pop_extension_node_t *_extension = (nn_pop_extension_node_t *)malloc(1 * sizeof(nn_pop_extension_node_t));
+        if (!_extension) {
             continue;
         }
-        extension->extension_prefix = sectionItems[i].extension_prefix;
-        extension->special_clazz = objc_getClass(sectionItems[i].special_clazz);
-        extension->extension_clazz = objc_getClass(sectionItems[i].extension_clazz);
-        extension->next = NULL;
-        if (extension->special_clazz == objc_getClass("NSObject")) {
-            protocols[i].extension.base = extension;
+        _extension->extension_prefix = _sectionItem->extension_prefix;
+        _extension->special_clazz = objc_getClass(_sectionItem->special_clazz);
+        _extension->extension_clazz = objc_getClass(_sectionItem->extension_clazz);
+        _extension->next = NULL;
+        if (_extension->special_clazz == objc_getClass("NSObject")) {
+            _protocol->extension.base = _extension;
         }
         else {
-            protocols[i].extension.special = extension;
+            _protocol->extension.special = _extension;
         }
     }
     
@@ -313,17 +318,17 @@ void __nn_pop_loadSection(const nn_pop_mach_header *mhp, char *sectname, void (^
         return cmp;
     });
     
-    unsigned int baseIndex = 0, forwardIndex = 1;
-    while (forwardIndex < sectionItemCount) {
-        if (protocol_isEqual(protocols[baseIndex].protocol, protocols[forwardIndex].protocol)) {
-            __nn_pop_extension_append(&protocols[baseIndex].extension.special, &protocols[forwardIndex].extension.special);
+    unsigned int protocolBaseIndex = 0, protocolForwardIndex = 1;
+    while (protocolForwardIndex < sectionItemCount) {
+        if (protocol_isEqual(protocols[protocolBaseIndex].protocol, protocols[protocolForwardIndex].protocol)) {
+            __nn_pop_extension_append(&(protocols[protocolBaseIndex].extension.special), &(protocols[protocolForwardIndex].extension.special));
         }
         else {
-            protocols[++baseIndex] = protocols[forwardIndex];
+            protocols[++protocolBaseIndex] = protocols[protocolForwardIndex];
         }
-        forwardIndex++;
+        protocolForwardIndex++;
     }
-    unsigned int protocolCount = baseIndex + 1;
+    unsigned int protocolCount = protocolBaseIndex + 1;
     protocols = realloc(protocols, (protocolCount + 1) * sizeof(nn_pop_protocol_t));
     protocols[protocolCount] = (nn_pop_protocol_t){0};
     
