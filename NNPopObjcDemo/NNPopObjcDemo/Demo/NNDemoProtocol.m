@@ -37,19 +37,6 @@
 
 @end
 
-@nn_extension(NNDemoWhoImIProtocol, nn_where(true))
-
-- (NSString *)whoImI {
-    NSString *whoImI = [NSString stringWithFormat:@"-[%@ %s] I am %@", [self class], sel_getName(_cmd), nil];
-    return whoImI;
-}
-
-- (void)setWhoImI:(NSString *)whoImI {
-    DLog(@"-[%@ %s%@]", [self class], sel_getName(_cmd), whoImI);
-}
-
-@end
-
 @nn_extension(NNDemoWhoImIProtocol, nn_where(self == [NNDemoCpp class]), NNDemoNameProtocol)
 
 + (void)sayHelloPop {
