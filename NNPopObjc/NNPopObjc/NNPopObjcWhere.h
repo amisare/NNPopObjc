@@ -35,7 +35,7 @@ typedef enum : NSUInteger {
         nn_where_block_default_ \
 
 #define nn_where_1(expression) \
-        , \
+        _, \
         nn_where_block_(expression) \
 
 #define nn_where_2(unique_id, expression) \
