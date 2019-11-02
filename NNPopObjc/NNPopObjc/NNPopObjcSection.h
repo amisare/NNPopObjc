@@ -10,6 +10,7 @@
 
 #import "NNPopObjcMacros.h"
 
+
 typedef nn_where_type_e (*extension_where_fp)(Class clazz);
 
 typedef struct {
@@ -25,26 +26,7 @@ typedef struct {
 #define nn_pop_extension_section_name_(...) \
         nn_pop_vrgs_concat(_, s, __VA_ARGS__) \
 
-#define nn_pop_extension_section_(prefix, protocol, ...) \
-        metamacro_if_eq(0, metamacro_argcount(__VA_ARGS__))(nn_pop_extension_section_0(prefix, protocol))\
-        (metamacro_if_eq(1, metamacro_argcount(__VA_ARGS__))(nn_pop_extension_section_0(prefix, protocol))\
-        (nn_pop_extension_section_N(prefix, protocol, __VA_ARGS__)))\
-
-
-#define nn_pop_extension_section_0(prefix, protocol) \
-        const nn_pop_extension_section_item \
-        nn_pop_extension_section_name_(prefix, protocol) \
-        nn_pop_section(metamacro_stringify(nn_pop_section_name)) = \
-        { \
-            metamacro_stringify(protocol), \
-            metamacro_stringify(prefix), \
-            metamacro_stringify(nn_pop_extension_name_(prefix, protocol)), \
-            nn_pop_extension_where_name_(prefix, protocol), \
-            0, \
-            {}, \
-        }; \
-
-#define nn_pop_extension_section_N(prefix, protocol, nn_where_unique_id, nn_where_block, ...) \
+#define nn_pop_extension_section_(prefix, protocol, nn_where_unique_id, nn_where_block, ...) \
         const nn_pop_extension_section_item \
         nn_pop_extension_section_name_(prefix, protocol, nn_where_unique_id, __VA_ARGS__) \
         nn_pop_section(metamacro_stringify(nn_pop_section_name)) = \

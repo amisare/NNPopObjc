@@ -159,6 +159,7 @@ void nn_pop_injectProtocolExtension (Protocol *protocol, Class extentionClass, C
     (void)[extentionClass class];
 }
 
+
 void nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
     
     __block unsigned int matchCount = 0;
