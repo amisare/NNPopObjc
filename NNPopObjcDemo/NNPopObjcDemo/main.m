@@ -17,7 +17,7 @@ int main(int argc, char * argv[]) {
         
 //        NSMutableArray *configs = [NSMutableArray array];
 //          unsigned long size = 0;
-//          uintptr_t *memory = (uintptr_t*)getsectiondata(&_mh_execute_header, SEG_DATA, nn_pop_stringify(nn_pop_section_name), &size);
+//          uintptr_t *memory = (uintptr_t*)getsectiondata(&_mh_execute_header, SEG_DATA, metamacro_stringify(nn_pop_section_name), &size);
 //          
 //          unsigned long counter = size/sizeof(void*);
 //          for(int idx = 0; idx < counter; ++idx){

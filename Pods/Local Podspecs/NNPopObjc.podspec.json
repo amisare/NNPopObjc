@@ -24,5 +24,12 @@
   },
   "requires_arc": true,
   "source_files": "NNPopObjc/NNPopObjc/*.{h,m,mm}",
-  "public_header_files": "NNPopObjc/NNPopObjc/NNPopObjc.h"
+  "public_header_files": "NNPopObjc/NNPopObjc/*.{h}, NNPopObjc/NNPopObjc/extobjc/*.{h}",
+  "default_subspecs": "extobjc",
+  "subspecs": [
+    {
+      "name": "extobjc",
+      "source_files": "NNPopObjc/NNPopObjc/extobjc/*.{h,m}"
+    }
+  ]
 }

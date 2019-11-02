@@ -22,6 +22,12 @@ Pod::Spec.new do |s|
   s.requires_arc  = true
 
   s.source_files        = 'NNPopObjc/NNPopObjc/*.{h,m,mm}'
-  s.public_header_files = 'NNPopObjc/NNPopObjc/NNPopObjc.h'
+  s.public_header_files = 'NNPopObjc/NNPopObjc/*.{h}, NNPopObjc/NNPopObjc/extobjc/*.{h}'
+  
+  s.default_subspec         = 'extobjc'
+  s.subspec 'extobjc' do |ss|
+    ss.source_files         = 'NNPopObjc/NNPopObjc/extobjc/*.{h,m}'
+  end
+  
 end
   

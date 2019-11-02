@@ -58,10 +58,8 @@ void __nn_pop_extension_foreach(nn_pop_extension_node_t *head, void (^enumerate_
 void __nn_pop_freeProtocols(nn_pop_protocol_t *protocols, unsigned int protocol_count) {
     
     for (unsigned int i = 0; i < protocol_count; i++) {
-        // free default extension
-        __nn_pop_extension_free(&(protocols[i].extension.base));
-        // free special extension
-        __nn_pop_extension_free(&(protocols[i].extension.special));
+        // free extension
+        __nn_pop_extension_free(&(protocols[i].extension));
     }
     
     free(protocols);
@@ -100,14 +98,7 @@ BOOL nn_pop_isExtensionClass(Class clazz, nn_pop_protocol_t *protocols, unsigned
         
         nn_pop_protocol_t protocol = protocols[i];
         
-        if (clazz == protocol.extension.base->extension_clazz) {
-            result = true;
-        }
-        if (result) {
-            break;
-        }
-        
-        __nn_pop_extension_foreach(protocol.extension.special, ^(nn_pop_extension_node_t *item, BOOL *stop) {
+        __nn_pop_extension_foreach(protocol.extension, ^(nn_pop_extension_node_t *item, BOOL *stop) {
             if (clazz == item->extension_clazz) {
                 result = true;
                 *stop = true;
@@ -168,6 +159,57 @@ void nn_pop_injectProtocolExtension (Protocol *protocol, Class extentionClass, C
     (void)[extentionClass class];
 }
 
+void nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
+    
+    __block unsigned int matchCount = 0;
+    __block unsigned int matchDefault = 0;
+    __block nn_pop_extension_node_t *defaultItem = nil;
+    __block nn_pop_extension_node_t *matchItem = nil;
+    __nn_pop_extension_foreach(protocol.extension, ^(nn_pop_extension_node_t *item, BOOL *stop) {
+        
+        if (nn_where_type_default == item->extension_where_fp(clazz)) {
+            defaultItem = item;
+            matchDefault++;
+        }
+        
+        if (nn_where_type_matched == item->extension_where_fp(clazz)) {
+            BOOL adopted = true;
+            for (unsigned int i = 0; i < item->extension_adopt_protocols_count; i++) {
+                Protocol *protocol = item->extension_adopt_protocols[i];
+                if ([clazz conformsToProtocol:protocol] == false) {
+                    adopted = false;
+                    break;
+                }
+            }
+            if (adopted) {
+                matchItem = item;
+                matchCount++;
+            }
+        }
+    });
+
+    if (matchDefault == 0 && matchCount == 0) {
+        NSCAssert(false, ([NSString stringWithFormat:@"You need at least provide a extension for %@", @(class_getName(clazz))]));
+    }
+    
+    if (matchCount > 1) {
+        NSCAssert(false, ([NSString stringWithFormat:@"Matched multiple extension to extension for %@", @(class_getName(clazz))]));
+    }
+    
+    if (matchCount == 1) {
+        nn_pop_injectProtocolExtension(protocol.protocol, matchItem->extension_clazz, clazz, false);
+    }
+    else {
+        if (matchDefault > 1) {
+            NSCAssert(false, ([NSString stringWithFormat:@"Matched multiple default extension to extension for %@", @(class_getName(clazz))]));
+        }
+        
+        if (matchDefault == 1) {
+            nn_pop_injectProtocolExtension(protocol.protocol, defaultItem->extension_clazz, clazz, true);
+        }
+    }
+}
+
 
 void nn_pop_injectProtocols (nn_pop_protocol_t *protocols, unsigned int protocol_count) {
     
@@ -224,30 +266,20 @@ void nn_pop_injectProtocols (nn_pop_protocol_t *protocols, unsigned int protocol
                 if (!class_conformsToProtocol(clazz, protocol.protocol)) {
                     continue;
                 }
-                
+
                 if (nn_pop_isExtensionClass(clazz, protocols, protocol_count)) {
                     continue;
                 }
-                __nn_pop_extension_foreach(protocol.extension.special, ^(nn_pop_extension_node_t *item, BOOL *stop) {
-                    if (clazz == item->special_clazz) {
-                        nn_pop_injectProtocolExtension(protocol.protocol, item->extension_clazz, clazz, false);
-                        *stop = true;
-                    }
-                });
+                nn_pop_injectProtocol(protocol, clazz);
                 
                 Class rootClass = __nn_pop_rootProtocolClass(protocol.protocol, clazz);
+                if (rootClass == clazz) {
+                    continue;
+                }
                 if (nn_pop_isExtensionClass(rootClass, protocols, protocol_count)) {
                     continue;
                 }
-                __nn_pop_extension_foreach(protocol.extension.special, ^(nn_pop_extension_node_t *item, BOOL *stop) {
-                    if (rootClass == item->special_clazz) {
-                        nn_pop_injectProtocolExtension(protocol.protocol, item->extension_clazz, rootClass, false);
-                        *stop = true;
-                    }
-                });
-                
-                nn_pop_injectProtocolExtension(protocol.protocol, protocol.extension.base->extension_clazz, rootClass, true);
-                
+                nn_pop_injectProtocol(protocol, rootClass);
             }
         }
     }
@@ -265,7 +297,7 @@ void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^l
     nn_pop_mach_header *_mhp = (nn_pop_mach_header *)mhp;
     
     unsigned long size = 0;
-    uintptr_t *sectionData = (uintptr_t*)getsectiondata(_mhp, nn_pop_stringify(nn_pop_segment_name), sectname, &size);
+    uintptr_t *sectionData = (uintptr_t*)getsectiondata(_mhp, metamacro_stringify(nn_pop_segment_name), sectname, &size);
     if (size == 0) {
         pthread_mutex_unlock(&nn_pop_inject_lock);
         return;
@@ -284,29 +316,29 @@ void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^l
         
         nn_pop_extension_section_item *_sectionItem = &sectionItems[sectionIndex];
         
+        nn_pop_protocol_t *_protocol = &protocols[protocolIndex++];
+        _protocol->protocol = NULL;
+        _protocol->extension = NULL;
+        
         Protocol *protocol = objc_getProtocol(_sectionItem->extension_protocol);
         if (!protocol) {
             continue;
         }
-        nn_pop_protocol_t *_protocol = &protocols[protocolIndex++];
         _protocol->protocol = protocol;
-        _protocol->extension.base = NULL;
-        _protocol->extension.special = NULL;
         
         nn_pop_extension_node_t *_extension = (nn_pop_extension_node_t *)calloc(1, sizeof(nn_pop_extension_node_t));
         if (!_extension) {
             continue;
         }
         _extension->extension_prefix = _sectionItem->extension_prefix;
-        _extension->special_clazz = objc_getClass(_sectionItem->special_clazz);
         _extension->extension_clazz = objc_getClass(_sectionItem->extension_clazz);
+        _extension->extension_where_fp = _sectionItem->extension_where_fp;
+        _extension->extension_adopt_protocols_count = _sectionItem->extension_adopt_protocols_count;
+        for (unsigned int i = 0; i < _extension->extension_adopt_protocols_count; i++) {
+            _extension->extension_adopt_protocols[i] = objc_getProtocol(_sectionItem->extension_adopt_protocols[i]);
+        }
         _extension->next = NULL;
-        if (_extension->special_clazz == objc_getClass("NSObject")) {
-            _protocol->extension.base = _extension;
-        }
-        else {
-            _protocol->extension.special = _extension;
-        }
+        _protocol->extension = _extension;
     }
     
     qsort_b(protocols, sectionItemCount, sizeof(nn_pop_protocol_t), ^int(const void *a, const void *b) {
@@ -323,7 +355,7 @@ void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^l
     unsigned int protocolBaseIndex = 0, protocolForwardIndex = 1;
     while (protocolForwardIndex < sectionItemCount) {
         if (protocol_isEqual(protocols[protocolBaseIndex].protocol, protocols[protocolForwardIndex].protocol)) {
-            __nn_pop_extension_append(&(protocols[protocolBaseIndex].extension.special), &(protocols[protocolForwardIndex].extension.special));
+            __nn_pop_extension_append(&(protocols[protocolBaseIndex].extension), &(protocols[protocolForwardIndex].extension));
         }
         else {
             protocols[++protocolBaseIndex] = protocols[protocolForwardIndex];
@@ -345,7 +377,7 @@ void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^l
 
 
 void __nn_pop_dyld_callback(const mach_header *mhp, intptr_t vmaddr_slide) {
-    __nn_pop_loadSection(mhp, nn_pop_stringify(nn_pop_section_name), ^(nn_pop_protocol_t *protocols, unsigned int protocol_count) {
+    __nn_pop_loadSection(mhp, metamacro_stringify(nn_pop_section_name), ^(nn_pop_protocol_t *protocols, unsigned int protocol_count) {
         nn_pop_injectProtocols(protocols, protocol_count);
     });
 }

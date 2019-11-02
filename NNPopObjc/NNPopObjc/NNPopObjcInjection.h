@@ -24,17 +24,14 @@ typedef struct nn_pop_extension_node nn_pop_extension_node_t;
 
 struct nn_pop_extension_node {
     const char *extension_prefix;
-    Class special_clazz;
     Class extension_clazz;
+    extension_where_fp extension_where_fp;
+    unsigned int extension_adopt_protocols_count;
+    Protocol *extension_adopt_protocols[20];
     nn_pop_extension_node_t *next;
 };
 
 typedef struct {
-    nn_pop_extension_node_t *base;
-    nn_pop_extension_node_t *special;
-} nn_pop_extension_t;
-
-typedef struct {
     Protocol *protocol;
-    nn_pop_extension_t extension;
+    nn_pop_extension_node_t *extension;
 } nn_pop_protocol_t;

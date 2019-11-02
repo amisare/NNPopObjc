@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NNDemoC : NSObject <NNDemoWhoImIProtocol>
+@interface NNDemoC : NSObject <NNDemoWhoImIProtocol, NNDemoNameProtocol>
 
 @property (nonatomic, strong) NSString *name;
 

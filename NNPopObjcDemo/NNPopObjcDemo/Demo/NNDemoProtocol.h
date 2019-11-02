@@ -25,4 +25,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@protocol NNDemoNameProtocol <NSObject>
+
+@optional
+@property (nonatomic, strong) NSString* name;
+
+@end
+
 NS_ASSUME_NONNULL_END

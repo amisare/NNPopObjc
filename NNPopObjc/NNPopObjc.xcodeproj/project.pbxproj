@@ -10,6 +10,8 @@
 		676979A22345C78300E13282 /* NNPopObjc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 676979982345C78200E13282 /* NNPopObjc.framework */; };
 		676979A72345C78300E13282 /* NNPopObjcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979A62345C78300E13282 /* NNPopObjcTests.m */; };
 		676979A92345C78300E13282 /* NNPopObjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 6769799B2345C78200E13282 /* NNPopObjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67F37137236D2A60002482D4 /* NNPopObjcMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 67F37134236D2A5F002482D4 /* NNPopObjcMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		67F37138236D2A60002482D4 /* metamacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 67F37136236D2A5F002482D4 /* metamacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7A5BFE4E2364292A006E03A8 /* NNPopObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5BFE4D2364292A006E03A8 /* NNPopObjc.m */; };
 		7A5E1C12234C5AD6005A7D1B /* NNTestProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5E1C11234C5AD6005A7D1B /* NNTestProtocol.m */; };
 		7A77C7E7236977220084118D /* NNPopObjcInjection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A77C7E6236977210084118D /* NNPopObjcInjection.mm */; };
@@ -39,6 +41,8 @@
 		676979A12345C78300E13282 /* NNPopObjcTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NNPopObjcTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		676979A62345C78300E13282 /* NNPopObjcTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNPopObjcTests.m; sourceTree = "<group>"; };
 		676979A82345C78300E13282 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		67F37134236D2A5F002482D4 /* NNPopObjcMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNPopObjcMacros.h; sourceTree = "<group>"; };
+		67F37136236D2A5F002482D4 /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
 		7A5BFE4D2364292A006E03A8 /* NNPopObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNPopObjc.m; sourceTree = "<group>"; };
 		7A5E1C10234C5AD6005A7D1B /* NNTestProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNTestProtocol.h; sourceTree = "<group>"; };
 		7A5E1C11234C5AD6005A7D1B /* NNTestProtocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNTestProtocol.m; sourceTree = "<group>"; };
@@ -98,11 +102,13 @@
 		6769799A2345C78200E13282 /* NNPopObjc */ = {
 			isa = PBXGroup;
 			children = (
+				6769799C2345C78200E13282 /* Info.plist */,
 				6769799B2345C78200E13282 /* NNPopObjc.h */,
 				7A5BFE4D2364292A006E03A8 /* NNPopObjc.m */,
 				7A8EFB5D236826C20061EFD3 /* NNPopObjcInjection.h */,
 				7A77C7E6236977210084118D /* NNPopObjcInjection.mm */,
-				6769799C2345C78200E13282 /* Info.plist */,
+				67F37134236D2A5F002482D4 /* NNPopObjcMacros.h */,
+				67F37135236D2A5F002482D4 /* extobjc */,
 			);
 			path = NNPopObjc;
 			sourceTree = "<group>";
@@ -130,6 +136,14 @@
 			path = NNPopObjcTests;
 			sourceTree = "<group>";
 		};
+		67F37135236D2A5F002482D4 /* extobjc */ = {
+			isa = PBXGroup;
+			children = (
+				67F37136236D2A5F002482D4 /* metamacros.h */,
+			);
+			path = extobjc;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -137,8 +151,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A8EFB5F236826C30061EFD3 /* NNPopObjcInjection.h in Headers */,
 				676979A92345C78300E13282 /* NNPopObjc.h in Headers */,
+				7A8EFB5F236826C30061EFD3 /* NNPopObjcInjection.h in Headers */,
+				67F37137236D2A60002482D4 /* NNPopObjcMacros.h in Headers */,
+				67F37138236D2A60002482D4 /* metamacros.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
