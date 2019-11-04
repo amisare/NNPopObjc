@@ -1,6 +1,6 @@
 # NNPopObjc usage
 
-This document is a guide for NNPopObjc.
+This document is a guide for NNPopObjc(No longer applicable above 0.1.0).
 
 ## @nn_extension
 

@@ -35,7 +35,7 @@ NNPopObjc 受面向协议编程的启发，为协议提供了实现扩展的功�
 
 ```objective-c
 /// 默认协议扩展
-@nn_extension(NNDemoProtocol, NSObject)
+@nn_extension(NNDemoProtocol)
 
 + (void)sayHelloPop {
     DLog(@"+[%@ %s] code say hello pop", self, sel_getName(_cmd));
@@ -57,7 +57,7 @@ NNPopObjc 受面向协议编程的启发，为协议提供了实现扩展的功�
 @end
 
 /// 对 NNDemoObjc 类的协议扩展
-@nn_extension(NNDemoProtocol, NNDemoObjc)
+@nn_extension(NNDemoProtocol, nn_where(provide_a_unique_identifier_for_where, self == [NNDemoObjc class]), NNDemoNameProtocol)
 
 - (NSString *)whoImI {
     NSString *whoImI = [NSString stringWithFormat:@"-[%@ %s] I am %@", [self class], sel_getName(_cmd), self.name];
@@ -76,7 +76,16 @@ NNPopObjc 受面向协议编程的启发，为协议提供了实现扩展的功�
 - 创建类
 
 ```objective-c
-@interface NNDemoObjc : NSObject <NNDemoProtocol>
+///name protocol
+@protocol NNDemoNameProtocol <NSObject>
+
+@optional
+@property (nonatomic, strong) NSString* name;
+
+@end
+
+///class
+@interface NNDemoObjc : NSObject <NNDemoNameProtocol, NNDemoProtocol>
 
 @property (nonatomic, strong) NSString *name;
 
@@ -133,7 +142,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 
 target 'TargetName' do
-pod 'NNPopObjc', '~> 0.0.5'
+pod 'NNPopObjc', '~> 0.1.0'
 end
 ```
 

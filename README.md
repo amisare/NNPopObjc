@@ -37,7 +37,7 @@ Extending the Procotol needs in a `.m` file
 
 ```objective-c
 ///Extending the Procotol for default implemention.
-@nn_extension(NNDemoProtocol, NSObject)
+@nn_extension(NNDemoProtocol)
 
 + (void)sayHelloPop {
     DLog(@"+[%@ %s] code say hello pop", self, sel_getName(_cmd));
@@ -59,7 +59,7 @@ Extending the Procotol needs in a `.m` file
 @end
 
 ///Extending the Procotol for NNDemoObjc
-@nn_extension(NNDemoProtocol, NNDemoObjc)
+@nn_extension(NNDemoProtocol, nn_where(provide_a_unique_identifier_for_where, self == [NNDemoObjc class]), NNDemoNameProtocol)
 
 - (NSString *)whoImI {
     NSString *whoImI = [NSString stringWithFormat:@"-[%@ %s] I am %@", [self class], sel_getName(_cmd), self.name];
@@ -78,7 +78,16 @@ Extending the Procotol needs in a `.m` file
 - Creating a Class
 
 ```objective-c
-@interface NNDemoObjc : NSObject <NNDemoProtocol>
+///name protocol
+@protocol NNDemoNameProtocol <NSObject>
+
+@optional
+@property (nonatomic, strong) NSString* name;
+
+@end
+
+///class
+@interface NNDemoObjc : NSObject <NNDemoNameProtocol, NNDemoProtocol>
 
 @property (nonatomic, strong) NSString *name;
 
@@ -135,7 +144,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 
 target 'TargetName' do
-pod 'NNPopObjc', '~> 0.0.5'
+pod 'NNPopObjc', '~> 0.1.0'
 end
 ```
 
