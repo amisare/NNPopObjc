@@ -19,7 +19,7 @@ typedef enum : NSUInteger {
 
 
 #define nn_where_(...) \
-        metamacro_concat(nn_where_, metamacro_argcount(__VA_ARGS__))(__VA_ARGS__)
+        metamacro_concat(nn_where_, nn_pop_argcount(__VA_ARGS__))(__VA_ARGS__)
 
 #define nn_pop_extension_where_name_(...) \
         nn_pop_args_concat(_, w, __VA_ARGS__) \

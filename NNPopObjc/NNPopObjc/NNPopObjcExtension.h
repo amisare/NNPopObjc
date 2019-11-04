@@ -15,7 +15,7 @@
         nn_pop_args_concat(_, __VA_ARGS__) \
 
 #define nn_pop_extension_(protocol, ...) \
-        nn_pop_if_less(metamacro_argcount(__VA_ARGS__), 2) \
+        nn_pop_if_less(nn_pop_argcount(__VA_ARGS__), 2) \
         (nn_pop_extension_fill(nn_pop_extension_prefix, protocol, nn_where())) \
         (nn_pop_extension_fill(nn_pop_extension_prefix, protocol, __VA_ARGS__)) \
 
@@ -38,7 +38,7 @@
 
 
 #define nn_pop_adopt_protocol(...) \
-        metamacro_if_eq(0, metamacro_argcount(__VA_ARGS__))()\
+        metamacro_if_eq(0, nn_pop_argcount(__VA_ARGS__))()\
         (nn_pop_adopt_protocol_(__VA_ARGS__))\
 
 #define nn_pop_adopt_protocol_(...) \

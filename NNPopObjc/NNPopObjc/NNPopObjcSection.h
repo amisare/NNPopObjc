@@ -37,12 +37,12 @@ typedef struct {
             metamacro_stringify(prefix), \
             metamacro_stringify(nn_pop_extension_name_(prefix, protocol, nn_where_unique_id, __VA_ARGS__)), \
             nn_pop_extension_where_name_(prefix, protocol, nn_where_unique_id, __VA_ARGS__), \
-            metamacro_argcount(__VA_ARGS__), \
+            nn_pop_argcount(__VA_ARGS__), \
             {nn_pop_adopt_protocol_names(__VA_ARGS__)}, \
         }; \
 
 #define nn_pop_adopt_protocol_names(...) \
-        metamacro_if_eq(0, metamacro_argcount(__VA_ARGS__))()\
+        metamacro_if_eq(0, nn_pop_argcount(__VA_ARGS__))()\
         (nn_pop_adopt_protocol_names_(__VA_ARGS__))\
 
 #define nn_pop_adopt_protocol_names_(...) \
