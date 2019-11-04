@@ -8,7 +8,7 @@
 #ifndef NNPopObjcWhere_h
 #define NNPopObjcWhere_h
 
-#import "NNPopObjcMacros.h"
+#import "NNPopObjcDefines.h"
 
 
 typedef enum : NSUInteger {
@@ -22,7 +22,7 @@ typedef enum : NSUInteger {
         metamacro_concat(nn_where_, metamacro_argcount(__VA_ARGS__))(__VA_ARGS__)
 
 #define nn_pop_extension_where_name_(...) \
-        nn_pop_vrgs_concat(_, w, __VA_ARGS__) \
+        nn_pop_args_concat(_, w, __VA_ARGS__) \
 
 #define nn_pop_extension_where_(prefix, protocol, nn_where_unique_id, nn_where_block, ...) \
         static nn_where_type_e nn_pop_extension_where_name_(prefix, protocol, nn_where_unique_id, __VA_ARGS__)(Class self) { \

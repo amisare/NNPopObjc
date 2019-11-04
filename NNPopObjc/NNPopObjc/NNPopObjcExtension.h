@@ -8,19 +8,21 @@
 #ifndef NNPopObjcExtension_h
 #define NNPopObjcExtension_h
 
-#import "NNPopObjcMacros.h"
+#import "NNPopObjcDefines.h"
 
 
 #define nn_pop_extension_name_(...) \
-        nn_pop_vrgs_concat(_, __VA_ARGS__) \
+        nn_pop_args_concat(_, __VA_ARGS__) \
 
 #define nn_pop_extension_(protocol, ...) \
-        metamacro_if_eq(0, metamacro_argcount(__VA_ARGS__))(nn_pop_extension_N(nn_pop_extension_prefix, protocol,,nn_where_block_default_))\
-        (metamacro_if_eq(1, metamacro_argcount(__VA_ARGS__))(nn_pop_extension_N(nn_pop_extension_prefix, protocol,,nn_where_block_default_))\
-        (nn_pop_extension_N(nn_pop_extension_prefix, protocol, __VA_ARGS__)))\
+        nn_pop_if_less(metamacro_argcount(__VA_ARGS__), 2) \
+        (nn_pop_extension_fill(nn_pop_extension_prefix, protocol, nn_where())) \
+        (nn_pop_extension_fill(nn_pop_extension_prefix, protocol, __VA_ARGS__)) \
 
+#define nn_pop_extension_fill(prefix, protocol, ...) \
+        nn_pop_extension_expand(prefix, protocol, __VA_ARGS__) \
 
-#define nn_pop_extension_N(prefix, protocol, nn_where_unique_id, nn_where_block, ...) \
+#define nn_pop_extension_expand(prefix, protocol, nn_where_unique_id, nn_where_block, ...) \
         \
         class NSObject; \
         \

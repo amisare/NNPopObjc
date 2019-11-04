@@ -8,7 +8,7 @@
 #ifndef NNPopObjcSection_h
 #define NNPopObjcSection_h
 
-#import "NNPopObjcMacros.h"
+#import "NNPopObjcDefines.h"
 
 
 typedef nn_where_type_e (*extension_where_fp)(Class clazz);
@@ -23,8 +23,10 @@ typedef struct {
 } nn_pop_extension_section_item;
 
 
+#define nn_pop_section(section_name) __attribute((used, section(metamacro_stringify(nn_pop_segment_name) "," section_name )))
+
 #define nn_pop_extension_section_name_(...) \
-        nn_pop_vrgs_concat(_, s, __VA_ARGS__) \
+        nn_pop_args_concat(_, s, __VA_ARGS__) \
 
 #define nn_pop_extension_section_(prefix, protocol, nn_where_unique_id, nn_where_block, ...) \
         const nn_pop_extension_section_item \

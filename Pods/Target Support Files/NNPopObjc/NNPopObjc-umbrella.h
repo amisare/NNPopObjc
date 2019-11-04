@@ -11,6 +11,7 @@
 #endif
 
 #import "NNPopObjc.h"
+#import "NNPopObjcDefines.h"
 #import "NNPopObjcExtension.h"
 #import "NNPopObjcInjection.h"
 #import "NNPopObjcMacros.h"
