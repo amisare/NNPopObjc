@@ -11,7 +11,7 @@
 #import "NNPopObjcDefines.h"
 
 
-typedef nn_where_type_e (*extension_where_fp)(Class clazz);
+typedef nn_where_value_def (*extension_where_fp)(Class clazz);
 
 typedef struct {
     const char *extension_protocol;
