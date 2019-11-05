@@ -54,7 +54,6 @@ void __nn_pop_extension_foreach(nn_pop_extension_node_t *head, void (^enumerate_
     }
 }
 
-
 void __nn_pop_freeProtocols(nn_pop_protocol_t *protocols, unsigned int protocol_count) {
     
     for (unsigned int i = 0; i < protocol_count; i++) {
