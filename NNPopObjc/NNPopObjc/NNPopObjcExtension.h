@@ -10,7 +10,9 @@
 
 #import "NNPopObjcDefines.h"
 
-
+/**
+ * nn_extension implementation class name, the name is concated all args with '_'
+ */
 #define nn_pop_extension_name_(...) \
         nn_pop_args_concat(_, __VA_ARGS__) \
 
@@ -18,14 +20,15 @@
  * nn_extension implementation
  */
 #define nn_pop_extension_(protocol, ...) \
-        nn_pop_extension_param_check(protocol, __VA_ARGS__)
+        nn_pop_extension_where_clause_check(protocol, __VA_ARGS__)
 
 /**
- * Check nn_extension variable parameter list, the list requires a minimum of 3 parameters.
- * If the parameter is less than 3, then use a @nn_where() as the variable parameter list input.
+ * Check nn_extension where clause. 3 parameters that the where clause @nn_where() expend.
+ * If the parameter list count is less than the count of parameter that @nn_where() expend,
+ * then fill @nn_where() as the variable parameter list input.
  */
-#define nn_pop_extension_param_check(protocol, ...) \
-        nn_pop_if_less(nn_pop_argcount(__VA_ARGS__), 3) \
+#define nn_pop_extension_where_clause_check(protocol, ...) \
+        nn_pop_if_less(nn_pop_argcount(__VA_ARGS__), nn_pop_argcount(@nn_where())) \
         (nn_pop_extension_param_fill(nn_pop_extension_prefix, protocol, @nn_where())) \
         (nn_pop_extension_param_fill(nn_pop_extension_prefix, protocol, __VA_ARGS__)) \
 
@@ -33,12 +36,12 @@
  * Used to fill nn_extension variable parameter list.
  */
 #define nn_pop_extension_param_fill(prefix, protocol, ...) \
-        nn_pop_extension_param_expand(prefix, protocol, __VA_ARGS__) \
+        nn_pop_extension_expand(prefix, protocol, __VA_ARGS__) \
 
 /**
  * Expand nn_extension
  */
-#define nn_pop_extension_param_expand(prefix, protocol, where_keywordify, where_unique_id, where_block, ...) \
+#define nn_pop_extension_expand(prefix, protocol, where_keywordify, where_unique_id, where_block, ...) \
         \
         class NSObject; \
         \
