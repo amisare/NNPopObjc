@@ -96,8 +96,6 @@ FOUNDATION_EXPORT const unsigned char NNPopObjcVersionString[];
  * @param expression An expression that returns a bool value. You can use a variable named
  * `self` in expression, the variable is the class that adopt to the extended protocol.
  *
- * 0. Example of @nn_where(unique_id, expression)
- *
  * @code
  
     // 0. Example of @nn_where(unique_id, expression)

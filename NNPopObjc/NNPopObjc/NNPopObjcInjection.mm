@@ -172,7 +172,7 @@ void nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
             matchDefault++;
         }
         
-        if (nn_pop_where_value_matched_limited == item->extension_where_fp(clazz)) {
+        if (nn_pop_where_value_matched_constrained == item->extension_where_fp(clazz)) {
             BOOL adopted = true;
             for (unsigned int i = 0; i < item->extension_adopt_protocols_count; i++) {
                 Protocol *protocol = item->extension_adopt_protocols[i];
