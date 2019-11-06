@@ -10,6 +10,9 @@
 
 #import "NNPopObjcDefines.h"
 
+/// IMPLEMENTATION DETAILS FOLLOW!
+/// Do not write code that depends on anything below this line.
+
 /**
  * nn_pop_where_block_ result type
  */
@@ -18,10 +21,6 @@ typedef enum : NSUInteger {
     nn_pop_where_value_matched_default,
     nn_pop_where_value_matched_constrained,
 } nn_pop_where_value_def;
-
-
-/// IMPLEMENTATION DETAILS FOLLOW!
-/// Do not write code that depends on anything below this line.
 
 /**
  * nn_where implementation

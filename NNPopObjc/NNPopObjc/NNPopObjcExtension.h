@@ -10,6 +10,9 @@
 
 #import "NNPopObjcDefines.h"
 
+/// IMPLEMENTATION DETAILS FOLLOW!
+/// Do not write code that depends on anything below this line.
+
 /**
  * nn_extension implementation class name, the name is concated all args with '_'
  */
