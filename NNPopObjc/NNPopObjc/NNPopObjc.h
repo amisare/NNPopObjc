@@ -41,19 +41,19 @@ FOUNDATION_EXPORT const unsigned char NNPopObjcVersionString[];
  *
  * The parameters of nn_extension include two parts, protocol and variable parameter list.
  * The protocol is required and the variable parameter list is optional.
- * The parameter list can also be divided into two parts, nn_where and adopted_protocol list.
+ * The parameter list can also be divided into two parts, @nn_where and adopted_protocol list.
  *
  * A complete protocol extension:
- * @nn_extension(protocol, nn_where(...), adopted_protocol_a, adopted_protocol_b, ...)
+ * @nn_extension(protocol, @nn_where(...), adopted_protocol_a, adopted_protocol_b, ...)
  *
  * An omitted adopted_protocol extension:
- * @nn_extension(protocol, nn_where(...))
+ * @nn_extension(protocol, @nn_where(...))
  *
  * An omitted where clause and adopted_protocol extension:
  * @nn_extension(protocol)
  *
  * @param protocol A protocol.
- * @param nn_where A where clause for protocol extension, it is used to add constraints to the conforming classes.
+ * @param @nn_where A where clause for protocol extension, it is used to add constraints to the conforming classes.
  * @param adopted_protocols... Adpoted protocols that conforming classes must satisfy.
  *
  * @note
@@ -79,15 +79,15 @@ FOUNDATION_EXPORT const unsigned char NNPopObjcVersionString[];
  * two parameters.
  *
  * A complete where clause:
- * nn_where(unique_id, expression)
+ * @nn_where(unique_id, expression)
  *
  * An omitted unique_id where clause:
- * nn_where(expression)
- * it is equivalent to nn_where(_, expression)
+ * @nn_where(expression)
+ * it is equivalent to @nn_where(_, expression)
  *
  * An omitted unique_id and expression where clause:
- * nn_where()
- * it is equivalent to nn_where(_, nn_where_block_default_)
+ * @nn_where()
+ * it is equivalent to @nn_where(_, nn_where_block_default_)
  *
  * @param unique_id An unique id for where clause, When implementing multiple extensions
  * for a protocol, the unique_id is used to differentiate extensions. The unique_id will
@@ -96,51 +96,26 @@ FOUNDATION_EXPORT const unsigned char NNPopObjcVersionString[];
  * @param expression An expression that returns a bool value. You can use a variable named
  * `self` in expression, the variable is the class that adopt to the extended protocol.
  *
- * 0. Example of nn_where(unique_id, expression)
+ * 0. Example of @nn_where(unique_id, expression)
  *
  * @code
+ 
+    // 0. Example of @nn_where(unique_id, expression)
+    @nn_extension(NNHelloWorld, @nn_where(id_english, self == [NNEnglish class]))
+    ...
+    @end
 
-     @nn_extension(NNHelloWorld, nn_where(id_english, self == [NNEnglish class]))
+    // 1. Example of @nn_where(expression)
+    @nn_extension(NNHelloWorld, @nn_where(self == [NNEnglish class]))
+    ...
+    @end
 
-     - (void)helloWorld {
-         NSLog(@"Hello World");
-     }
-
-     @end
+    // 2. Example of @nn_where()
+    @nn_extension(NNHelloWorld, @nn_where())
+    ...
+    @end
  
  * @endcode
- *
- * 1. Example of nn_where(expression)
- *
- * @code
-
-     @nn_extension(NNHelloWorld, nn_where(self == [NNEnglish class]))
-     ...
-     @end
-
-     // is equivalent to
- 
-     @nn_extension(NNHelloWorld, nn_where(_, self == [NNEnglish class]))
-     ...
-     @end
-
- * @endcode
- *
- * 2. Example of nn_where()
- *
- * @code
-
-     @nn_extension(NNHelloWorld, nn_where())
-     ...
-     @end
-
-     // is equivalent to
- 
-     @nn_extension(NNHelloWorld)
-     ...
-     @end
-
- * @endcode
- *
+ * 
  */
-#define nn_where(...)                   nn_where_(__VA_ARGS__)
+#define nn_where(...)                   nn_pop_where_(__VA_ARGS__)

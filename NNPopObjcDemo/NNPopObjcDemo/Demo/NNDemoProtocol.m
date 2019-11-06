@@ -37,7 +37,7 @@
 
 @end
 
-@nn_extension(NNDemoWhoImIProtocol, nn_where(NNDemoCpp, self == [NNDemoCpp class]), NNDemoNameProtocol)
+@nn_extension(NNDemoWhoImIProtocol, @nn_where(NNDemoCpp, self == [NNDemoCpp class]), NNDemoNameProtocol)
 
 + (void)sayHelloPop {
     DLog(@"+[%@ %s] cpp say hello pop", self, sel_getName(_cmd));
@@ -58,7 +58,7 @@
 
 @end
 
-@nn_extension(NNDemoWhoImIProtocol, nn_where(provide_a_unique_identifier_for_where, self == [NNDemoObjc class]), NNDemoNameProtocol)
+@nn_extension(NNDemoWhoImIProtocol, @nn_where(provide_a_unique_identifier_for_where, self == [NNDemoObjc class]), NNDemoNameProtocol)
 
 - (NSString *)whoImI {
     NSString *whoImI = [NSString stringWithFormat:@"-[%@ %s] I am %@", [self class], sel_getName(_cmd), self.name];
@@ -71,7 +71,7 @@
 
 @end
 
-@nn_extension(NNDemoWhoImIProtocol, nn_where(NNDemoSwift, self == [NNDemoSwift class]), NNDemoNameProtocol)
+@nn_extension(NNDemoWhoImIProtocol, @nn_where(NNDemoSwift, self == [NNDemoSwift class]), NNDemoNameProtocol)
 
 + (void)sayHelloPop {
     DLog(@"+[%@ %s] swift say hello pop", self, sel_getName(_cmd));

@@ -11,7 +11,7 @@
 #import "NNPopObjcDefines.h"
 
 
-typedef nn_where_value_def (*extension_where_fp)(Class clazz);
+typedef nn_pop_where_value_def (*extension_where_fp)(Class clazz);
 
 typedef struct {
     const char *extension_protocol;
@@ -28,15 +28,15 @@ typedef struct {
 #define nn_pop_extension_section_name_(...) \
         nn_pop_args_concat(_, s, __VA_ARGS__) \
 
-#define nn_pop_extension_section_(prefix, protocol, nn_where_unique_id, nn_where_block, ...) \
+#define nn_pop_extension_section_(prefix, protocol, nn_pop_where_unique_id, nn_pop_where_block, ...) \
         const nn_pop_extension_section_item \
-        nn_pop_extension_section_name_(prefix, protocol, nn_where_unique_id, __VA_ARGS__) \
+        nn_pop_extension_section_name_(prefix, protocol, nn_pop_where_unique_id, __VA_ARGS__) \
         nn_pop_section(metamacro_stringify(nn_pop_section_name)) = \
         { \
             metamacro_stringify(protocol), \
             metamacro_stringify(prefix), \
-            metamacro_stringify(nn_pop_extension_name_(prefix, protocol, nn_where_unique_id, __VA_ARGS__)), \
-            nn_pop_extension_where_name_(prefix, protocol, nn_where_unique_id, __VA_ARGS__), \
+            metamacro_stringify(nn_pop_extension_name_(prefix, protocol, nn_pop_where_unique_id, __VA_ARGS__)), \
+            nn_pop_extension_where_name_(prefix, protocol, nn_pop_where_unique_id, __VA_ARGS__), \
             nn_pop_argcount(__VA_ARGS__), \
             {nn_pop_adopt_protocol_names(__VA_ARGS__)}, \
         }; \

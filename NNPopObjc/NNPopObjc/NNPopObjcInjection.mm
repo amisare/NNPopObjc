@@ -167,12 +167,12 @@ void nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
     __block nn_pop_extension_node_t *matchItem = nil;
     __nn_pop_extension_foreach(protocol.extension, ^(nn_pop_extension_node_t *item, BOOL *stop) {
         
-        if (nn_where_value_matched_default == item->extension_where_fp(clazz)) {
+        if (nn_pop_where_value_matched_default == item->extension_where_fp(clazz)) {
             defaultItem = item;
             matchDefault++;
         }
         
-        if (nn_where_value_matched_limited == item->extension_where_fp(clazz)) {
+        if (nn_pop_where_value_matched_limited == item->extension_where_fp(clazz)) {
             BOOL adopted = true;
             for (unsigned int i = 0; i < item->extension_adopt_protocols_count; i++) {
                 Protocol *protocol = item->extension_adopt_protocols[i];

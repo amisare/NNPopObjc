@@ -15,26 +15,29 @@
         nn_pop_args_concat(_, __VA_ARGS__) \
 
 #define nn_pop_extension_(protocol, ...) \
-        nn_pop_if_less(nn_pop_argcount(__VA_ARGS__), 2) \
-        (nn_pop_extension_fill(nn_pop_extension_prefix, protocol, nn_where())) \
-        (nn_pop_extension_fill(nn_pop_extension_prefix, protocol, __VA_ARGS__)) \
+        nn_pop_extension_param_check(protocol, __VA_ARGS__)
 
-#define nn_pop_extension_fill(prefix, protocol, ...) \
-        nn_pop_extension_expand(prefix, protocol, __VA_ARGS__) \
+#define nn_pop_extension_param_check(protocol, ...) \
+        nn_pop_if_less(nn_pop_argcount(__VA_ARGS__), 3) \
+        (nn_pop_extension_param_fill(nn_pop_extension_prefix, protocol, @nn_where())) \
+        (nn_pop_extension_param_fill(nn_pop_extension_prefix, protocol, __VA_ARGS__)) \
 
-#define nn_pop_extension_expand(prefix, protocol, nn_where_unique_id, nn_where_block, ...) \
+#define nn_pop_extension_param_fill(prefix, protocol, ...) \
+        nn_pop_extension_param_expand(prefix, protocol, __VA_ARGS__) \
+
+#define nn_pop_extension_param_expand(prefix, protocol, where_keywordify, where_unique_id, where_block, ...) \
         \
         class NSObject; \
         \
-        nn_pop_extension_where_(nn_pop_extension_prefix, protocol, nn_where_unique_id, nn_where_block, __VA_ARGS__)\
+        nn_pop_extension_where_(nn_pop_extension_prefix, protocol, where_keywordify, where_unique_id, where_block, __VA_ARGS__)\
         \
-        nn_pop_extension_section_(nn_pop_extension_prefix, protocol, nn_where_unique_id, nn_where_block, __VA_ARGS__) \
+        nn_pop_extension_section_(nn_pop_extension_prefix, protocol, where_unique_id, where_block, __VA_ARGS__) \
         \
-        @interface nn_pop_extension_name_(prefix, protocol, nn_where_unique_id, __VA_ARGS__) : NSObject < protocol nn_pop_adopt_protocol(__VA_ARGS__)> \
+        @interface nn_pop_extension_name_(prefix, protocol, where_unique_id, __VA_ARGS__) : NSObject < protocol nn_pop_adopt_protocol(__VA_ARGS__)> \
         \
         @end \
         \
-        @implementation nn_pop_extension_name_(prefix, protocol, nn_where_unique_id, __VA_ARGS__) \
+        @implementation nn_pop_extension_name_(prefix, protocol, where_unique_id, __VA_ARGS__) \
 
 
 #define nn_pop_adopt_protocol(...) \
