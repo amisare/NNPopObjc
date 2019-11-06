@@ -11,7 +11,7 @@
 #import "NNPopObjcDefines.h"
 
 /**
- * nn_pop_where_block_ calculation result type
+ * nn_pop_where_block_ result type
  */
 typedef enum : NSUInteger {
     nn_pop_where_value_unmatched = 0,
