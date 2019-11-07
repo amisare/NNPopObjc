@@ -31,7 +31,7 @@ typedef struct {
 } nn_pop_extension_description_t;
 
 /**
- * __attribute__ of extension description
+ * __attribute__ of extension description section
  */
 #define nn_pop_extension_description_section(section_name) __attribute__((used, section(metamacro_stringify(nn_pop_segment_name) "," section_name )))
 
