@@ -10,31 +10,68 @@
 
 #import "metamacros.h"
 
-
+/**
+ * This is same as metamacro_argcount(...), but argument can be empty.
+ */
 #define nn_pop_argcount(...) \
         metamacro_at(20, ##__VA_ARGS__, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
 
+/**
+ * This is same as metamacro_at(N, ...), but agrument count up to 40.
+ * It is used for nn_pop_if compare functions.
+ */
 #define nn_pop_if_at(N, ...) \
         metamacro_concat(nn_pop_if_at, N)(__VA_ARGS__)
 
+/**
+ * This is same as metamacro_inc(VAL), but agrument count up to 40.
+ * It is used for nn_pop_if compare functions.
+ */
 #define nn_pop_if_inc(VAL) \
         nn_pop_if_at(VAL, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40)
 
+/**
+ * This is same as metamacro_if_eq(A, B).
+ */
 #define nn_pop_if_equal(A, B) \
         metamacro_concat(nn_pop_if_equal, A)(B)
 
+/**
+ * This is same as metamacro_if_eq(A, B), but B can be greater than or equal to A.
+ * If A is equal to B, the next argument list is expanded; otherwise, the
+ * argument list after that is expanded. A and B must be numbers between zero
+ * and twenty, inclusive.
+ */
 #define nn_pop_if_greater(A, B) \
         metamacro_concat(nn_pop_if_greater, A)(B)
 
+/**
+ * If A is greater or orequal to B, the next argument list is expanded; otherwise, the
+ * argument list after that is expanded. A and B must be numbers between zero
+ * and twenty, inclusive.
+ */
 #define nn_pop_if_greater_or_equal(A, B) \
         metamacro_concat(nn_pop_if_greater_or_equal, A)(B)
 
+/**
+ * If A is less to B, the next argument list is expanded; otherwise, the
+ * argument list after that is expanded. A and B must be numbers between zero
+ * and twenty, inclusive.
+ */
 #define nn_pop_if_less(A, B) \
         metamacro_concat(nn_pop_if_less, A)(B)
 
+/**
+ * If A is less or equal to B, the next argument list is expanded; otherwise, the
+ * argument list after that is expanded. A and B must be numbers between zero
+ * and twenty, inclusive.
+ */
 #define nn_pop_if_less_or_equal(A, B) \
         metamacro_concat(nn_pop_if_less_or_equal, A)(B)
 
+/**
+ * Concat all args wiht SEP.
+ */
 #define nn_pop_args_concat(SEP, ...) \
         metamacro_concat(nn_pop_args_concat_, nn_pop_argcount(__VA_ARGS__))(SEP, __VA_ARGS__)
 

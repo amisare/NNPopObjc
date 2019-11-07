@@ -36,7 +36,7 @@
         (nn_pop_extension_param_fill(nn_pop_extension_prefix, protocol, __VA_ARGS__)) \
 
 /**
- * Used to fill nn_extension variable parameter list.
+ * Fill nn_extension variable parameter list.
  */
 #define nn_pop_extension_param_fill(prefix, protocol, ...) \
         nn_pop_extension_expand(prefix, protocol, __VA_ARGS__) \
