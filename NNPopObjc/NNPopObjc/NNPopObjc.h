@@ -114,6 +114,6 @@ FOUNDATION_EXPORT const unsigned char NNPopObjcVersionString[];
     @end
  
  * @endcode
- * 
+ *
  */
 #define nn_where(...)                   nn_pop_where_(__VA_ARGS__)
