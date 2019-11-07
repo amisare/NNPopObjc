@@ -12,7 +12,6 @@
 
 #import "NNPopObjc.h"
 
-
 typedef struct
 #ifdef __LP64__
 mach_header_64
@@ -24,15 +23,22 @@ nn_pop_mach_header;
 typedef struct nn_pop_extension_node nn_pop_extension_node_t;
 
 struct nn_pop_extension_node {
-    const char *extension_prefix;
-    Class extension_clazz;
-    extension_where_fp extension_where_fp;
-    unsigned int extension_adopt_protocols_count;
-    Protocol *extension_adopt_protocols[20];
+    /// Prefix of extension implementation class name
+    const char *prefix;
+    /// Extension implemention Class
+    Class clazz;
+    /// Where clause function pointer
+    where_fp where_fp;
+    /// Count of protocols that the adopted class should be confrom to.
+    unsigned int confrom_protocols_count;
+    /// Protocols that the adopted class should be confrom to.
+    Protocol *confrom_protocols[20];
     nn_pop_extension_node_t *next;
 };
 
 typedef struct {
+    /// Protocol be extended
     Protocol *protocol;
+    /// Protocol extension descriptions
     nn_pop_extension_node_t *extension;
 } nn_pop_protocol_t;

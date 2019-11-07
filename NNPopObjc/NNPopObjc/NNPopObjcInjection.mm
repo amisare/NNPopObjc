@@ -98,7 +98,7 @@ BOOL nn_pop_isExtensionClass(Class clazz, nn_pop_protocol_t *protocols, unsigned
         nn_pop_protocol_t protocol = protocols[i];
         
         __nn_pop_extension_foreach(protocol.extension, ^(nn_pop_extension_node_t *item, BOOL *stop) {
-            if (clazz == item->extension_clazz) {
+            if (clazz == item->clazz) {
                 result = true;
                 *stop = true;
             }
@@ -167,15 +167,15 @@ void nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
     __block nn_pop_extension_node_t *matchItem = nil;
     __nn_pop_extension_foreach(protocol.extension, ^(nn_pop_extension_node_t *item, BOOL *stop) {
         
-        if (nn_pop_where_value_matched_default == item->extension_where_fp(clazz)) {
+        if (nn_pop_where_value_matched_default == item->where_fp(clazz)) {
             defaultItem = item;
             matchDefault++;
         }
         
-        if (nn_pop_where_value_matched_constrained == item->extension_where_fp(clazz)) {
+        if (nn_pop_where_value_matched_constrained == item->where_fp(clazz)) {
             BOOL adopted = true;
-            for (unsigned int i = 0; i < item->extension_adopt_protocols_count; i++) {
-                Protocol *protocol = item->extension_adopt_protocols[i];
+            for (unsigned int i = 0; i < item->confrom_protocols_count; i++) {
+                Protocol *protocol = item->confrom_protocols[i];
                 if ([clazz conformsToProtocol:protocol] == false) {
                     adopted = false;
                     break;
@@ -197,7 +197,7 @@ void nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
     }
     
     if (matchCount == 1) {
-        nn_pop_injectProtocolExtension(protocol.protocol, matchItem->extension_clazz, clazz, false);
+        nn_pop_injectProtocolExtension(protocol.protocol, matchItem->clazz, clazz, false);
     }
     else {
         if (matchDefault > 1) {
@@ -205,7 +205,7 @@ void nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
         }
         
         if (matchDefault == 1) {
-            nn_pop_injectProtocolExtension(protocol.protocol, defaultItem->extension_clazz, clazz, true);
+            nn_pop_injectProtocolExtension(protocol.protocol, defaultItem->clazz, clazz, true);
         }
     }
 }
@@ -303,8 +303,8 @@ void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^l
         return;
     }
     
-    unsigned long sectionItemCount = size / sizeof(nn_pop_extension_section_item);
-    nn_pop_extension_section_item *sectionItems = (nn_pop_extension_section_item *)sectionData;
+    unsigned long sectionItemCount = size / sizeof(nn_pop_extension_description_t);
+    nn_pop_extension_description_t *sectionItems = (nn_pop_extension_description_t *)sectionData;
     
     nn_pop_protocol_t *protocols = (nn_pop_protocol_t *)calloc((sectionItemCount + 1), sizeof(nn_pop_protocol_t));
     if (protocols == NULL) {
@@ -314,13 +314,13 @@ void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^l
     
     for (unsigned int sectionIndex = 0, protocolIndex = 0; sectionIndex < sectionItemCount; sectionIndex++) {
         
-        nn_pop_extension_section_item *_sectionItem = &sectionItems[sectionIndex];
+        nn_pop_extension_description_t *_sectionItem = &sectionItems[sectionIndex];
         
         nn_pop_protocol_t *_protocol = &protocols[protocolIndex++];
         _protocol->protocol = NULL;
         _protocol->extension = NULL;
         
-        Protocol *protocol = objc_getProtocol(_sectionItem->extension_protocol);
+        Protocol *protocol = objc_getProtocol(_sectionItem->protocol);
         if (!protocol) {
             continue;
         }
@@ -330,12 +330,12 @@ void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^l
         if (!_extension) {
             continue;
         }
-        _extension->extension_prefix = _sectionItem->extension_prefix;
-        _extension->extension_clazz = objc_getClass(_sectionItem->extension_clazz);
-        _extension->extension_where_fp = _sectionItem->extension_where_fp;
-        _extension->extension_adopt_protocols_count = _sectionItem->extension_adopt_protocols_count;
-        for (unsigned int i = 0; i < _extension->extension_adopt_protocols_count; i++) {
-            _extension->extension_adopt_protocols[i] = objc_getProtocol(_sectionItem->extension_adopt_protocols[i]);
+        _extension->prefix = _sectionItem->prefix;
+        _extension->clazz = objc_getClass(_sectionItem->clazz);
+        _extension->where_fp = _sectionItem->where_fp;
+        _extension->confrom_protocols_count = _sectionItem->confrom_protocols_count;
+        for (unsigned int i = 0; i < _extension->confrom_protocols_count; i++) {
+            _extension->confrom_protocols[i] = objc_getProtocol(_sectionItem->confrom_protocols[i]);
         }
         _extension->next = NULL;
         _protocol->extension = _extension;

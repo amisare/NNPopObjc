@@ -12,10 +12,10 @@
 
 #import "NNPopObjc.h"
 #import "NNPopObjcDefines.h"
+#import "NNPopObjcDescription.h"
 #import "NNPopObjcExtension.h"
 #import "NNPopObjcInjection.h"
 #import "NNPopObjcMacros.h"
-#import "NNPopObjcSection.h"
 #import "NNPopObjcWhere.h"
 #import "metamacros.h"
 

@@ -21,14 +21,14 @@ FOUNDATION_EXPORT const unsigned char NNPopObjcVersionString[];
 #import <NNPopObjc/NNPopObjcMacros.h>
 #import <NNPopObjc/NNPopObjcDefines.h>
 #import <NNPopObjc/NNPopObjcWhere.h>
-#import <NNPopObjc/NNPopObjcSection.h>
+#import <NNPopObjc/NNPopObjcDescription.h>
 #import <NNPopObjc/NNPopObjcExtension.h>
 #else
 #import "metamacros.h"
 #import "NNPopObjcMacros.h"
 #import "NNPopObjcDefines.h"
 #import "NNPopObjcWhere.h"
-#import "NNPopObjcSection.h"
+#import "NNPopObjcDescription.h"
 #import "NNPopObjcExtension.h"
 #endif
 
