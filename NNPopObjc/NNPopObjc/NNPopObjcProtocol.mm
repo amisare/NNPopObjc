@@ -8,7 +8,7 @@
 #import "NNPopObjcProtocol.h"
 
 
-nn_pop_extension_node_p nn_pop_extension_node_new() {
+nn_pop_extension_node_p nn_pop_extension_node_new(void) {
     
     nn_pop_extension_node_p node = (nn_pop_extension_node_p )calloc(1, sizeof(nn_pop_extension_node_t));
     return node;

@@ -41,7 +41,7 @@ typedef struct {
 } nn_pop_protocol_t;
 
 
-nn_pop_extension_node_p nn_pop_extension_node_new();
+nn_pop_extension_node_p nn_pop_extension_node_new(void);
 nn_pop_extension_node_p nn_pop_extension_node_copy(nn_pop_extension_node_p dst, nn_pop_extension_node_p src);
 
 unsigned int nn_pop_extension_list_count(nn_pop_extension_node_p *head);
