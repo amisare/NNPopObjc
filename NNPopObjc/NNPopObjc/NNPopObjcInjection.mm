@@ -20,51 +20,6 @@
 static pthread_mutex_t nn_pop_inject_lock = PTHREAD_MUTEX_INITIALIZER;
 
 
-void __nn_pop_extension_append(nn_pop_extension_node_t **head, nn_pop_extension_node_t **entry) {
-    if (*head) {
-        nn_pop_extension_node_t *t = *head;
-        while (t->next != NULL) {
-            t = t->next;
-        }
-        t->next = *entry;
-    }
-    else {
-        *head = *entry;
-    }
-}
-
-
-void __nn_pop_extension_free(nn_pop_extension_node_t **head) {
-    while (*head) {
-        nn_pop_extension_node_t *t = *head;
-        *head = (t)->next;
-        free(t);
-    }
-}
-
-
-void __nn_pop_extension_foreach(nn_pop_extension_node_t *head, void (^enumerate_block)(nn_pop_extension_node_t *item, BOOL *stop)) {
-    nn_pop_extension_node_t *t = head;
-    BOOL stop = false;
-    while (t) {
-        if (enumerate_block && stop == false) {
-            enumerate_block(t, &stop);
-        }
-        t = t->next;
-    }
-}
-
-void __nn_pop_freeProtocols(nn_pop_protocol_t *protocols, unsigned int protocol_count) {
-    
-    for (unsigned int i = 0; i < protocol_count; i++) {
-        // free extension
-        __nn_pop_extension_free(&(protocols[i].extension));
-    }
-    
-    free(protocols);
-}
-
-
 /// Gets a root clazz that conformed to protocol.
 ///
 /// @param protocol A protocol that root clazz adpoted.
@@ -97,7 +52,7 @@ BOOL nn_pop_isExtensionClass(Class clazz, nn_pop_protocol_t *protocols, unsigned
         
         nn_pop_protocol_t protocol = protocols[i];
         
-        __nn_pop_extension_foreach(protocol.extension, ^(nn_pop_extension_node_t *item, BOOL *stop) {
+        nn_pop_extension_list_foreach(&(protocol.extension), ^(nn_pop_extension_node_p item, BOOL *stop) {
             if (clazz == item->clazz) {
                 result = true;
                 *stop = true;
@@ -161,53 +116,67 @@ void nn_pop_injectProtocolExtension (Protocol *protocol, Class extentionClass, C
 
 void nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
     
-    __block unsigned int matchCount = 0;
-    __block unsigned int matchDefault = 0;
-    __block nn_pop_extension_node_t *defaultItem = nil;
-    __block nn_pop_extension_node_t *matchItem = nil;
-    __nn_pop_extension_foreach(protocol.extension, ^(nn_pop_extension_node_t *item, BOOL *stop) {
+    __block nn_pop_extension_node_p default_list = nil;
+    __block nn_pop_extension_node_p constrained_list = nil;
+    
+    nn_pop_extension_list_foreach(&(protocol.extension), ^(nn_pop_extension_node_p node, BOOL *stop) {
         
-        if (nn_pop_where_value_matched_default == item->where_fp(clazz)) {
-            defaultItem = item;
-            matchDefault++;
+        nn_pop_where_value_def match_value = node->where_fp(clazz);
+
+        if (match_value == nn_pop_where_value_matched_default) {
+            nn_pop_extension_node_p matched_node = nn_pop_extension_node_new();
+            nn_pop_extension_node_copy(matched_node, node);
+            matched_node->next = nil;
+            nn_pop_extension_list_append(&(default_list), &(matched_node));
         }
         
-        if (nn_pop_where_value_matched_constrained == item->where_fp(clazz)) {
-            BOOL adopted = true;
-            for (unsigned int i = 0; i < item->confrom_protocols_count; i++) {
-                Protocol *protocol = item->confrom_protocols[i];
+        if (match_value == nn_pop_where_value_matched_constrained) {
+            BOOL conform = true;
+            for (unsigned int i = 0; i < node->confrom_protocols_count; i++) {
+                Protocol *protocol = node->confrom_protocols[i];
                 if ([clazz conformsToProtocol:protocol] == false) {
-                    adopted = false;
+                    conform = false;
                     break;
                 }
             }
-            if (adopted) {
-                matchItem = item;
-                matchCount++;
+            if (conform) {
+                nn_pop_extension_node_p matched_node = nn_pop_extension_node_new();
+                nn_pop_extension_node_copy(matched_node, node);
+                matched_node->next = nil;
+                nn_pop_extension_list_append(&(constrained_list), &(matched_node));
             }
         }
     });
-
-    if (matchDefault == 0 && matchCount == 0) {
-        NSCAssert(false, ([NSString stringWithFormat:@"You need at least provide a extension for %@", @(class_getName(clazz))]));
-    }
     
-    if (matchCount > 1) {
+    if (nn_pop_extension_list_count(&(constrained_list)) > 1) {
         NSCAssert(false, ([NSString stringWithFormat:@"Matched multiple extension to extension for %@", @(class_getName(clazz))]));
+        goto cleanup;
+    }
+    if (nn_pop_extension_list_count(&(constrained_list)) == 1) {
+        nn_pop_injectProtocolExtension(protocol.protocol, constrained_list->clazz, clazz, false);
+        goto cleanup;
     }
     
-    if (matchCount == 1) {
-        nn_pop_injectProtocolExtension(protocol.protocol, matchItem->clazz, clazz, false);
+    if (nn_pop_extension_list_count(&(default_list)) > 1) {
+        NSCAssert(false, ([NSString stringWithFormat:@"Matched multiple extension to extension for %@", @(class_getName(clazz))]));
+        goto cleanup;
     }
-    else {
-        if (matchDefault > 1) {
-            NSCAssert(false, ([NSString stringWithFormat:@"Matched multiple default extension to extension for %@", @(class_getName(clazz))]));
-        }
-        
-        if (matchDefault == 1) {
-            nn_pop_injectProtocolExtension(protocol.protocol, defaultItem->clazz, clazz, true);
-        }
+    if (nn_pop_extension_list_count(&(default_list)) == 1) {
+        nn_pop_injectProtocolExtension(protocol.protocol, default_list->clazz, clazz, false);
+        goto cleanup;
     }
+    
+    if ((nn_pop_extension_list_count(&(constrained_list)) == 0) && (nn_pop_extension_list_count(&(default_list)) == 0)) {
+        NSCAssert(false, ([NSString stringWithFormat:@"You need at least provide a extension for %@", @(class_getName(clazz))]));
+        goto cleanup;
+    }
+
+cleanup:
+    
+    nn_pop_extension_list_free(&default_list);
+    nn_pop_extension_list_free(&constrained_list);
+    
+    return;
 }
 
 
@@ -306,7 +275,7 @@ void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^l
     unsigned long sectionItemCount = size / sizeof(nn_pop_extension_description_t);
     nn_pop_extension_description_t *sectionItems = (nn_pop_extension_description_t *)sectionData;
     
-    nn_pop_protocol_t *protocols = (nn_pop_protocol_t *)calloc((sectionItemCount + 1), sizeof(nn_pop_protocol_t));
+    nn_pop_protocol_t *protocols = nn_pop_protocols_new(sectionItemCount + 1);
     if (protocols == NULL) {
         pthread_mutex_unlock(&nn_pop_inject_lock);
         return;
@@ -326,7 +295,7 @@ void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^l
         }
         _protocol->protocol = protocol;
         
-        nn_pop_extension_node_t *_extension = (nn_pop_extension_node_t *)calloc(1, sizeof(nn_pop_extension_node_t));
+        nn_pop_extension_node_p _extension = nn_pop_extension_node_new();
         if (!_extension) {
             continue;
         }
@@ -338,7 +307,7 @@ void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^l
             _extension->confrom_protocols[i] = objc_getProtocol(_sectionItem->confrom_protocols[i]);
         }
         _extension->next = NULL;
-        _protocol->extension = _extension;
+        nn_pop_extension_list_append(&(_protocol->extension), &(_extension));
     }
     
     qsort_b(protocols, sectionItemCount, sizeof(nn_pop_protocol_t), ^int(const void *a, const void *b) {
@@ -355,7 +324,7 @@ void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^l
     unsigned int protocolBaseIndex = 0, protocolForwardIndex = 1;
     while (protocolForwardIndex < sectionItemCount) {
         if (protocol_isEqual(protocols[protocolBaseIndex].protocol, protocols[protocolForwardIndex].protocol)) {
-            __nn_pop_extension_append(&(protocols[protocolBaseIndex].extension), &(protocols[protocolForwardIndex].extension));
+            nn_pop_extension_list_append(&(protocols[protocolBaseIndex].extension), &(protocols[protocolForwardIndex].extension));
         }
         else {
             protocols[++protocolBaseIndex] = protocols[protocolForwardIndex];
@@ -370,7 +339,7 @@ void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^l
         loaded(protocols, protocolCount);
     }
     
-    __nn_pop_freeProtocols(protocols, protocolCount);
+    nn_pop_protocols_free(protocols, protocolCount);
     
     pthread_mutex_unlock(&nn_pop_inject_lock);
 }
