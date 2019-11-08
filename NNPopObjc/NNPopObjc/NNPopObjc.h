@@ -41,20 +41,21 @@ FOUNDATION_EXPORT const unsigned char NNPopObjcVersionString[];
  *
  * The parameters of nn_extension include two parts, protocol and variable parameter list.
  * The protocol is required and the variable parameter list is optional.
- * The parameter list can also be divided into two parts, @nn_where and adopted_protocol list.
+ * The parameter list can also be divided into two parts, @nn_where and confrom protocol list.
  *
  * A complete protocol extension:
- * @nn_extension(protocol, @nn_where(...), adopted_protocol_a, adopted_protocol_b, ...)
+ * @nn_extension(protocol, @nn_where(...), confrom_protocol_a, confrom_protocol_b, ...)
  *
- * An omitted adopted_protocol extension:
+ * An omitted confrom_protocol extension:
  * @nn_extension(protocol, @nn_where(...))
  *
- * An omitted where clause and adopted_protocol extension:
+ * An omitted where clause and confrom protocol list extension:
  * @nn_extension(protocol)
  *
  * @param protocol A protocol.
- * @param @nn_where A where clause for protocol extension, it is used to add constraints to the conforming classes.
- * @param adopted_protocols... Adpoted protocols that conforming classes must satisfy.
+ * @param @nn_where A where clause for protocol extension, it is used to add constraints to the
+ * conforming classes.
+ * @param confrom_protocols... Adpoted protocols that conforming classes must satisfy.
  *
  * @note
  *
