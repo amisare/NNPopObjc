@@ -1,11 +1,11 @@
-# NNPopObjc 的使用
+# NNPopObjc usage
 
-本文档是 NNPopObjc 的使用指南(在 0.1.0 以上不再适用)。
+This document is a guide for NNPopObjc (version 0.0.x) .
 
 ## @nn_extension
 
-在 NNPopObjc 中，`nn_extension` 有两个参数。第一个参数是要扩展的 `procotol`，第二个参数是 `procotol` 实现所要继承的类。
-关键字 `nn_extension` 只是一个宏，使用 `nn_extension` 将声明并实现一个类作为 `procotol` 扩展名，因此 `nn_extension` 只能在 `.m` 文件中使用，其定义如下 ：
+In NNPopObjc, `nn_extension` has two parameters. The frist parameter is protocol to be extended, the second parameter is the class that the `extension` inherits.
+The key word `nn_extension` is just a macro, using the `nn_extension` macro, it will declare and implement a class as the procotol `extension`, so you can only use it in `.m` file, it is defined as follow:
 
 ```
 #define nn_extension(protocol, clazz) \
@@ -18,9 +18,9 @@ interface __NNPopObjc##_##protocol##_##clazz : clazz <protocol> \
 \
 ```
 
-这是一个使用 `nn_extension` 扩展 procotol 的示例：
+This is an example of using `nn_extension` to extend a procotol:
 
-声明一个名为 "NNDemoProcotol" 的 procotol：
+Declare a protocol named "NNDemoProcotol":
 
 ```
 @protocol NNDemoProtocol <NSObject>
@@ -31,7 +31,7 @@ interface __NNPopObjc##_##protocol##_##clazz : clazz <protocol> \
 @end
 ```
 
-使用 `nn_extension` 扩展 procotol：
+Use the `nn_extension` to extend procotol:
 
 ```
 @nn_extension(NNDemoProtocol, NSObject)
@@ -43,7 +43,7 @@ interface __NNPopObjc##_##protocol##_##clazz : clazz <protocol> \
 @end
 ```
 
-将宏展开以后：
+The following is the content after the macro is expanded：
 
 ```
 @interface __NNPopObjc_NNDemoProtocol_NSObject : NSObject <NNDemoProtocol>
@@ -59,11 +59,11 @@ interface __NNPopObjc##_##protocol##_##clazz : clazz <protocol> \
 @end
 ```
 
-## Protocol 扩展
+## Protocol Extensions
 
-### 提供默认实现
+### Providing Default Implementations
 
-当 `nn_extension` 的第二个参数是 `NSObject` 时，那么它将作为当前 `protocol` 的默认扩展，遵守该 `protocol` 的所有类都将它用作默认的 `protocol` 扩展实现，例如：
+When the second parameter of `nn_extension` is `NSObject`, it is the default extension of the current protocol. All classes that adapting the protocol will use it as the default procotol extention implementation, for example:
 
 ```
 @nn_extension(NNDemoProtocol, NSObject)
@@ -75,7 +75,7 @@ interface __NNPopObjc##_##protocol##_##clazz : clazz <protocol> \
 @end
 ```
 
-所有符合条件的类都会自动获得此方法的实现，而无需进行任何其他修改。
+All conforming classes automatically gain this method implementation without any additional modification.
 
 ```
 @interface NNDemoClassA: NSObject <NNDemoProtocol> @end
@@ -91,9 +91,9 @@ interface __NNPopObjc##_##protocol##_##clazz : clazz <protocol> \
 //Prints "-[NNDemoClassB sayHelloPop] say hello pop"
 ```
 
-### 向 Protocol 扩展添加类约束
+### Adding Class Constraints to Protocol Extensions
 
-将类约束写在 `nn_extension` 的第二个参数中。 例如，定义一个 NNDemoProtocol 协议的扩展，该扩展适用于继承自 NNDemoClassAA 的所有子类。
+Write the class constraints in the second parameter of `nn_extension`. For example, you can define an extension to the NNDemoProtocol protocol that applies to any class whose inherited from from NNDemoClassAA.
 
 ```
 @nn_extension(NNDemoProtocol, NSObject)
@@ -113,7 +113,7 @@ interface __NNPopObjc##_##protocol##_##clazz : clazz <protocol> \
 @end
 ```
 
-考虑 NNDemoProtocol 扩展的 NNDemoClassAA 的类约束，以及 NNDemoClassA ，NNDemoClassAA ， NNDemoClassAAA ，NNDemoClassAAB 之间的继承关系。
+Consider the NNDemoClassAA class constraint to NNDemoProtocol procotol extentsion, and  the inheritance relationship between NNDemoClassA, NNDemoClassAA, NNDemoClassAAA, NNDemoClassAAB.
 
 ```
 @interface NNDemoClassA: NSObject <NNDemoProtocol> @end

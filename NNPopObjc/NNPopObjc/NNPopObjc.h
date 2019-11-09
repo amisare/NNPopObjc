@@ -39,14 +39,14 @@ FOUNDATION_EXPORT const unsigned char NNPopObjcVersionString[];
  * conforming types. This allows you to define behavior on protocols themselves, rather
  * than in each type’s individual conformance.
  *
- * The parameters of nn_extension include two parts, protocol and variable parameter list.
- * The protocol is required and the variable parameter list is optional.
- * The parameter list can also be divided into two parts, @nn_where and confrom protocol list.
+ * The parameters of nn_extension include two parts, protocol and variable parameter.
+ * The protocol is required and the variable parameter is optional.
+ * The variable parameter can also be divided into two parts, @nn_where and confrom protocol list.
  *
  * A complete protocol extension:
- * @nn_extension(protocol, @nn_where(...), confrom_protocol_a, confrom_protocol_b, ...)
+ * @nn_extension(protocol, @nn_where(...), confrom_protocol_0, confrom_protocol_1, ..., confrom_protocol_n)
  *
- * An omitted confrom_protocol extension:
+ * An omitted confrom_protocols extension:
  * @nn_extension(protocol, @nn_where(...))
  *
  * An omitted where clause and confrom protocol list extension:
@@ -55,7 +55,7 @@ FOUNDATION_EXPORT const unsigned char NNPopObjcVersionString[];
  * @param protocol A protocol.
  * @param @nn_where A where clause for protocol extension, it is used to add constraints to the
  * conforming classes.
- * @param confrom_protocols... Adpoted protocols that conforming classes must satisfy.
+ * @param confrom_protocols... A class that adopt protocol extension must confrom to all the protocols in this list.
  *
  * @note
  *
@@ -76,7 +76,7 @@ FOUNDATION_EXPORT const unsigned char NNPopObjcVersionString[];
 /**
  * Where Clause for Protocol Extension
  *
- * This provids where clause for Extension, the clause's variable parameters can pass up to
+ * This provids where clause for Extension, the clause's variable parameter can pass up to
  * two parameters.
  *
  * A complete where clause:

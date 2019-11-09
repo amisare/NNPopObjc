@@ -12,7 +12,7 @@ NNPopObjc is inspired by protocol oriented programming, it provides extensibilit
 
 ## Documents
 
-* Read the [NNPopObjc Guide](Docs/usage_en.md) document.
+* Read the [NNPopObjc Guide](Docs/0.2.x/usage_en.md) document.
 
 ## Quick Start
 
@@ -24,7 +24,6 @@ Declaring the Procotol in a `.h` file
 @protocol NNDemoProtocol <NSObject>
 
 @optional
-@property (nonatomic, strong) NSString* whoImI;
 - (void)sayHelloPop;
 + (void)sayHelloPop;
 
@@ -47,29 +46,6 @@ Extending the Procotol needs in a `.m` file
     DLog(@"-[%@ %s] code say hello pop", [self class], sel_getName(_cmd));
 }
 
-- (NSString *)whoImI {
-    NSString *whoImI = [NSString stringWithFormat:@"-[%@ %s] I am %@", [self class], sel_getName(_cmd), nil];
-    return whoImI;
-}
-
-- (void)setWhoImI:(NSString *)whoImI {
-    DLog(@"-[%@ %s%@]", [self class], sel_getName(_cmd), whoImI);
-}
-
-@end
-
-///Extending the Procotol for NNDemoObjc
-@nn_extension(NNDemoProtocol, nn_where(provide_a_unique_identifier_for_where, self == [NNDemoObjc class]), NNDemoNameProtocol)
-
-- (NSString *)whoImI {
-    NSString *whoImI = [NSString stringWithFormat:@"-[%@ %s] I am %@", [self class], sel_getName(_cmd), self.name];
-    return whoImI;
-}
-
-- (void)setWhoImI:(NSString *)whoImI {
-    self.name = whoImI;
-}
-
 @end
 ```
 
@@ -78,18 +54,7 @@ Extending the Procotol needs in a `.m` file
 - Creating a Class
 
 ```objective-c
-///name protocol
-@protocol NNDemoNameProtocol <NSObject>
-
-@optional
-@property (nonatomic, strong) NSString* name;
-
-@end
-
-///class
-@interface NNDemoObjc : NSObject <NNDemoNameProtocol, NNDemoProtocol>
-
-@property (nonatomic, strong) NSString *name;
+@interface NNDemoObjc : NSObject <NNDemoNameProtocol>
 
 @end
 ```
@@ -108,10 +73,7 @@ Extending the Procotol needs in a `.m` file
 
 ```objective-c
 [NNDemoObjc sayHelloPop];
-NNDemoObjc *objc = [NNDemoObjc new];
-[objc sayHelloPop];
-objc.whoImI = @"objc";
-DLog(@"%@", objc.whoImI);
+[[NNDemoObjc new] sayHelloPop];
 ```
 
 - Outputting
@@ -119,7 +81,6 @@ DLog(@"%@", objc.whoImI);
 ```objective-c
 +[NNDemoObjc sayHelloPop] code say hello pop
 -[NNDemoObjc sayHelloPop] code say hello pop
--[NNDemoObjc whoImI] I am objc
 ```
 
 

@@ -8,9 +8,11 @@
 
 NNPopObjc 受面向协议编程的启发，为协议提供了实现扩展的功能。
 
+[NNPopObjc English Document](README_zh_CN.md)
+
 ## 文档
 
-* 阅读 [NNPopObjc Guide](Docs/usage_zh_CN.md) 文档。
+* 阅读 [NNPopObjc Guide](Docs/0.2.x/usage_zh_CN.md) 文档。
 
 ## 快速开始
 
@@ -22,7 +24,6 @@ NNPopObjc 受面向协议编程的启发，为协议提供了实现扩展的功�
 @protocol NNDemoProtocol <NSObject>
 
 @optional
-@property (nonatomic, strong) NSString* whoImI;
 - (void)sayHelloPop;
 + (void)sayHelloPop;
 
@@ -45,29 +46,6 @@ NNPopObjc 受面向协议编程的启发，为协议提供了实现扩展的功�
     DLog(@"-[%@ %s] code say hello pop", [self class], sel_getName(_cmd));
 }
 
-- (NSString *)whoImI {
-    NSString *whoImI = [NSString stringWithFormat:@"-[%@ %s] I am %@", [self class], sel_getName(_cmd), nil];
-    return whoImI;
-}
-
-- (void)setWhoImI:(NSString *)whoImI {
-    DLog(@"-[%@ %s%@]", [self class], sel_getName(_cmd), whoImI);
-}
-
-@end
-
-/// 对 NNDemoObjc 类的协议扩展
-@nn_extension(NNDemoProtocol, nn_where(provide_a_unique_identifier_for_where, self == [NNDemoObjc class]), NNDemoNameProtocol)
-
-- (NSString *)whoImI {
-    NSString *whoImI = [NSString stringWithFormat:@"-[%@ %s] I am %@", [self class], sel_getName(_cmd), self.name];
-    return whoImI;
-}
-
-- (void)setWhoImI:(NSString *)whoImI {
-    self.name = whoImI;
-}
-
 @end
 ```
 
@@ -76,18 +54,7 @@ NNPopObjc 受面向协议编程的启发，为协议提供了实现扩展的功�
 - 创建类
 
 ```objective-c
-///name protocol
-@protocol NNDemoNameProtocol <NSObject>
-
-@optional
-@property (nonatomic, strong) NSString* name;
-
-@end
-
-///class
-@interface NNDemoObjc : NSObject <NNDemoNameProtocol, NNDemoProtocol>
-
-@property (nonatomic, strong) NSString *name;
+@interface NNDemoObjc : NSObject <NNDemoNameProtocol>
 
 @end
 ```
@@ -106,10 +73,7 @@ NNPopObjc 受面向协议编程的启发，为协议提供了实现扩展的功�
 
 ```objective-c
 [NNDemoObjc sayHelloPop];
-NNDemoObjc *objc = [NNDemoObjc new];
-[objc sayHelloPop];
-objc.whoImI = @"objc";
-DLog(@"%@", objc.whoImI);
+[[NNDemoObjc new] sayHelloPop];
 ```
 
 - 输出日志
@@ -117,7 +81,6 @@ DLog(@"%@", objc.whoImI);
 ```objective-cc
 +[NNDemoObjc sayHelloPop] code say hello pop
 -[NNDemoObjc sayHelloPop] code say hello pop
--[NNDemoObjc whoImI] I am objc
 ```
 
 

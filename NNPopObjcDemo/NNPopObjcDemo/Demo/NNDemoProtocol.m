@@ -40,7 +40,7 @@
 @end
 
 
-@nn_extension(NNDemoWhoImIProtocol, @nn_where(provide_a_unique_identifier_for_where, self == [NNDemoObjc class]), NNDemoNameProtocol)
+@nn_extension(NNDemoWhoImIProtocol, @nn_where(a_where_unique_id, self == [NNDemoObjc class]), NNDemoNameProtocol)
 
 + (void)sayHelloPop {
     DLog(@"+[%@ %s] objc says hello pop", self, sel_getName(_cmd));
