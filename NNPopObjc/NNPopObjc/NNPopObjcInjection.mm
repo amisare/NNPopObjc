@@ -257,16 +257,14 @@ void nn_pop_injectProtocols (nn_pop_protocol_t *protocols, unsigned int protocol
 }
 
 
-void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^loaded)(nn_pop_protocol_t *protocols, unsigned int protocol_count)) {
+void __nn_pop_loadSection(const nn_pop_mach_header *mhp, const char *sectname, void (^loaded)(nn_pop_protocol_t *protocols, unsigned int protocol_count)) {
     
     if (pthread_mutex_lock(&nn_pop_inject_lock) != 0) {
         fprintf(stderr, "ERROR: Could not synchronize on special protocol data\n");
     }
     
-    nn_pop_mach_header *_mhp = (nn_pop_mach_header *)mhp;
-    
     unsigned long size = 0;
-    uintptr_t *sectionData = (uintptr_t*)getsectiondata(_mhp, metamacro_stringify(nn_pop_segment_name), sectname, &size);
+    uintptr_t *sectionData = (uintptr_t*)getsectiondata(mhp, metamacro_stringify(nn_pop_segment_name), sectname, &size);
     if (size == 0) {
         pthread_mutex_unlock(&nn_pop_inject_lock);
         return;
@@ -345,14 +343,22 @@ void __nn_pop_loadSection(const mach_header *mhp, const char *sectname, void (^l
 }
 
 
-void __nn_pop_dyld_callback(const mach_header *mhp, intptr_t vmaddr_slide) {
+struct __nn_pop_ProgramVars
+{
+    const void*        mh;
+    int*            NXArgcPtr;
+    const char***    NXArgvPtr;
+    const char***    environPtr;
+    const char**    __prognamePtr;
+};
+
+
+__attribute__((constructor)) void __nn_pop_prophet(int argc, const char* argv[], const char* envp[], const char* apple[], const __nn_pop_ProgramVars* vars) {
+
+    nn_pop_mach_header *mhp = (nn_pop_mach_header *)vars->mh;
+    
     __nn_pop_loadSection(mhp, metamacro_stringify(nn_pop_section_name), ^(nn_pop_protocol_t *protocols, unsigned int protocol_count) {
         nn_pop_injectProtocols(protocols, protocol_count);
     });
-}
-
-
-__attribute__((constructor)) void __nn_pop_prophet() {
-    _dyld_register_func_for_add_image(__nn_pop_dyld_callback);
 }
 
