@@ -128,6 +128,7 @@ pod install --repo-update
 
 ## inspired
 
+- [Protocol-Oriented Programming in Swift](https://developer.apple.com/videos/play/wwdc2015/408/)
 - [ProtocolKit](https://github.com/forkingdog/ProtocolKit)
 - [libextobjc](https://github.com/jspahrsummers/libextobjc)
 
