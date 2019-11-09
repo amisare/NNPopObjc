@@ -83,7 +83,6 @@ Extending the Procotol needs in a `.m` file
 -[NNDemoObjc sayHelloPop] code say hello pop
 ```
 
-
 ## Installation
 
 NNPopObjc supports CocoaPods for installing the library in a project.
@@ -126,3 +125,12 @@ try install with the following command:
 ```bash
 pod install --repo-update
 ```
+
+## inspired
+
+- [ProtocolKit](https://github.com/forkingdog/ProtocolKit)
+- [libextobjc](https://github.com/jspahrsummers/libextobjc)
+
+## License
+
+NNPopObjc is released under the MIT license. See LICENSE for details.
