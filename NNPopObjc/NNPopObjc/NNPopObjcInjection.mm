@@ -19,12 +19,13 @@
 
 static pthread_mutex_t nn_pop_inject_lock = PTHREAD_MUTEX_INITIALIZER;
 
-/// Gets a root clazz that adopt to protocol.
-/// @param protocol A protocol that root clazz adpoted.
-/// @param clazz A clazz that it is sub clazz of root or the root self.
-Class __nn_pop_rootProtocolClass(Protocol *protocol, Class clazz) {
+/// Returns a Boolean value that indicates whether a class conforms to a given protocol.
+/// It is same as: + (BOOL)conformsToProtocol:(Protocol *)protocol
+/// @param clazz The class you want to inspect.
+/// @param protocol A protocol.
+BOOL __nn_pop_class_conformsToProtocol(Class clazz, Protocol *protocol)  {
     
-    Class result = nil;
+    BOOL result = false;
     
     if (clazz == nil || protocol == nil) {
         return result;
@@ -33,7 +34,7 @@ Class __nn_pop_rootProtocolClass(Protocol *protocol, Class clazz) {
     Class currentClazz = clazz;
     while (currentClazz) {
         if (class_conformsToProtocol(currentClazz, protocol)) {
-            result = currentClazz;
+            result = true;
         }
         currentClazz = class_getSuperclass(currentClazz);
     }
@@ -157,31 +158,26 @@ void __nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
     });
     
     if (nn_pop_extension_list_count(&(constrained_list)) > 1) {
-        NSCAssert(false, ([NSString stringWithFormat:@"Matched multiple extension to extension for %@", @(class_getName(clazz))]));
-        goto cleanup;
+        NSCAssert(false, ([NSString stringWithFormat:@"Matched multiple extensions for %@", @(class_getName(clazz))]));
     }
     if (nn_pop_extension_list_count(&(constrained_list)) == 1) {
         __nn_pop_injectProtocolExtension(protocol.protocol, constrained_list->clazz, clazz, false);
-        goto cleanup;
     }
     
     if (nn_pop_extension_list_count(&(default_list)) > 1) {
-        NSCAssert(false, ([NSString stringWithFormat:@"Matched multiple extension to extension for %@", @(class_getName(clazz))]));
-        goto cleanup;
+        NSCAssert(false, ([NSString stringWithFormat:@"Matched multiple extensions for %@", @(class_getName(clazz))]));
     }
     if (nn_pop_extension_list_count(&(default_list)) == 1) {
-        __nn_pop_injectProtocolExtension(protocol.protocol, default_list->clazz, clazz, false);
-        goto cleanup;
+        __nn_pop_injectProtocolExtension(protocol.protocol, default_list->clazz, clazz, true);
     }
     
     if ((nn_pop_extension_list_count(&(constrained_list)) == 0) && (nn_pop_extension_list_count(&(default_list)) == 0)) {
         NSCAssert(false, ([NSString stringWithFormat:@"You need at least provide a extension for %@", @(class_getName(clazz))]));
-        goto cleanup;
     }
 
-cleanup:
     nn_pop_extension_list_free(&default_list);
     nn_pop_extension_list_free(&constrained_list);
+    
     return;
 }
 
@@ -240,23 +236,13 @@ void __nn_pop_injectProtocols (nn_pop_protocol_t *protocols, unsigned int protoc
                 
                 Class clazz = clazzes[i];
                 
-                if (!class_conformsToProtocol(clazz, protocol.protocol)) {
+                if (__nn_pop_class_conformsToProtocol(clazz, protocol.protocol) == false) {
                     continue;
                 }
-
-                if (__nn_pop_isExtensionClass(clazz, protocols, protocol_count)) {
+                if (__nn_pop_isExtensionClass(clazz, protocols, protocol_count) == true) {
                     continue;
                 }
                 __nn_pop_injectProtocol(protocol, clazz);
-                
-                Class rootClass = __nn_pop_rootProtocolClass(protocol.protocol, clazz);
-                if (rootClass == clazz) {
-                    continue;
-                }
-                if (__nn_pop_isExtensionClass(rootClass, protocols, protocol_count)) {
-                    continue;
-                }
-                __nn_pop_injectProtocol(protocol, rootClass);
             }
         }
     }

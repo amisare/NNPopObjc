@@ -41,30 +41,30 @@
     DLog(@"");
     
     [NNDemoC sayHelloPop];
-    [NNDemoCpp sayHelloPop];
     [NNDemoObjc sayHelloPop];
+    [NNDemoCpp sayHelloPop];
     [NNDemoSwift sayHelloPop];
     
     DLog(@"");
     
     NNDemoC *c = [NNDemoC new];
-    NNDemoCpp *cpp = [NNDemoCpp new];
     NNDemoObjc *objc = [NNDemoObjc new];
+    NNDemoCpp *cpp = [NNDemoCpp new];
     NNDemoSwift *swift = [NNDemoSwift new];
     
     [c sayHelloPop];
-    [cpp sayHelloPop];
     [objc sayHelloPop];
+    [cpp sayHelloPop];
     [swift sayHelloPop];
     
     DLog(@"");
     
     c.whoImI = @"c";
     DLog(@"%@", c.whoImI);
-    cpp.whoImI = @"cpp";
-    DLog(@"%@", cpp.whoImI);
     objc.whoImI = @"objc";
     DLog(@"%@", objc.whoImI);
+    cpp.whoImI = @"cpp";
+    DLog(@"%@", cpp.whoImI);
     swift.whoImI = @"swift";
     DLog(@"%@", swift.whoImI);
 }

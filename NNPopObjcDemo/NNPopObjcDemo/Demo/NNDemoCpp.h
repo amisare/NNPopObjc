@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NNDemoCpp : NNDemoC <NNDemoWhoImIProtocol>
+@interface NNDemoCpp : NNDemoC
 
 @end
 

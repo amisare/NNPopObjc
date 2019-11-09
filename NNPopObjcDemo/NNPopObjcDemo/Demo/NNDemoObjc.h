@@ -6,14 +6,11 @@
 //  Copyright © 2019 GuHaiJun. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "NNDemoProtocol.h"
+#import "NNDemoC.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NNDemoObjc : NSObject <NNDemoWhoImIProtocol, NNDemoNameProtocol>
-
-@property (nonatomic, strong) NSString *name;
+@interface NNDemoObjc : NNDemoC
 
 @end
 
