@@ -19,9 +19,7 @@
 
 static pthread_mutex_t nn_pop_inject_lock = PTHREAD_MUTEX_INITIALIZER;
 
-
-/// Gets a root clazz that conformed to protocol.
-///
+/// Gets a root clazz that adopt to protocol.
 /// @param protocol A protocol that root clazz adpoted.
 /// @param clazz A clazz that it is sub clazz of root or the root self.
 Class __nn_pop_rootProtocolClass(Protocol *protocol, Class clazz) {
@@ -43,7 +41,10 @@ Class __nn_pop_rootProtocolClass(Protocol *protocol, Class clazz) {
     return result;
 }
 
-
+/// Returns a Boolean value that indicates whether clazz is in protocol implements.
+/// @param clazz A class
+/// @param protocols nn_pop_protocol_t list
+/// @param protocol_count nn_pop_protocol_t list count
 BOOL nn_pop_isExtensionClass(Class clazz, nn_pop_protocol_t *protocols, unsigned int protocol_count) {
     
     __block BOOL result = false;
@@ -66,7 +67,12 @@ BOOL nn_pop_isExtensionClass(Class clazz, nn_pop_protocol_t *protocols, unsigned
     return result;
 }
 
-
+/// Injects extentionClass implements in to clazz
+/// @param protocol A protocol that extened
+/// @param extentionClass Extension implement class
+/// @param clazz A class
+/// @param checkSupserImplement Whether the injection should check super implemention,
+/// if a instance mathod has been implemented by super class, then jump over the injection.
 void nn_pop_injectProtocolExtension (Protocol *protocol, Class extentionClass, Class clazz, BOOL checkSupserImplement) {
     
     unsigned imethodCount = 0;
@@ -113,7 +119,9 @@ void nn_pop_injectProtocolExtension (Protocol *protocol, Class extentionClass, C
     (void)[extentionClass class];
 }
 
-
+/// Injects protocol extension in to clazz
+/// @param protocol A nn_pop_protocol_t struct
+/// @param clazz A class
 void nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
     
     __block nn_pop_extension_node_p default_list = nil;
@@ -172,14 +180,14 @@ void nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
     }
 
 cleanup:
-    
     nn_pop_extension_list_free(&default_list);
     nn_pop_extension_list_free(&constrained_list);
-    
     return;
 }
 
-
+/// Injects each protocols extension in to the corresponding class
+/// @param protocols nn_pop_protocol_t list
+/// @param protocol_count nn_pop_protocol_t list count
 void nn_pop_injectProtocols (nn_pop_protocol_t *protocols, unsigned int protocol_count) {
     
     qsort_b(protocols, protocol_count, sizeof(nn_pop_protocol_t), ^(const void *a, const void *b){
@@ -256,7 +264,9 @@ void nn_pop_injectProtocols (nn_pop_protocol_t *protocols, unsigned int protocol
     free(clazzes);
 }
 
-
+/// Loads protocol extensions info from image segment
+/// @param mhp A mach header appears at the very beginning of the object file
+/// @param sectname A section name in __DATA segment
 void __nn_pop_loadSection(const nn_pop_mach_header *mhp, const char *sectname, void (^loaded)(nn_pop_protocol_t *protocols, unsigned int protocol_count)) {
     
     if (pthread_mutex_lock(&nn_pop_inject_lock) != 0) {
@@ -342,7 +352,8 @@ void __nn_pop_loadSection(const nn_pop_mach_header *mhp, const char *sectname, v
     pthread_mutex_unlock(&nn_pop_inject_lock);
 }
 
-
+/// ProgramVars, it is defined in ImageLoader.h at dyld project.
+/// @note dyld project: https://opensource.apple.com/tarballs/dyld/
 struct __nn_pop_ProgramVars
 {
     const void*        mh;
@@ -352,7 +363,13 @@ struct __nn_pop_ProgramVars
     const char**    __prognamePtr;
 };
 
-
+/// Initializer function is called by ImageLoaderMachO::doModInitFunctions at dyld project.
+/// @param argc argc
+/// @param argv argv
+/// @param envp envp
+/// @param apple apple
+/// @param vars vars
+/// @note dyld project: https://opensource.apple.com/tarballs/dyld/
 __attribute__((constructor)) void __nn_pop_prophet(int argc, const char* argv[], const char* envp[], const char* apple[], const __nn_pop_ProgramVars* vars) {
 
     nn_pop_mach_header *mhp = (nn_pop_mach_header *)vars->mh;
