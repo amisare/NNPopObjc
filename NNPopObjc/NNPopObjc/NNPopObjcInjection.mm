@@ -45,7 +45,7 @@ Class __nn_pop_rootProtocolClass(Protocol *protocol, Class clazz) {
 /// @param clazz A class
 /// @param protocols nn_pop_protocol_t list
 /// @param protocol_count nn_pop_protocol_t list count
-BOOL nn_pop_isExtensionClass(Class clazz, nn_pop_protocol_t *protocols, unsigned int protocol_count) {
+BOOL __nn_pop_isExtensionClass(Class clazz, nn_pop_protocol_t *protocols, unsigned int protocol_count) {
     
     __block BOOL result = false;
     
@@ -73,7 +73,7 @@ BOOL nn_pop_isExtensionClass(Class clazz, nn_pop_protocol_t *protocols, unsigned
 /// @param clazz A class
 /// @param checkSupserImplement Whether the injection should check super implemention,
 /// if a instance mathod has been implemented by super class, then jump over the injection.
-void nn_pop_injectProtocolExtension (Protocol *protocol, Class extentionClass, Class clazz, BOOL checkSupserImplement) {
+void __nn_pop_injectProtocolExtension (Protocol *protocol, Class extentionClass, Class clazz, BOOL checkSupserImplement) {
     
     unsigned imethodCount = 0;
     Method *imethodList = class_copyMethodList(extentionClass, &imethodCount);
@@ -122,7 +122,7 @@ void nn_pop_injectProtocolExtension (Protocol *protocol, Class extentionClass, C
 /// Injects protocol extension in to clazz
 /// @param protocol A nn_pop_protocol_t struct
 /// @param clazz A class
-void nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
+void __nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
     
     __block nn_pop_extension_node_p default_list = nil;
     __block nn_pop_extension_node_p constrained_list = nil;
@@ -161,7 +161,7 @@ void nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
         goto cleanup;
     }
     if (nn_pop_extension_list_count(&(constrained_list)) == 1) {
-        nn_pop_injectProtocolExtension(protocol.protocol, constrained_list->clazz, clazz, false);
+        __nn_pop_injectProtocolExtension(protocol.protocol, constrained_list->clazz, clazz, false);
         goto cleanup;
     }
     
@@ -170,7 +170,7 @@ void nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
         goto cleanup;
     }
     if (nn_pop_extension_list_count(&(default_list)) == 1) {
-        nn_pop_injectProtocolExtension(protocol.protocol, default_list->clazz, clazz, false);
+        __nn_pop_injectProtocolExtension(protocol.protocol, default_list->clazz, clazz, false);
         goto cleanup;
     }
     
@@ -188,7 +188,7 @@ cleanup:
 /// Injects each protocols extension in to the corresponding class
 /// @param protocols nn_pop_protocol_t list
 /// @param protocol_count nn_pop_protocol_t list count
-void nn_pop_injectProtocols (nn_pop_protocol_t *protocols, unsigned int protocol_count) {
+void __nn_pop_injectProtocols (nn_pop_protocol_t *protocols, unsigned int protocol_count) {
     
     qsort_b(protocols, protocol_count, sizeof(nn_pop_protocol_t), ^(const void *a, const void *b){
         
@@ -244,19 +244,19 @@ void nn_pop_injectProtocols (nn_pop_protocol_t *protocols, unsigned int protocol
                     continue;
                 }
 
-                if (nn_pop_isExtensionClass(clazz, protocols, protocol_count)) {
+                if (__nn_pop_isExtensionClass(clazz, protocols, protocol_count)) {
                     continue;
                 }
-                nn_pop_injectProtocol(protocol, clazz);
+                __nn_pop_injectProtocol(protocol, clazz);
                 
                 Class rootClass = __nn_pop_rootProtocolClass(protocol.protocol, clazz);
                 if (rootClass == clazz) {
                     continue;
                 }
-                if (nn_pop_isExtensionClass(rootClass, protocols, protocol_count)) {
+                if (__nn_pop_isExtensionClass(rootClass, protocols, protocol_count)) {
                     continue;
                 }
-                nn_pop_injectProtocol(protocol, rootClass);
+                __nn_pop_injectProtocol(protocol, rootClass);
             }
         }
     }
@@ -375,7 +375,7 @@ __attribute__((constructor)) void __nn_pop_prophet(int argc, const char* argv[],
     nn_pop_mach_header *mhp = (nn_pop_mach_header *)vars->mh;
     
     __nn_pop_loadSection(mhp, metamacro_stringify(nn_pop_section_name), ^(nn_pop_protocol_t *protocols, unsigned int protocol_count) {
-        nn_pop_injectProtocols(protocols, protocol_count);
+        __nn_pop_injectProtocols(protocols, protocol_count);
     });
 }
 
