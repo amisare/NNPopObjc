@@ -212,7 +212,7 @@ void __nn_pop_injectProtocols (nn_pop_protocol_t *protocols, unsigned int protoc
         return protocolInjectionPriority(p_b) - protocolInjectionPriority(p_a);
     });
     
-    unsigned long classCount = objc_getClassList(NULL, 0);
+    int classCount = objc_getClassList(NULL, 0);
     if (!classCount) {
         fprintf(stderr, "ERROR: No clazzes registered with the runtime\n");
         return;
@@ -220,7 +220,7 @@ void __nn_pop_injectProtocols (nn_pop_protocol_t *protocols, unsigned int protoc
     
     Class *clazzes = (Class *)calloc((size_t)(classCount + 1), sizeof(Class));
     if (!clazzes) {
-        fprintf(stderr, "ERROR: Could not allocate space for %u clazzes\n", classCount);
+        fprintf(stderr, "ERROR: Could not allocate space for %d clazzes\n", classCount);
         return;
     }
     
