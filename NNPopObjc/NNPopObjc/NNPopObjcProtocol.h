@@ -70,7 +70,7 @@ void nn_pop_extension_list_foreach(nn_pop_extension_node_p *head, void (^enumera
 
 /// Creates a nn_pop_protocol_t struct array list.
 /// @param protocol_count A number of nn_pop_protocol_t struct.
-nn_pop_protocol_t *nn_pop_protocols_new(unsigned int protocol_count);
+nn_pop_protocol_t *nn_pop_protocols_new(size_t protocol_count);
 
 /// Frees a nn_pop_protocol_t struct array list.
 /// @param protocols A nn_pop_protocol_t struct array list.

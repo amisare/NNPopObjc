@@ -212,13 +212,13 @@ void __nn_pop_injectProtocols (nn_pop_protocol_t *protocols, unsigned int protoc
         return protocolInjectionPriority(p_b) - protocolInjectionPriority(p_a);
     });
     
-    unsigned classCount = objc_getClassList(NULL, 0);
+    unsigned long classCount = objc_getClassList(NULL, 0);
     if (!classCount) {
         fprintf(stderr, "ERROR: No clazzes registered with the runtime\n");
         return;
     }
     
-    Class *clazzes = (Class *)calloc((classCount + 1), sizeof(Class));
+    Class *clazzes = (Class *)calloc((size_t)(classCount + 1), sizeof(Class));
     if (!clazzes) {
         fprintf(stderr, "ERROR: Could not allocate space for %u clazzes\n", classCount);
         return;
@@ -269,7 +269,7 @@ void __nn_pop_loadSection(const nn_pop_mach_header *mhp, const char *sectname, v
     unsigned long sectionItemCount = size / sizeof(nn_pop_extension_description_t);
     nn_pop_extension_description_t *sectionItems = (nn_pop_extension_description_t *)sectionData;
     
-    nn_pop_protocol_t *protocols = nn_pop_protocols_new(sectionItemCount + 1);
+    nn_pop_protocol_t *protocols = nn_pop_protocols_new((size_t)(sectionItemCount + 1));
     if (protocols == NULL) {
         pthread_mutex_unlock(&nn_pop_inject_lock);
         return;

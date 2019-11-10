@@ -75,7 +75,7 @@ void nn_pop_extension_list_foreach(nn_pop_extension_node_p *head, void (^enumera
 }
 
 
-nn_pop_protocol_t *nn_pop_protocols_new(unsigned int protocol_count) {
+nn_pop_protocol_t *nn_pop_protocols_new(size_t protocol_count) {
     
     nn_pop_protocol_t *protocols = (nn_pop_protocol_t *)calloc(protocol_count, sizeof(nn_pop_protocol_t));
     return protocols;
