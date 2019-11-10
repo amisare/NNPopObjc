@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.author        = { "Haijun Gu" => "243297288@qq.com" }
   s.social_media_url        = "http://www.jianshu.com/users/9df9f28ff266/latest_articles"
 
-  s.source        = { :git => "https://github.com/amisare/NNPopObjc.git", :branch => 'master' }
+  s.source        = { :git => "https://github.com/amisare/NNPopObjc.git", :branch => "master" }
   
   s.user_target_xcconfig = { 'OTHER_LDFLAGS' => '-ObjC' }
   
@@ -22,9 +22,7 @@ Pod::Spec.new do |s|
   s.requires_arc  = true
 
   s.source_files        = 'NNPopObjc/NNPopObjc/*.{h,m,mm}'
-  s.public_header_files = 'NNPopObjc/NNPopObjc/*.{h}, NNPopObjc/NNPopObjc/extobjc/*.{h}'
   
-  s.default_subspec         = 'extobjc'
   s.subspec 'extobjc' do |ss|
     ss.source_files         = 'NNPopObjc/NNPopObjc/extobjc/*.{h,m}'
   end

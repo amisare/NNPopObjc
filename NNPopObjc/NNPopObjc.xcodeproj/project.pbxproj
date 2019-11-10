@@ -18,13 +18,13 @@
 		7AA532EB234C620C00490F7D /* NNTestClassBA.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA532EA234C620C00490F7D /* NNTestClassBA.m */; };
 		7AA532EE234C621500490F7D /* NNTestClassBB.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA532ED234C621500490F7D /* NNTestClassBB.m */; };
 		7AC2C6592377E1A300CCEA52 /* NNPopObjcProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AC2C64F2377E1A300CCEA52 /* NNPopObjcProtocol.h */; };
-		7AC2C65A2377E1A300CCEA52 /* NNPopObjcDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AC2C6502377E1A300CCEA52 /* NNPopObjcDescription.h */; };
-		7AC2C65B2377E1A300CCEA52 /* NNPopObjcExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AC2C6512377E1A300CCEA52 /* NNPopObjcExtension.h */; };
+		7AC2C65A2377E1A300CCEA52 /* NNPopObjcDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AC2C6502377E1A300CCEA52 /* NNPopObjcDescription.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7AC2C65B2377E1A300CCEA52 /* NNPopObjcExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AC2C6512377E1A300CCEA52 /* NNPopObjcExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7AC2C65C2377E1A300CCEA52 /* NNPopObjcInjection.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AC2C6522377E1A300CCEA52 /* NNPopObjcInjection.h */; };
-		7AC2C65D2377E1A300CCEA52 /* NNPopObjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AC2C6532377E1A300CCEA52 /* NNPopObjc.h */; };
-		7AC2C65E2377E1A300CCEA52 /* NNPopObjcMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AC2C6542377E1A300CCEA52 /* NNPopObjcMacros.h */; };
-		7AC2C65F2377E1A300CCEA52 /* NNPopObjcWhere.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AC2C6552377E1A300CCEA52 /* NNPopObjcWhere.h */; };
-		7AC2C6602377E1A300CCEA52 /* NNPopObjcDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AC2C6562377E1A300CCEA52 /* NNPopObjcDefines.h */; };
+		7AC2C65D2377E1A300CCEA52 /* NNPopObjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AC2C6532377E1A300CCEA52 /* NNPopObjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7AC2C65E2377E1A300CCEA52 /* NNPopObjcMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AC2C6542377E1A300CCEA52 /* NNPopObjcMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7AC2C65F2377E1A300CCEA52 /* NNPopObjcWhere.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AC2C6552377E1A300CCEA52 /* NNPopObjcWhere.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7AC2C6602377E1A300CCEA52 /* NNPopObjcDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AC2C6562377E1A300CCEA52 /* NNPopObjcDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7AC2C6612377E1A300CCEA52 /* NNPopObjcProtocol.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7AC2C6572377E1A300CCEA52 /* NNPopObjcProtocol.mm */; };
 		7AC2C6622377E1A300CCEA52 /* NNPopObjcInjection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7AC2C6582377E1A300CCEA52 /* NNPopObjcInjection.mm */; };
 /* End PBXBuildFile section */
@@ -166,15 +166,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7AC2C65C2377E1A300CCEA52 /* NNPopObjcInjection.h in Headers */,
-				7AC2C65E2377E1A300CCEA52 /* NNPopObjcMacros.h in Headers */,
-				7AC2C65F2377E1A300CCEA52 /* NNPopObjcWhere.h in Headers */,
-				7AC2C65B2377E1A300CCEA52 /* NNPopObjcExtension.h in Headers */,
 				7AC2C65D2377E1A300CCEA52 /* NNPopObjc.h in Headers */,
-				7AC2C6592377E1A300CCEA52 /* NNPopObjcProtocol.h in Headers */,
+				7AC2C65B2377E1A300CCEA52 /* NNPopObjcExtension.h in Headers */,
+				7AC2C65F2377E1A300CCEA52 /* NNPopObjcWhere.h in Headers */,
 				7AC2C65A2377E1A300CCEA52 /* NNPopObjcDescription.h in Headers */,
-				67F37138236D2A60002482D4 /* metamacros.h in Headers */,
 				7AC2C6602377E1A300CCEA52 /* NNPopObjcDefines.h in Headers */,
+				7AC2C65E2377E1A300CCEA52 /* NNPopObjcMacros.h in Headers */,
+				7AC2C65C2377E1A300CCEA52 /* NNPopObjcInjection.h in Headers */,
+				7AC2C6592377E1A300CCEA52 /* NNPopObjcProtocol.h in Headers */,
+				67F37138236D2A60002482D4 /* metamacros.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
