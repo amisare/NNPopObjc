@@ -1,5 +1,5 @@
 //
-//  NNDemoC.h
+//  NNCodeC.h
 //  NNPopObjcDemo
 //
 //  Created by GuHaijun on 2019/10/3.
@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NNDemoProtocol.h"
+#import "NNCodeProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NNDemoC : NSObject <NNDemoWhoImIProtocol, NNDemoNameProtocol>
+@interface NNCodeC : NSObject <NNCodeWhoProtocol, NNCodeNameProtocol>
 
 @property (nonatomic, strong) NSString *name;
 

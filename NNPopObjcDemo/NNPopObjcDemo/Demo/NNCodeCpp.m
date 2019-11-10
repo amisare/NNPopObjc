@@ -1,13 +1,13 @@
 //
-//  NNDemoSwift.m
+//  NNCodeCpp.m
 //  NNPopObjcDemo
 //
 //  Created by GuHaijun on 2019/10/3.
 //  Copyright © 2019 GuHaiJun. All rights reserved.
 //
 
-#import "NNDemoSwift.h"
+#import "NNCodeCpp.h"
 
-@implementation NNDemoSwift
+@implementation NNCodeCpp
 
 @end

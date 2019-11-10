@@ -1,5 +1,5 @@
 //
-//  NNDemoProtocol.h
+//  NNCodeProtocol.h
 //  NNPopObjcDemo
 //
 //  Created by GuHaijun on 2019/10/3.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol NNDemoProtocol <NSObject>
+@protocol NNCodeProtocol <NSObject>
 
 @optional
 + (void)sayHelloPop;
@@ -18,14 +18,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@protocol NNDemoWhoImIProtocol <NNDemoProtocol>
+@protocol NNCodeWhoProtocol <NNCodeProtocol>
 
 @optional
-@property (nonatomic, strong) NSString* whoImI;
+@property (nonatomic, strong) NSString* who;
 
 @end
 
-@protocol NNDemoNameProtocol <NSObject>
+@protocol NNCodeNameProtocol <NSObject>
 
 @optional
 @property (nonatomic, strong) NSString* name;

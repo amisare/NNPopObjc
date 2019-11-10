@@ -1,17 +1,13 @@
 //
-//  NNDemoCpp.h
+//  NNCodeObjc.m
 //  NNPopObjcDemo
 //
 //  Created by GuHaijun on 2019/10/3.
 //  Copyright © 2019 GuHaiJun. All rights reserved.
 //
 
-#import "NNDemoC.h"
+#import "NNCodeObjc.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
-@interface NNDemoCpp : NNDemoC
+@implementation NNCodeObjc
 
 @end
-
-NS_ASSUME_NONNULL_END

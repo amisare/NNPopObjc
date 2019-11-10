@@ -8,12 +8,12 @@
 
 #import "ViewController.h"
 #import <NNPopObjc/NNPopObjc.h>
-#import "NNDemoLog.h"
-#import "NNDemoProtocol.h"
-#import "NNDemoCpp.h"
-#import "NNDemoC.h"
-#import "NNDemoObjc.h"
-#import "NNDemoSwift.h"
+#import "NNCodeLog.h"
+#import "NNCodeProtocol.h"
+#import "NNCodeCpp.h"
+#import "NNCodeC.h"
+#import "NNCodeObjc.h"
+#import "NNCodeSwift.h"
 
 @interface ViewController ()
 
@@ -40,17 +40,17 @@
     
     DLog(@"");
     
-    [NNDemoC sayHelloPop];
-    [NNDemoObjc sayHelloPop];
-    [NNDemoCpp sayHelloPop];
-    [NNDemoSwift sayHelloPop];
+    [NNCodeC sayHelloPop];
+    [NNCodeObjc sayHelloPop];
+    [NNCodeCpp sayHelloPop];
+    [NNCodeSwift sayHelloPop];
     
     DLog(@"");
     
-    NNDemoC *c = [NNDemoC new];
-    NNDemoObjc *objc = [NNDemoObjc new];
-    NNDemoCpp *cpp = [NNDemoCpp new];
-    NNDemoSwift *swift = [NNDemoSwift new];
+    NNCodeC *c = [NNCodeC new];
+    NNCodeObjc *objc = [NNCodeObjc new];
+    NNCodeCpp *cpp = [NNCodeCpp new];
+    NNCodeSwift *swift = [NNCodeSwift new];
     
     [c sayHelloPop];
     [objc sayHelloPop];
@@ -59,14 +59,14 @@
     
     DLog(@"");
     
-    c.whoImI = @"c";
-    DLog(@"%@", c.whoImI);
-    objc.whoImI = @"objc";
-    DLog(@"%@", objc.whoImI);
-    cpp.whoImI = @"cpp";
-    DLog(@"%@", cpp.whoImI);
-    swift.whoImI = @"swift";
-    DLog(@"%@", swift.whoImI);
+    c.who = @"c";
+    DLog(@"%@", c.who);
+    objc.who = @"objc";
+    DLog(@"%@", objc.who);
+    cpp.who = @"cpp";
+    DLog(@"%@", cpp.who);
+    swift.who = @"swift";
+    DLog(@"%@", swift.who);
 }
 
 - (void)redirectNotificationHandle:(NSNotification *)notification{
