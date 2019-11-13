@@ -180,7 +180,7 @@ void __nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
         }
     });
     
-    NSString *(^assert_extension_desc)(nn_pop_extension_node_p *head) = ^(nn_pop_extension_node_p *head){
+    __unused NSString *(^assert_extension_desc)(nn_pop_extension_node_p *head) = ^(nn_pop_extension_node_p *head){
         NSMutableArray<NSString *> *extension_names = [NSMutableArray new];
         nn_pop_extension_list_foreach(head, ^(nn_pop_extension_node_p item, BOOL *stop) {
             [extension_names addObject:NSStringFromClass(item->clazz)];
