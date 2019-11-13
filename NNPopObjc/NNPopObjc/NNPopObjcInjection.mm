@@ -19,6 +19,28 @@
 
 static pthread_mutex_t nn_pop_inject_lock = PTHREAD_MUTEX_INITIALIZER;
 
+/// Gets a root clazz that confrom to protocol.
+/// @param protocol A protocol that root clazz adpoted.
+/// @param clazz A clazz that it is sub clazz of root or the root self.
+Class __nn_pop_class_rootProtocolClass(Class clazz, Protocol *protocol) {
+    
+    Class result = nil;
+    
+    if (clazz == nil || protocol == nil) {
+        return result;
+    }
+    
+    Class currentClazz = clazz;
+    while (currentClazz) {
+        if (class_conformsToProtocol(currentClazz, protocol)) {
+            result = currentClazz;
+        }
+        currentClazz = class_getSuperclass(currentClazz);
+    }
+    
+    return result;
+}
+
 /// Returns a Boolean value that indicates whether a class conforms to a given protocol.
 /// It is same as: + (BOOL)conformsToProtocol:(Protocol *)protocol
 /// @param clazz The class you want to inspect.
@@ -35,6 +57,7 @@ BOOL __nn_pop_class_conformsToProtocol(Class clazz, Protocol *protocol)  {
     while (currentClazz) {
         if (class_conformsToProtocol(currentClazz, protocol)) {
             result = true;
+            break;
         }
         currentClazz = class_getSuperclass(currentClazz);
     }
@@ -242,7 +265,16 @@ void __nn_pop_injectProtocols (nn_pop_protocol_t *protocols, unsigned int protoc
                 if (__nn_pop_isExtensionClass(clazz, protocols, protocol_count) == true) {
                     continue;
                 }
-                __nn_pop_injectProtocol(protocol, clazz);
+                
+                Class rootClazz = __nn_pop_class_rootProtocolClass(clazz, protocol.protocol);
+                
+                if (rootClazz == clazz) {
+                    __nn_pop_injectProtocol(protocol, clazz);
+                }
+                else {
+                    __nn_pop_injectProtocol(protocol, rootClazz);
+                    __nn_pop_injectProtocol(protocol, clazz);
+                }
             }
         }
     }
