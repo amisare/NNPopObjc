@@ -48,9 +48,9 @@
         \
         class NSObject; \
         \
-        nn_pop_extension_where_(nn_pop_extension_prefix, protocol, where_keywordify, where_unique_id, where_block, __VA_ARGS__)\
+        nn_pop_extension_where_(prefix, protocol, where_keywordify, where_unique_id, where_block, __VA_ARGS__)\
         \
-        nn_pop_extension_description_(nn_pop_extension_prefix, protocol, where_unique_id, where_block, __VA_ARGS__) \
+        nn_pop_extension_description_(prefix, protocol, where_unique_id, where_block, __VA_ARGS__) \
         \
         @interface nn_pop_extension_name_(prefix, protocol, where_unique_id, __VA_ARGS__) : NSObject < protocol nn_pop_adopt_protocol(__VA_ARGS__)> \
         \
