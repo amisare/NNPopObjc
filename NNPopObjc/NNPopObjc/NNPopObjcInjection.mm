@@ -15,6 +15,7 @@
 #import <stdio.h>
 #import <stdlib.h>
 #import <string.h>
+#import <set>
 
 
 static pthread_mutex_t nn_pop_inject_lock = PTHREAD_MUTEX_INITIALIZER;
@@ -257,6 +258,8 @@ void __nn_pop_injectProtocols(nn_pop_protocol_t *protocols, unsigned int protoco
         
         for (size_t i = 0; i < protocol_count; ++i) {
             nn_pop_protocol_t protocol = protocols[i];
+
+            std::set<const char *> classesInjected;
             
             // loop all clazzes
             for (unsigned int i = 0; i < classCount; i++) {
@@ -271,13 +274,14 @@ void __nn_pop_injectProtocols(nn_pop_protocol_t *protocols, unsigned int protoco
                 }
                 
                 Class rootClazz = __nn_pop_class_rootProtocolClass(clazz, protocol.protocol);
-                
-                if (rootClazz == clazz) {
-                    __nn_pop_injectProtocol(protocol, clazz);
-                }
-                else {
+
+                if (classesInjected.find(class_getName(rootClazz)) == classesInjected.end()) {
                     __nn_pop_injectProtocol(protocol, rootClazz);
+                    classesInjected.insert(class_getName(rootClazz));
+                }
+                if (clazz !=  rootClazz) {
                     __nn_pop_injectProtocol(protocol, clazz);
+                    classesInjected.insert(class_getName(clazz));
                 }
             }
         }
