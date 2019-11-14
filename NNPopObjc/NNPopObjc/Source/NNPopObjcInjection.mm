@@ -100,13 +100,13 @@ BOOL nn_pop_isExtensionClass(Class clazz, nn_pop_protocol_t **protocols, unsigne
 /// @param clazz A class
 /// @param checkSupserImplement Whether the injection should check super implemention,
 /// if a instance mathod has been implemented by super class, then jump over the injection.
-void nn_pop_injectProtocolExtension (Protocol *protocol, Class extentionClass, Class clazz, BOOL checkSupserImplement) {
+void nn_pop_injectProtocolExtension(Protocol *protocol, Class extentionClazz, Class clazz, BOOL checkSupserImplement) {
     
     unsigned imethodCount = 0;
-    Method *imethodList = class_copyMethodList(extentionClass, &imethodCount);
+    Method *imethodList = class_copyMethodList(extentionClazz, &imethodCount);
     
     unsigned cmethodCount = 0;
-    Method *cmethodList = class_copyMethodList(object_getClass(extentionClass), &cmethodCount);
+    Method *cmethodList = class_copyMethodList(object_getClass(extentionClazz), &cmethodCount);
     
     Class metaclazz = object_getClass(clazz);
     
@@ -143,7 +143,7 @@ void nn_pop_injectProtocolExtension (Protocol *protocol, Class extentionClass, C
     free(imethodList); imethodList = NULL;
     free(cmethodList); cmethodList = NULL;
     
-    (void)[extentionClass class];
+    (void)[extentionClazz class];
 }
 
 /// Injects protocol extension in to clazz
