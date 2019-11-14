@@ -259,7 +259,7 @@ void __nn_pop_injectProtocols(nn_pop_protocol_t *protocols, unsigned int protoco
         for (size_t i = 0; i < protocol_count; ++i) {
             nn_pop_protocol_t protocol = protocols[i];
 
-            std::set<const char *> classesInjected;
+            std::set<const char *> injected;
             
             // loop all clazzes
             for (unsigned int i = 0; i < classCount; i++) {
@@ -275,13 +275,13 @@ void __nn_pop_injectProtocols(nn_pop_protocol_t *protocols, unsigned int protoco
                 
                 Class rootClazz = __nn_pop_class_rootProtocolClass(clazz, protocol.protocol);
 
-                if (classesInjected.find(class_getName(rootClazz)) == classesInjected.end()) {
+                if (injected.find(class_getName(rootClazz)) == injected.end()) {
                     __nn_pop_injectProtocol(protocol, rootClazz);
-                    classesInjected.insert(class_getName(rootClazz));
+                    injected.insert(class_getName(rootClazz));
                 }
                 if (clazz !=  rootClazz) {
                     __nn_pop_injectProtocol(protocol, clazz);
-                    classesInjected.insert(class_getName(clazz));
+                    injected.insert(class_getName(clazz));
                 }
             }
         }
