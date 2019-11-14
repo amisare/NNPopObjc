@@ -26,6 +26,14 @@
   "source_files": "NNPopObjc/NNPopObjc/*.{h,m,mm}",
   "subspecs": [
     {
+      "name": "Public",
+      "source_files": "NNPopObjc/NNPopObjc/Public/*.{h,m,mm}"
+    },
+    {
+      "name": "Source",
+      "source_files": "NNPopObjc/NNPopObjc/Source/*.{h,m,mm}"
+    },
+    {
       "name": "extobjc",
       "source_files": "NNPopObjc/NNPopObjc/extobjc/*.{h,m}"
     }

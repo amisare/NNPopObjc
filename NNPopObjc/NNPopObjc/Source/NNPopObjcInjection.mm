@@ -17,13 +17,15 @@
 #import <string.h>
 #import <set>
 
+#import "NNPopObjcMemory.h"
+
 
 static pthread_mutex_t nn_pop_inject_lock = PTHREAD_MUTEX_INITIALIZER;
 
 /// Gets a root clazz that confrom to protocol.
 /// @param protocol A protocol that root clazz adpoted.
 /// @param clazz A clazz that it is sub clazz of root or the root self.
-Class __nn_pop_class_rootProtocolClass(Class clazz, Protocol *protocol) {
+Class nn_pop__class_rootProtocolClass(Class clazz, Protocol *protocol) {
     
     Class result = nil;
     
@@ -46,7 +48,7 @@ Class __nn_pop_class_rootProtocolClass(Class clazz, Protocol *protocol) {
 /// It is same as: + (BOOL)conformsToProtocol:(Protocol *)protocol
 /// @param clazz The class you want to inspect.
 /// @param protocol A protocol.
-BOOL __nn_pop_class_conformsToProtocol(Class clazz, Protocol *protocol)  {
+BOOL nn_pop_class_conformsToProtocol(Class clazz, Protocol *protocol)  {
     
     BOOL result = false;
     
@@ -70,13 +72,13 @@ BOOL __nn_pop_class_conformsToProtocol(Class clazz, Protocol *protocol)  {
 /// @param clazz A class
 /// @param protocols nn_pop_protocol_t list
 /// @param protocol_count nn_pop_protocol_t list count
-BOOL __nn_pop_isExtensionClass(Class clazz, nn_pop_protocol_t *protocols, unsigned int protocol_count) {
+BOOL nn_pop_isExtensionClass(Class clazz, nn_pop_protocol_t **protocols, unsigned int protocol_count) {
     
     __block BOOL result = false;
     
     for (unsigned int i = 0; i < protocol_count; i++) {
         
-        nn_pop_protocol_t protocol = protocols[i];
+        nn_pop_protocol_t protocol = *protocols[i];
         
         nn_pop_extension_list_foreach(&(protocol.extension), ^(nn_pop_extension_node_p item, BOOL *stop) {
             if (clazz == item->clazz) {
@@ -98,7 +100,7 @@ BOOL __nn_pop_isExtensionClass(Class clazz, nn_pop_protocol_t *protocols, unsign
 /// @param clazz A class
 /// @param checkSupserImplement Whether the injection should check super implemention,
 /// if a instance mathod has been implemented by super class, then jump over the injection.
-void __nn_pop_injectProtocolExtension (Protocol *protocol, Class extentionClass, Class clazz, BOOL checkSupserImplement) {
+void nn_pop_injectProtocolExtension (Protocol *protocol, Class extentionClass, Class clazz, BOOL checkSupserImplement) {
     
     unsigned imethodCount = 0;
     Method *imethodList = class_copyMethodList(extentionClass, &imethodCount);
@@ -147,12 +149,12 @@ void __nn_pop_injectProtocolExtension (Protocol *protocol, Class extentionClass,
 /// Injects protocol extension in to clazz
 /// @param protocol A nn_pop_protocol_t struct
 /// @param clazz A class
-void __nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
+void nn_pop_injectProtocol(nn_pop_protocol_t *protocol, Class clazz) {
     
     __block nn_pop_extension_node_p default_list = nil;
     __block nn_pop_extension_node_p constrained_list = nil;
     
-    nn_pop_extension_list_foreach(&(protocol.extension), ^(nn_pop_extension_node_p node, BOOL *stop) {
+    nn_pop_extension_list_foreach(&(protocol->extension), ^(nn_pop_extension_node_p node, BOOL *stop) {
         
         nn_pop_where_value_def match_value = node->where_fp(clazz);
 
@@ -197,10 +199,10 @@ void __nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
               @"Unmatched to the protocol extension for class %@", @(class_getName(clazz)));
     
     if (nn_pop_extension_list_count(&(constrained_list)) == 1) {
-        __nn_pop_injectProtocolExtension(protocol.protocol, constrained_list->clazz, clazz, false);
+        nn_pop_injectProtocolExtension(protocol->protocol, constrained_list->clazz, clazz, false);
     }
     if (nn_pop_extension_list_count(&(default_list)) == 1) {
-        __nn_pop_injectProtocolExtension(protocol.protocol, default_list->clazz, clazz, true);
+        nn_pop_injectProtocolExtension(protocol->protocol, default_list->clazz, clazz, true);
     }
 
     nn_pop_extension_list_free(&default_list);
@@ -212,25 +214,25 @@ void __nn_pop_injectProtocol(nn_pop_protocol_t protocol, Class clazz) {
 /// Injects each protocols extension in to the corresponding class
 /// @param protocols nn_pop_protocol_t list
 /// @param protocol_count nn_pop_protocol_t list count
-void __nn_pop_injectProtocols(nn_pop_protocol_t *protocols, unsigned int protocol_count) {
+void nn_pop_injectProtocols (nn_pop_protocol_t **protocols, unsigned int protocol_count) {
     
-    qsort_b(protocols, protocol_count, sizeof(nn_pop_protocol_t), ^(const void *a, const void *b){
+    qsort_b(protocols, protocol_count, sizeof(nn_pop_protocol_t *), ^(const void *a, const void *b){
         
         if (a == b)
             return 0;
         
-        const nn_pop_protocol_t *p_a = (nn_pop_protocol_t *)a;
-        const nn_pop_protocol_t *p_b = (nn_pop_protocol_t *)b;
+        const nn_pop_protocol_t *p_a = *(nn_pop_protocol_t **)a;
+        const nn_pop_protocol_t *p_b = *(nn_pop_protocol_t **)b;
         
         int (^protocolInjectionPriority)(const nn_pop_protocol_t *) = ^(const nn_pop_protocol_t *protocol){
             int runningTotal = 0;
             
             for (size_t i = 0;i < protocol_count;++i) {
                 
-                if (protocol == protocols + i)
+                if (protocol == *(protocols + i))
                     continue;
                 
-                if (protocol_conformsToProtocol(protocol->protocol, protocols[i].protocol))
+                if (protocol_conformsToProtocol(protocol->protocol, protocols[i]->protocol))
                     runningTotal++;
             }
             
@@ -246,7 +248,7 @@ void __nn_pop_injectProtocols(nn_pop_protocol_t *protocols, unsigned int protoco
         return;
     }
     
-    Class *clazzes = (Class *)calloc((size_t)(classCount + 1), sizeof(Class));
+    Class *clazzes = (Class *)nn_pop_malloc((size_t)(classCount + 1) * sizeof(Class));
     if (!clazzes) {
         fprintf(stderr, "ERROR: Could not allocate space for %d clazzes\n", classCount);
         return;
@@ -257,8 +259,9 @@ void __nn_pop_injectProtocols(nn_pop_protocol_t *protocols, unsigned int protoco
     @autoreleasepool {
         
         for (size_t i = 0; i < protocol_count; ++i) {
-            nn_pop_protocol_t protocol = protocols[i];
-
+            
+            nn_pop_protocol_t *protocol = protocols[i];
+            
             std::set<const char *> injected;
             
             // loop all clazzes
@@ -266,21 +269,20 @@ void __nn_pop_injectProtocols(nn_pop_protocol_t *protocols, unsigned int protoco
                 
                 Class clazz = clazzes[i];
                 
-                if (__nn_pop_class_conformsToProtocol(clazz, protocol.protocol) == false) {
+                if (nn_pop_class_conformsToProtocol(clazz, protocol->protocol) == false) {
                     continue;
                 }
-                if (__nn_pop_isExtensionClass(clazz, protocols, protocol_count) == true) {
+                if (nn_pop_isExtensionClass(clazz, protocols, protocol_count) == true) {
                     continue;
                 }
                 
-                Class rootClazz = __nn_pop_class_rootProtocolClass(clazz, protocol.protocol);
-
+                Class rootClazz = nn_pop__class_rootProtocolClass(clazz, protocol->protocol);
                 if (injected.find(class_getName(rootClazz)) == injected.end()) {
-                    __nn_pop_injectProtocol(protocol, rootClazz);
+                    nn_pop_injectProtocol(protocol, rootClazz);
                     injected.insert(class_getName(rootClazz));
                 }
                 if (clazz !=  rootClazz) {
-                    __nn_pop_injectProtocol(protocol, clazz);
+                    nn_pop_injectProtocol(protocol, clazz);
                     injected.insert(class_getName(clazz));
                 }
             }
@@ -293,7 +295,7 @@ void __nn_pop_injectProtocols(nn_pop_protocol_t *protocols, unsigned int protoco
 /// Loads protocol extensions info from image segment
 /// @param mhp A mach header appears at the very beginning of the object file
 /// @param sectname A section name in __DATA segment
-void __nn_pop_loadSection(const nn_pop_mach_header *mhp, const char *sectname, void (^loaded)(nn_pop_protocol_t *protocols, unsigned int protocol_count)) {
+void nn_pop_loadSection(const nn_pop_mach_header *mhp, const char *sectname, void (^loaded)(nn_pop_protocol_t **protocols, unsigned int protocol_count)) {
     
     if (pthread_mutex_lock(&nn_pop_inject_lock) != 0) {
         fprintf(stderr, "ERROR: Could not synchronize on special protocol data\n");
@@ -309,7 +311,7 @@ void __nn_pop_loadSection(const nn_pop_mach_header *mhp, const char *sectname, v
     unsigned long sectionItemCount = size / sizeof(nn_pop_extension_description_t);
     nn_pop_extension_description_t *sectionItems = (nn_pop_extension_description_t *)sectionData;
     
-    nn_pop_protocol_t *protocols = nn_pop_protocols_new((size_t)(sectionItemCount + 1));
+    nn_pop_protocol_t **protocols = nn_pop_protocols_new((size_t)(sectionItemCount + 1));
     if (protocols == NULL) {
         pthread_mutex_unlock(&nn_pop_inject_lock);
         return;
@@ -317,36 +319,18 @@ void __nn_pop_loadSection(const nn_pop_mach_header *mhp, const char *sectname, v
     
     for (unsigned int sectionIndex = 0, protocolIndex = 0; sectionIndex < sectionItemCount; sectionIndex++) {
         
-        nn_pop_extension_description_t *_sectionItem = &sectionItems[sectionIndex];
-        
-        nn_pop_protocol_t *_protocol = &protocols[protocolIndex++];
-        _protocol->protocol = NULL;
-        _protocol->extension = NULL;
-        
-        Protocol *protocol = objc_getProtocol(_sectionItem->protocol);
-        if (!protocol) {
+        nn_pop_extension_description_t *_extensionDescription = &sectionItems[sectionIndex];
+        nn_pop_protocol_t *_protocol = nn_pop_protocol_new();
+        if (_protocol == NULL) {
             continue;
         }
-        _protocol->protocol = protocol;
-        
-        nn_pop_extension_node_p _extension = nn_pop_extension_node_new();
-        if (!_extension) {
-            continue;
-        }
-        _extension->prefix = _sectionItem->prefix;
-        _extension->clazz = objc_getClass(_sectionItem->clazz);
-        _extension->where_fp = _sectionItem->where_fp;
-        _extension->confrom_protocols_count = _sectionItem->confrom_protocols_count;
-        for (unsigned int i = 0; i < _extension->confrom_protocols_count; i++) {
-            _extension->confrom_protocols[i] = objc_getProtocol(_sectionItem->confrom_protocols[i]);
-        }
-        _extension->next = NULL;
-        nn_pop_extension_list_append(&(_protocol->extension), &(_extension));
+        nn_pop_protocol_init_with_extension_description(_protocol, _extensionDescription);
+        protocols[protocolIndex++] = _protocol;
     }
     
-    qsort_b(protocols, sectionItemCount, sizeof(nn_pop_protocol_t), ^int(const void *a, const void *b) {
-        const nn_pop_protocol_t *_a = (nn_pop_protocol_t *)a;
-        const nn_pop_protocol_t *_b = (nn_pop_protocol_t *)b;
+    qsort_b(protocols, sectionItemCount, sizeof(nn_pop_protocol_t *), ^int(const void *a, const void *b) {
+        const nn_pop_protocol_t *_a = *(nn_pop_protocol_t **)a;
+        const nn_pop_protocol_t *_b = *(nn_pop_protocol_t **)b;
         
         const char *p_a = protocol_getName(_a->protocol);
         const char *p_b = protocol_getName(_b->protocol);
@@ -357,17 +341,24 @@ void __nn_pop_loadSection(const nn_pop_mach_header *mhp, const char *sectname, v
     
     unsigned int protocolBaseIndex = 0, protocolForwardIndex = 1;
     while (protocolForwardIndex < sectionItemCount) {
-        if (protocol_isEqual(protocols[protocolBaseIndex].protocol, protocols[protocolForwardIndex].protocol)) {
-            nn_pop_extension_list_append(&(protocols[protocolBaseIndex].extension), &(protocols[protocolForwardIndex].extension));
+        
+        nn_pop_protocol_t *protocolBase = protocols[protocolBaseIndex];
+        nn_pop_protocol_t *protocolForward = protocols[protocolForwardIndex];
+        
+        if (protocol_isEqual(protocolBase->protocol, protocolForward->protocol)) {
+            nn_pop_extension_list_append(&(protocolBase->extension), &(protocolForward->extension));
+            protocolForward->extension = nil;
+            nn_pop_protocol_free(protocolForward);
         }
         else {
-            protocols[++protocolBaseIndex] = protocols[protocolForwardIndex];
+            protocols[++protocolBaseIndex] = protocolForward;
         }
         protocolForwardIndex++;
     }
+    
     unsigned int protocolCount = protocolBaseIndex + 1;
-    protocols = (nn_pop_protocol_t *)realloc(protocols, (protocolCount + 1) * sizeof(nn_pop_protocol_t));
-    memset((protocols + protocolCount), 0, sizeof(nn_pop_protocol_t));
+    protocols = (nn_pop_protocol_t **)nn_pop_realloc(protocols, (protocolCount + 1) * sizeof(nn_pop_protocol_t *));
+    memset(protocols + protocolCount, 0, sizeof(nn_pop_protocol_t *));
     
     if (loaded) {
         loaded(protocols, protocolCount);
@@ -380,7 +371,7 @@ void __nn_pop_loadSection(const nn_pop_mach_header *mhp, const char *sectname, v
 
 /// ProgramVars, it is defined in ImageLoader.h at dyld project.
 /// @note dyld project: https://opensource.apple.com/tarballs/dyld/
-struct __nn_pop_ProgramVars
+struct nn_pop_ProgramVars
 {
     const void*        mh;
     int*            NXArgcPtr;
@@ -396,12 +387,12 @@ struct __nn_pop_ProgramVars
 /// @param apple apple
 /// @param vars vars
 /// @note dyld project: https://opensource.apple.com/tarballs/dyld/
-__attribute__((constructor)) void __nn_pop_prophet(int argc, const char* argv[], const char* envp[], const char* apple[], const __nn_pop_ProgramVars* vars) {
+__attribute__((constructor)) void nn_pop_prophet(int argc, const char* argv[], const char* envp[], const char* apple[], const nn_pop_ProgramVars* vars) {
 
     nn_pop_mach_header *mhp = (nn_pop_mach_header *)vars->mh;
     
-    __nn_pop_loadSection(mhp, metamacro_stringify(nn_pop_section_name), ^(nn_pop_protocol_t *protocols, unsigned int protocol_count) {
-        __nn_pop_injectProtocols(protocols, protocol_count);
+    nn_pop_loadSection(mhp, metamacro_stringify(nn_pop_section_name), ^(nn_pop_protocol_t **protocols, unsigned int protocol_count) {
+        nn_pop_injectProtocols(protocols, protocol_count);
     });
 }
 

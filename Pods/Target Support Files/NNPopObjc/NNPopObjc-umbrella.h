@@ -14,10 +14,11 @@
 #import "NNPopObjcDefines.h"
 #import "NNPopObjcDescription.h"
 #import "NNPopObjcExtension.h"
-#import "NNPopObjcInjection.h"
 #import "NNPopObjcMacros.h"
-#import "NNPopObjcProtocol.h"
 #import "NNPopObjcWhere.h"
+#import "NNPopObjcInjection.h"
+#import "NNPopObjcMemory.h"
+#import "NNPopObjcProtocol.h"
 #import "metamacros.h"
 
 FOUNDATION_EXPORT double NNPopObjcVersionNumber;

@@ -13,7 +13,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif //__cplusplus
+#endif /* __cplusplus */
 
 
 /// Extension description list node.
@@ -40,9 +40,14 @@ typedef struct {
     nn_pop_extension_node_p extension;
 } nn_pop_protocol_t;
 
-
-/// Creates a node.
+/// Creates a nn_pop_extension_node_p node.
 nn_pop_extension_node_p nn_pop_extension_node_new(void);
+
+/// Initialize a nn_pop_extension_node_p node
+/// @param node A nn_pop_extension_node_p node pointer.
+/// @param desc A nn_pop_extension_description_t pointer.
+nn_pop_extension_node_p nn_pop_extension_node_init_with_extension_description(nn_pop_extension_node_p *node,
+                                                                              nn_pop_extension_description_t *desc);
 
 /// Copys a node from src to dst.
 /// @param dst dst node
@@ -68,18 +73,33 @@ void nn_pop_extension_list_free(nn_pop_extension_node_p *head);
 void nn_pop_extension_list_foreach(nn_pop_extension_node_p *head, void (^enumerate_block)(nn_pop_extension_node_p item, BOOL *stop));
 
 
+/// Creates a nn_pop_protocol_t struct.
+nn_pop_protocol_t *nn_pop_protocol_new();
+
+/// Frees a nn_pop_protocol_t struct.
+/// @param protocol A nn_pop_protocol_t struct pointer.
+void nn_pop_protocol_free(nn_pop_protocol_t *protocol);
+
+/// Initialize a nn_pop_protocol_t struct
+/// @param protocol A nn_pop_protocol_t struct pointer
+nn_pop_protocol_t *nn_pop_protocol_init(nn_pop_protocol_t *protocol);
+
+/// Initialize a nn_pop_protocol_t struct
+/// @param protocol A nn_pop_protocol_t struct pointer
+nn_pop_protocol_t *nn_pop_protocol_init_with_extension_description(nn_pop_protocol_t *protocol,
+                                                                   nn_pop_extension_description_t *desc);
+
 /// Creates a nn_pop_protocol_t struct array list.
 /// @param protocol_count A number of nn_pop_protocol_t struct.
-nn_pop_protocol_t *nn_pop_protocols_new(size_t protocol_count);
+nn_pop_protocol_t **nn_pop_protocols_new(size_t protocol_count);
 
 /// Frees a nn_pop_protocol_t struct array list.
 /// @param protocols A nn_pop_protocol_t struct array list.
 /// @param protocol_count A mumber of nn_pop_protocol_t struct.
-void nn_pop_protocols_free(nn_pop_protocol_t *protocols, unsigned int protocol_count);
-
+void nn_pop_protocols_free(nn_pop_protocol_t **protocols, unsigned int protocol_count);
 
 #ifdef __cplusplus
 }
-#endif //__cplusplus
+#endif /* __cplusplus */
 
 #endif /* NNPopObjcProtocol_h */

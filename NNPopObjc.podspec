@@ -20,8 +20,16 @@ Pod::Spec.new do |s|
   
   s.ios.deployment_target   = '7.0'
   s.requires_arc  = true
-
-  s.source_files        = 'NNPopObjc/NNPopObjc/*.{h,m,mm}'
+  
+  s.source_files            = 'NNPopObjc/NNPopObjc/*.{h,m,mm}'
+  
+  s.subspec 'Public' do |ss|
+    ss.source_files         = 'NNPopObjc/NNPopObjc/Public/*.{h,m,mm}'
+  end
+  
+  s.subspec 'Source' do |ss|
+    ss.source_files         = 'NNPopObjc/NNPopObjc/Source/*.{h,m,mm}'
+  end
   
   s.subspec 'extobjc' do |ss|
     ss.source_files         = 'NNPopObjc/NNPopObjc/extobjc/*.{h,m}'
