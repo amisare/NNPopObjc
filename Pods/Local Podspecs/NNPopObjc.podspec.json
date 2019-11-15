@@ -26,6 +26,10 @@
   "source_files": "NNPopObjc/NNPopObjc/*.{h,m,mm}",
   "subspecs": [
     {
+      "name": "extobjc",
+      "source_files": "NNPopObjc/NNPopObjc/extobjc/*.{h,m}"
+    },
+    {
       "name": "Public",
       "source_files": "NNPopObjc/NNPopObjc/Public/*.{h,m,mm}"
     },
@@ -34,17 +38,13 @@
       "source_files": "NNPopObjc/NNPopObjc/Source/*.{h,m,mm}",
       "private_header_files": "NNPopObjc/NNPopObjc/Source/*.{h}",
       "dependencies": {
-        "NNPopObjc/Public": [
+        "NNPopObjc/extobjc": [
 
         ],
-        "NNPopObjc/extobjc": [
+        "NNPopObjc/Public": [
 
         ]
       }
-    },
-    {
-      "name": "extobjc",
-      "source_files": "NNPopObjc/NNPopObjc/extobjc/*.{h,m}"
     }
   ]
 }
