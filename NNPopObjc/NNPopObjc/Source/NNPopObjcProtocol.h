@@ -10,7 +10,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "NNPopObjc.h"
+#import "NNPopObjcDescription.h"
 
 #ifdef __cplusplus
 extern "C" {

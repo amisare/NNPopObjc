@@ -10,19 +10,19 @@
 		676979A22345C78300E13282 /* NNPopObjc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 676979982345C78200E13282 /* NNPopObjc.framework */; };
 		676979A72345C78300E13282 /* NNPopObjcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979A62345C78300E13282 /* NNPopObjcTests.m */; };
 		7A5E1C12234C5AD6005A7D1B /* NNTestProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5E1C11234C5AD6005A7D1B /* NNTestProtocol.m */; };
-		7A826860237E7ED600FF9359 /* NNPopObjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A826850237E7ED500FF9359 /* NNPopObjc.h */; };
-		7A826861237E7ED600FF9359 /* NNPopObjcDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A826852237E7ED600FF9359 /* NNPopObjcDescription.h */; };
-		7A826862237E7ED600FF9359 /* NNPopObjcDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A826853237E7ED600FF9359 /* NNPopObjcDefines.h */; };
-		7A826863237E7ED600FF9359 /* NNPopObjcWhere.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A826854237E7ED600FF9359 /* NNPopObjcWhere.h */; };
-		7A826864237E7ED600FF9359 /* NNPopObjcExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A826855237E7ED600FF9359 /* NNPopObjcExtension.h */; };
-		7A826865237E7ED600FF9359 /* NNPopObjcMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A826856237E7ED600FF9359 /* NNPopObjcMacros.h */; };
-		7A826866237E7ED600FF9359 /* NNPopObjcMetaMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A826858237E7ED600FF9359 /* NNPopObjcMetaMacros.h */; };
 		7A826867237E7ED600FF9359 /* NNPopObjcMemory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A82685A237E7ED600FF9359 /* NNPopObjcMemory.mm */; };
 		7A826868237E7ED600FF9359 /* NNPopObjcInjection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A82685B237E7ED600FF9359 /* NNPopObjcInjection.mm */; };
-		7A826869237E7ED600FF9359 /* NNPopObjcInjection.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A82685C237E7ED600FF9359 /* NNPopObjcInjection.h */; };
 		7A82686A237E7ED600FF9359 /* NNPopObjcProtocol.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A82685D237E7ED600FF9359 /* NNPopObjcProtocol.mm */; };
-		7A82686B237E7ED600FF9359 /* NNPopObjcProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A82685E237E7ED600FF9359 /* NNPopObjcProtocol.h */; };
-		7A82686C237E7ED600FF9359 /* NNPopObjcMemory.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A82685F237E7ED600FF9359 /* NNPopObjcMemory.h */; };
+		7A82686D237E8A5A00FF9359 /* NNPopObjcDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A826853237E7ED600FF9359 /* NNPopObjcDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7A82686E237E8A5A00FF9359 /* NNPopObjcDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A826852237E7ED600FF9359 /* NNPopObjcDescription.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7A82686F237E8A5A00FF9359 /* NNPopObjcExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A826855237E7ED600FF9359 /* NNPopObjcExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7A826870237E8A5A00FF9359 /* NNPopObjcMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A826856237E7ED600FF9359 /* NNPopObjcMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7A826871237E8A5A00FF9359 /* NNPopObjcWhere.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A826854237E7ED600FF9359 /* NNPopObjcWhere.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7A826872237E8A5E00FF9359 /* NNPopObjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A826850237E7ED500FF9359 /* NNPopObjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7A826873237E8B2800FF9359 /* NNPopObjcMetaMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A826858237E7ED600FF9359 /* NNPopObjcMetaMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7A826874237E8B3500FF9359 /* NNPopObjcInjection.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A82685C237E7ED600FF9359 /* NNPopObjcInjection.h */; };
+		7A826875237E8B3500FF9359 /* NNPopObjcMemory.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A82685F237E7ED600FF9359 /* NNPopObjcMemory.h */; };
+		7A826876237E8B3500FF9359 /* NNPopObjcProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A82685E237E7ED600FF9359 /* NNPopObjcProtocol.h */; };
 		7AA532DF234C5F0300490F7D /* NNTestClassA.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA532DE234C5F0300490F7D /* NNTestClassA.m */; };
 		7AA532E2234C619F00490F7D /* NNTestClassAA.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA532E1234C619F00490F7D /* NNTestClassAA.m */; };
 		7AA532E5234C61AA00490F7D /* NNTestClassAB.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA532E4234C61AA00490F7D /* NNTestClassAB.m */; };
@@ -188,16 +188,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A826860237E7ED600FF9359 /* NNPopObjc.h in Headers */,
-				7A826861237E7ED600FF9359 /* NNPopObjcDescription.h in Headers */,
-				7A826863237E7ED600FF9359 /* NNPopObjcWhere.h in Headers */,
-				7A82686B237E7ED600FF9359 /* NNPopObjcProtocol.h in Headers */,
-				7A826864237E7ED600FF9359 /* NNPopObjcExtension.h in Headers */,
-				7A826862237E7ED600FF9359 /* NNPopObjcDefines.h in Headers */,
-				7A826865237E7ED600FF9359 /* NNPopObjcMacros.h in Headers */,
-				7A82686C237E7ED600FF9359 /* NNPopObjcMemory.h in Headers */,
-				7A826869237E7ED600FF9359 /* NNPopObjcInjection.h in Headers */,
-				7A826866237E7ED600FF9359 /* NNPopObjcMetaMacros.h in Headers */,
+				7A826872237E8A5E00FF9359 /* NNPopObjc.h in Headers */,
+				7A82686D237E8A5A00FF9359 /* NNPopObjcDefines.h in Headers */,
+				7A82686E237E8A5A00FF9359 /* NNPopObjcDescription.h in Headers */,
+				7A82686F237E8A5A00FF9359 /* NNPopObjcExtension.h in Headers */,
+				7A826870237E8A5A00FF9359 /* NNPopObjcMacros.h in Headers */,
+				7A826871237E8A5A00FF9359 /* NNPopObjcWhere.h in Headers */,
+				7A826873237E8B2800FF9359 /* NNPopObjcMetaMacros.h in Headers */,
+				7A826874237E8B3500FF9359 /* NNPopObjcInjection.h in Headers */,
+				7A826875237E8B3500FF9359 /* NNPopObjcMemory.h in Headers */,
+				7A826876237E8B3500FF9359 /* NNPopObjcProtocol.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

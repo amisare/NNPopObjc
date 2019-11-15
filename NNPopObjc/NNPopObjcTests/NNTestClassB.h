@@ -11,9 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NNTestClassB : NSObject <NNTestProtocol>
-
-@property (nonatomic, strong) NSString *name;
+@interface NNTestClassB : NSObject <NNTestProtocol, NNTestNameProtocol>
 
 @end
 

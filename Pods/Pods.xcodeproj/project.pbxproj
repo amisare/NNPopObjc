@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		003B60D8EF65F2AF08BB779C3F684817 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		061C3C219DDC0F29FA29E06F562687AA /* NNPopObjcProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 9225BE4E35B589664C41B74DA8ADE223 /* NNPopObjcProtocol.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		0CB431518955F874F6EC480BBBB75C7A /* NNPopObjcMemory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7EB8277E7E98EC8F6F75D065CB717719 /* NNPopObjcMemory.mm */; };
 		198A9FDE47A5CE1FEB187CCAF4F61C24 /* NNPopObjcWhere.h in Headers */ = {isa = PBXBuildFile; fileRef = EE3CB30081C5FDDD7B44310660C1107D /* NNPopObjcWhere.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2223B4A566E5C127D4B48178AE63884A /* NNPopObjc-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F4425403D3A6CD6A59F52C28A3CE67B8 /* NNPopObjc-dummy.m */; };
-		28B79B46A6CC7B0BA268815A713802E7 /* NNPopObjcMemory.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A19F2DAA85AD5612107801CDE4028D9 /* NNPopObjcMemory.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2DFA981C3D13D805D48680B07B7BF17E /* NNPopObjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CE44D875013B4C951EA6ACC23F7300D /* NNPopObjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		37062721DB41C247CAD2E473AC24F8BF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		4101591BC0FFF5B0D1F976D131C78B8F /* NNPopObjcMetaMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 9E135B56700C7C5B076A88C8B09A70C3 /* NNPopObjcMetaMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -19,10 +19,10 @@
 		573489FC1F2725CE56CD3AB8508E5642 /* NNPopObjcDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = B2D24CA4F1D08A6DF23BC8B0A8352596 /* NNPopObjcDescription.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		59EC259780A58C3D97F8E6E672788D0B /* Pods-NNPopObjcDemo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 820E14EB8FA26134D07C89250B4E7FE6 /* Pods-NNPopObjcDemo-dummy.m */; };
 		6A82C1A005AF39942704679CF82BF144 /* NNPopObjcExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F9489E97F7934A5147C2E1730DA209A /* NNPopObjcExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7DD65A508D1250F707B0E7420CFDF617 /* NNPopObjcInjection.h in Headers */ = {isa = PBXBuildFile; fileRef = AA5D2B4205A608CEFFEAAC436CD19C99 /* NNPopObjcInjection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82F0E8E50B1E50F1A9D08CB36E37673D /* NNPopObjcProtocol.mm in Sources */ = {isa = PBXBuildFile; fileRef = E8B4F68E0569D1753D54E82709ACB6E1 /* NNPopObjcProtocol.mm */; };
 		97926655AA54B8C1345900ED75D5BA09 /* NNPopObjc-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E132B14958AC91C47F2D01A80D42AE8 /* NNPopObjc-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B8ADE3FCA10FFA451A7871D179688DA9 /* NNPopObjcProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 9225BE4E35B589664C41B74DA8ADE223 /* NNPopObjcProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A2D4C0F3EBCFC28268EC744CCAEC18AC /* NNPopObjcMemory.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A19F2DAA85AD5612107801CDE4028D9 /* NNPopObjcMemory.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		B19232C19F879B0CB741FB53A76D91C5 /* NNPopObjcInjection.h in Headers */ = {isa = PBXBuildFile; fileRef = AA5D2B4205A608CEFFEAAC436CD19C99 /* NNPopObjcInjection.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		DD11321DDAD1D66DDA58745D02017FD2 /* NNPopObjcDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DB3826CD40A5764AC753EAF39168ADE /* NNPopObjcDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E347173F59F8BBDB8E6594EB4E9DB3B8 /* NNPopObjcInjection.mm in Sources */ = {isa = PBXBuildFile; fileRef = D92FDAA30E04A589177AD9A82F2B79EE /* NNPopObjcInjection.mm */; };
 		E4A67780FE887088EA39B8CBE3FFD9FA /* NNPopObjcMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = B939088493E9EAF4AFB726190BB92762 /* NNPopObjcMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -256,11 +256,11 @@
 				DD11321DDAD1D66DDA58745D02017FD2 /* NNPopObjcDefines.h in Headers */,
 				573489FC1F2725CE56CD3AB8508E5642 /* NNPopObjcDescription.h in Headers */,
 				6A82C1A005AF39942704679CF82BF144 /* NNPopObjcExtension.h in Headers */,
-				7DD65A508D1250F707B0E7420CFDF617 /* NNPopObjcInjection.h in Headers */,
+				B19232C19F879B0CB741FB53A76D91C5 /* NNPopObjcInjection.h in Headers */,
 				E4A67780FE887088EA39B8CBE3FFD9FA /* NNPopObjcMacros.h in Headers */,
-				28B79B46A6CC7B0BA268815A713802E7 /* NNPopObjcMemory.h in Headers */,
+				A2D4C0F3EBCFC28268EC744CCAEC18AC /* NNPopObjcMemory.h in Headers */,
 				4101591BC0FFF5B0D1F976D131C78B8F /* NNPopObjcMetaMacros.h in Headers */,
-				B8ADE3FCA10FFA451A7871D179688DA9 /* NNPopObjcProtocol.h in Headers */,
+				061C3C219DDC0F29FA29E06F562687AA /* NNPopObjcProtocol.h in Headers */,
 				198A9FDE47A5CE1FEB187CCAF4F61C24 /* NNPopObjcWhere.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

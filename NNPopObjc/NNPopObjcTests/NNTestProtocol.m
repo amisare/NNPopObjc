@@ -10,7 +10,7 @@
 #import <NNPopObjc/NNPopObjc.h>
 #import "NNTestClassBA.h"
 
-@nn_extension(NNTestProtocol, NSObject)
+@nn_extension(NNTestProtocol)
 
 + (void)sayHelloPop {
     NSLog(@"+[%@ %s] say hello pop", self, sel_getName(_cmd));
@@ -31,7 +31,7 @@
 
 @end
 
-@nn_extension(NNTestProtocol, NNTestClassBA)
+@nn_extension(NNTestProtocol, @nn_where(), NNTestNameProtocol)
 
 + (void)sayHelloPop {
     NSLog(@"+[%@ %s] say hello pop", self, sel_getName(_cmd));

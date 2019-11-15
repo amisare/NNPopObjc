@@ -31,7 +31,16 @@
     },
     {
       "name": "Source",
-      "source_files": "NNPopObjc/NNPopObjc/Source/*.{h,m,mm}"
+      "source_files": "NNPopObjc/NNPopObjc/Source/*.{h,m,mm}",
+      "private_header_files": "NNPopObjc/NNPopObjc/Source/*.{h}",
+      "dependencies": {
+        "NNPopObjc/Public": [
+
+        ],
+        "NNPopObjc/extobjc": [
+
+        ]
+      }
     },
     {
       "name": "extobjc",

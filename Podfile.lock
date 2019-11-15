@@ -5,7 +5,9 @@ PODS:
     - NNPopObjc/Source (= 0.0.1)
   - NNPopObjc/extobjc (0.0.1)
   - NNPopObjc/Public (0.0.1)
-  - NNPopObjc/Source (0.0.1)
+  - NNPopObjc/Source (0.0.1):
+    - NNPopObjc/extobjc
+    - NNPopObjc/Public
 
 DEPENDENCIES:
   - NNPopObjc (from `NNPopObjc.podspec`)
@@ -15,7 +17,7 @@ EXTERNAL SOURCES:
     :path: NNPopObjc.podspec
 
 SPEC CHECKSUMS:
-  NNPopObjc: 6ad704cccf24e232fe4b0b44040426a0db2f43da
+  NNPopObjc: 7873f6e282a7725be51d39fdaef21b6c8ca51c73
 
 PODFILE CHECKSUM: 5dba2bf68d091aabbbbd35e1fb91422ad7d801c4
 

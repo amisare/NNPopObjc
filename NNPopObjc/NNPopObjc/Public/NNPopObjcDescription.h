@@ -9,6 +9,7 @@
 #define NNPopObjcDescription_h
 
 #import "NNPopObjcDefines.h"
+#import "NNPopObjcWhere.h"
 
 /// IMPLEMENTATION DETAILS FOLLOW!
 /// Do not write code that depends on anything below this line.

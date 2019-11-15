@@ -17,3 +17,10 @@
 
 @end
 
+
+@protocol NNTestNameProtocol <NSObject>
+
+@optional
+@property (nonatomic, strong) NSString *name;
+
+@end

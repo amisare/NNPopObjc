@@ -29,6 +29,9 @@ Pod::Spec.new do |s|
   
   s.subspec 'Source' do |ss|
     ss.source_files         = 'NNPopObjc/NNPopObjc/Source/*.{h,m,mm}'
+    ss.private_header_files = 'NNPopObjc/NNPopObjc/Source/*.{h}'
+    ss.dependency           'NNPopObjc/Public'
+    ss.dependency           'NNPopObjc/extobjc'
   end
   
   s.subspec 'extobjc' do |ss|
