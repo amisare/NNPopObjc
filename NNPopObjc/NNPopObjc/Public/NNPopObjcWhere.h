@@ -26,7 +26,7 @@ typedef enum : NSUInteger {
  * nn_where implementation
  */
 #define nn_pop_where_(...) \
-        metamacro_concat(nn_pop_where_, nn_pop_argcount(__VA_ARGS__))(__VA_ARGS__)
+        nn_pop_metamacro_concat(nn_pop_where_, nn_pop_argcount(__VA_ARGS__))(__VA_ARGS__)
 
 /**
  * nn_where static function name, the name is prefixed as 'w' and concated all args with '_'

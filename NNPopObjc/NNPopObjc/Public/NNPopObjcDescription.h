@@ -25,7 +25,7 @@ typedef struct {
     /// Where clause function pointer
     where_fp where_fp;
     /// Count of protocols that the adopted class should be confrom to.
-    unsigned int confrom_protocols_count;
+    unsigned int confrom_protocol_count;
     /// Protocols that the adopted class should be confrom to.
     const char *confrom_protocols[20];
 } nn_pop_extension_description_t;
@@ -33,7 +33,7 @@ typedef struct {
 /**
  * __attribute__ of extension description section
  */
-#define nn_pop_extension_description_section(section_name) __attribute__((used, section(metamacro_stringify(nn_pop_segment_name) "," section_name )))
+#define nn_pop_extension_description_section(section_name) __attribute__((used, section(nn_pop_metamacro_stringify(nn_pop_segment_name) "," section_name )))
 
 /**
  * nn_pop_extension_description_t name, the name is prefixed as 's' and concated all args with '_'
@@ -47,11 +47,11 @@ typedef struct {
 #define nn_pop_extension_description_(prefix, protocol, where_unique_id, where_block, ...) \
         const nn_pop_extension_description_t \
         nn_pop_extension_description_name_(prefix, protocol, where_unique_id, __VA_ARGS__) \
-        nn_pop_extension_description_section(metamacro_stringify(nn_pop_section_name)) = \
+        nn_pop_extension_description_section(nn_pop_metamacro_stringify(nn_pop_section_name)) = \
         { \
-            metamacro_stringify(protocol), \
-            metamacro_stringify(prefix), \
-            metamacro_stringify(nn_pop_extension_name_(prefix, protocol, where_unique_id, __VA_ARGS__)), \
+            nn_pop_metamacro_stringify(protocol), \
+            nn_pop_metamacro_stringify(prefix), \
+            nn_pop_metamacro_stringify(nn_pop_extension_name_(prefix, protocol, where_unique_id, __VA_ARGS__)), \
             nn_pop_extension_where_name_(prefix, protocol, where_unique_id, __VA_ARGS__), \
             nn_pop_argcount(__VA_ARGS__), \
             {nn_pop_confrom_protocol_names(__VA_ARGS__)}, \
@@ -68,13 +68,13 @@ typedef struct {
  * @endcode
  */
 #define nn_pop_confrom_protocol_names(...) \
-        metamacro_if_eq(0, nn_pop_argcount(__VA_ARGS__))()\
+        nn_pop_metamacro_if_eq(0, nn_pop_argcount(__VA_ARGS__))()\
         (nn_pop_confrom_protocol_names_(__VA_ARGS__))\
 
 #define nn_pop_confrom_protocol_names_(...) \
-        metamacro_foreach_cxt(nn_pop_confrom_protocol_name_iter,,, __VA_ARGS__) \
+        nn_pop_metamacro_foreach_cxt(nn_pop_confrom_protocol_name_iter,,, __VA_ARGS__) \
 
 #define nn_pop_confrom_protocol_name_iter(INDEX, CONTEXT, VAR) \
-        metamacro_stringify(VAR),
+        nn_pop_metamacro_stringify(VAR),
 
 #endif /* NNPopObjcDescription_h */

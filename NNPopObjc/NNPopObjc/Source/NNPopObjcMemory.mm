@@ -9,7 +9,7 @@
 
 void *nn_pop_malloc(size_t size) {
     void *_ptr = malloc(size);
-    memset(_ptr, 0, size);
+    memset(_ptr, 0, size); // fix: EXC_BAD_ACCESS
     return _ptr;
 }
 

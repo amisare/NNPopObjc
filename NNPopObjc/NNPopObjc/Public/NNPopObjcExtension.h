@@ -69,11 +69,11 @@
  * @endcode
  */
 #define nn_pop_adopt_protocol(...) \
-        metamacro_if_eq(0, nn_pop_argcount(__VA_ARGS__))()\
+        nn_pop_metamacro_if_eq(0, nn_pop_argcount(__VA_ARGS__))()\
         (nn_pop_adopt_protocol_(__VA_ARGS__))\
 
 #define nn_pop_adopt_protocol_(...) \
-        metamacro_foreach_cxt(nn_pop_adopt_protocol_iter,,, __VA_ARGS__) \
+        nn_pop_metamacro_foreach_cxt(nn_pop_adopt_protocol_iter,,, __VA_ARGS__) \
 
 #define nn_pop_adopt_protocol_iter(INDEX, CONTEXT, VAR) \
         ,VAR \
