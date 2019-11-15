@@ -9,6 +9,7 @@
 #define NNPopObjcProtocol_h
 
 #import <Foundation/Foundation.h>
+
 #import "NNPopObjc.h"
 
 #ifdef __cplusplus

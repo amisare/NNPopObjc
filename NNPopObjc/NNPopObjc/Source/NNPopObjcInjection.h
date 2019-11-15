@@ -13,8 +13,6 @@
 #include <mach-o/getsect.h>
 #include <mach-o/dyld.h>
 
-#import "NNPopObjcProtocol.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */

@@ -18,6 +18,7 @@
 #import <set>
 
 #import "NNPopObjcMemory.h"
+#import "NNPopObjcProtocol.h"
 
 
 static pthread_mutex_t nn_pop_injectLock = PTHREAD_MUTEX_INITIALIZER;
