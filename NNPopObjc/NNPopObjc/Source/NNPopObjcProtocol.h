@@ -76,7 +76,7 @@ void nn_pop_extensionListForeach(nn_pop_extensionNode_p *head, void (^enumerateB
 
 
 /// Creates a nn_pop_protocol_extension_t struct.
-nn_pop_protocolExtension_t *nn_pop_protocolExtensionNew();
+nn_pop_protocolExtension_t *nn_pop_protocolExtensionNew(void);
 
 /// Frees a nn_pop_protocol_extension_t struct.
 /// @param protocolExtension A nn_pop_protocol_extension_t struct pointer.

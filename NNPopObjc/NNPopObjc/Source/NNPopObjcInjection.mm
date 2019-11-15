@@ -70,17 +70,17 @@ BOOL nn_pop_class_conformsToProtocol(Class clazz, Protocol *protocol)  {
 
 /// Returns a Boolean value that indicates whether clazz is in protocol implements.
 /// @param clazz A class
-/// @param protocols nn_pop_protocol_extension_t list
-/// @param protocol_count nn_pop_protocol_extension_t list count
-BOOL nn_pop_isExtensionClass(Class clazz, nn_pop_protocolExtension_t **protocols, unsigned int protocol_count) {
+/// @param protocolExtensions nn_pop_protocol_extension_t list
+/// @param protocolCount nn_pop_protocol_extension_t list count
+BOOL nn_pop_isExtensionClass(Class clazz, nn_pop_protocolExtension_t **protocolExtensions, unsigned int protocolCount) {
     
     __block BOOL result = false;
     
-    for (unsigned int i = 0; i < protocol_count; i++) {
+    for (unsigned int i = 0; i < protocolCount; i++) {
         
-        nn_pop_protocolExtension_t protocol = *protocols[i];
+        nn_pop_protocolExtension_t protocolExtension = *protocolExtensions[i];
         
-        nn_pop_extensionListForeach(&(protocol.extension), ^(nn_pop_extensionNode_p item, BOOL *stop) {
+        nn_pop_extensionListForeach(&(protocolExtension.extension), ^(nn_pop_extensionNode_p item, BOOL *stop) {
             if (clazz == item->clazz) {
                 result = true;
                 *stop = true;
@@ -95,7 +95,6 @@ BOOL nn_pop_isExtensionClass(Class clazz, nn_pop_protocolExtension_t **protocols
 }
 
 /// Injects extentionClass implements in to clazz
-/// @param protocol A protocol that extened
 /// @param extentionClazz Extension implement class
 /// @param clazz A class
 /// @param checkSupserImplement Whether the injection should check super implemention,
