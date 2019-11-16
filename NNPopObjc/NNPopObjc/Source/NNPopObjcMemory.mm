@@ -13,7 +13,6 @@ void *nn_pop_malloc(size_t size) {
     return _ptr;
 }
 
-
 void *nn_pop_realloc(void *ptr, size_t size) {
     void *_ptr = realloc(ptr, size);
     return _ptr;

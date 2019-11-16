@@ -36,14 +36,6 @@ typedef struct nn_pop_extensionNode {
     struct nn_pop_extensionNode *next;
 } nn_pop_extensionNode_t, *nn_pop_extensionNode_p;
 
-/// Protocol extension struct.
-typedef struct {
-    /// Protocol be extended.
-    Protocol *protocol;
-    /// Protocol extension descriptions.
-    nn_pop_extensionNode_p extension;
-} nn_pop_protocolExtension_t;
-
 /// Creates a nn_pop_extension_node_p node.
 nn_pop_extensionNode_p nn_pop_extensionNodeNew(void);
 
@@ -75,6 +67,14 @@ void nn_pop_extensionListFree(nn_pop_extensionNode_p *head);
 /// @param head A list head
 void nn_pop_extensionListForeach(nn_pop_extensionNode_p *head, void (^enumerateBlock)(nn_pop_extensionNode_p item, BOOL *stop));
 
+
+/// Protocol extension struct.
+typedef struct {
+    /// Protocol be extended.
+    Protocol *protocol;
+    /// Protocol extension descriptions.
+    nn_pop_extensionNode_p extension;
+} nn_pop_protocolExtension_t;
 
 /// Creates a nn_pop_protocol_extension_t struct.
 nn_pop_protocolExtension_t *nn_pop_protocolExtensionNew(void);
