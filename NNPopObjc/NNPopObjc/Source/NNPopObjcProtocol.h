@@ -9,6 +9,7 @@
 #define NNPopObjcProtocol_h
 
 #import <Foundation/Foundation.h>
+#import <functional>
 
 #import "NNPopObjcDescription.h"
 
@@ -21,7 +22,9 @@ extern "C" {
 typedef nn_pop_extension_description_t nn_pop_extensionDescription_t;
 
 /// Extension list node.
-typedef struct nn_pop_extensionNode {
+struct nn_pop_extensionNode {
+        
+public:
     /// Prefix of extension implementation class name.
     const char *prefix;
     /// Extension implemention Class.
@@ -33,73 +36,49 @@ typedef struct nn_pop_extensionNode {
     /// Protocols that the adopted class should be confrom to.
     Protocol *confromProtocols[20];
     /// Next extension list node.
-    struct nn_pop_extensionNode *next;
-} nn_pop_extensionNode_t, *nn_pop_extensionNode_p;
+    nn_pop_extensionNode *next;
+    
+    nn_pop_extensionNode(void) = default;
+    nn_pop_extensionNode(nn_pop_extensionDescription_t *extensionDescription);
+    ~nn_pop_extensionNode(void);
+    
+    nn_pop_extensionNode *copy(void);
+    
+};
 
-/// Creates a nn_pop_extension_node_p node.
-nn_pop_extensionNode_p nn_pop_extensionNodeNew(void);
+struct nn_pop_extensionList {
 
-/// Initialize a nn_pop_extension_node_p node
-/// @param node A nn_pop_extension_node_p node pointer.
-/// @param extensionDescription A nn_pop_extensionDescription_t pointer.
-nn_pop_extensionNode_p nn_pop_extensionNodeInitWithExtensionDescription(nn_pop_extensionNode_p *node,
-                                                                        nn_pop_extensionDescription_t *extensionDescription);
+private:
+    nn_pop_extensionNode *_head;
 
-/// Copys a node from src to dst.
-/// @param dst dst node
-/// @param src src node
-nn_pop_extensionNode_p nn_pop_extensionNodeCopy(nn_pop_extensionNode_p dst, nn_pop_extensionNode_p src);
-
-/// Gets node count in list.
-/// @param head A list head
-unsigned int nn_pop_extensionListCount(nn_pop_extensionNode_p *head);
-
-/// Appends a node at the tail of list.
-/// @param head A list head
-/// @param entry A node
-void nn_pop_extensionListAppend(nn_pop_extensionNode_p *head, nn_pop_extensionNode_p *entry);
-
-/// Frees a list.
-/// @param head A list head
-void nn_pop_extensionListFree(nn_pop_extensionNode_p *head);
-
-/// Executes a given block using each object in the list, starting with the first object and continuing through the list to the last object.
-/// @param head A list head
-void nn_pop_extensionListForeach(nn_pop_extensionNode_p *head, void (^enumerateBlock)(nn_pop_extensionNode_p item, BOOL *stop));
+public:
+    nn_pop_extensionList(void) = default;
+    ~nn_pop_extensionList(void);
+    
+    unsigned int count(void);
+    nn_pop_extensionNode *head(void);
+    void head(nn_pop_extensionNode *node);
+    void append(nn_pop_extensionNode *entry);
+    void foreach(std::function<void(nn_pop_extensionNode *item, BOOL *stop)> enumerater);
+    void clear(void);
+    
+};
 
 
 /// Protocol extension struct.
-typedef struct {
+struct nn_pop_protocolExtension{
+
+public:
     /// Protocol be extended.
     Protocol *protocol;
     /// Protocol extension descriptions.
-    nn_pop_extensionNode_p extension;
-} nn_pop_protocolExtension_t;
-
-/// Creates a nn_pop_protocol_extension_t struct.
-nn_pop_protocolExtension_t *nn_pop_protocolExtensionNew(void);
-
-/// Frees a nn_pop_protocol_extension_t struct.
-/// @param protocolExtension A nn_pop_protocol_extension_t struct pointer.
-void nn_pop_protocolExtensionFree(nn_pop_protocolExtension_t *protocolExtension);
-
-/// Initialize a nn_pop_protocol_extension_t struct
-/// @param protocolExtension A nn_pop_protocol_extension_t struct pointer
-nn_pop_protocolExtension_t *nn_pop_protocolExtensionInit(nn_pop_protocolExtension_t *protocolExtension);
-
-/// Initialize a nn_pop_protocol_extension_t struct
-/// @param protocolExtension A nn_pop_protocol_extension_t struct pointer
-nn_pop_protocolExtension_t *nn_pop_protocolExtensionInitWithExtensionDescription(nn_pop_protocolExtension_t *protocolExtension,
-                                                                                 nn_pop_extensionDescription_t *extensionDescription);
-
-/// Creates a nn_pop_protocol_extension_t struct array list.
-/// @param protocolExtensionCount A number of nn_pop_protocol_extension_t struct.
-nn_pop_protocolExtension_t **nn_pop_protocolExtensionsNew(size_t protocolExtensionCount);
-
-/// Frees a nn_pop_protocol_extension_t struct array list.
-/// @param protocolExtensions A nn_pop_protocol_extension_t struct array list.
-/// @param protocolExtensionCount A mumber of nn_pop_protocol_extension_t struct.
-void nn_pop_protocolExtensionsFree(nn_pop_protocolExtension_t **protocolExtensions, unsigned int protocolExtensionCount);
+    nn_pop_extensionList extension;
+    
+    nn_pop_protocolExtension(void) = default;
+    nn_pop_protocolExtension(nn_pop_extensionDescription_t *extensionDescription);
+    ~nn_pop_protocolExtension(void);
+    
+};
 
 #ifdef __cplusplus
 }

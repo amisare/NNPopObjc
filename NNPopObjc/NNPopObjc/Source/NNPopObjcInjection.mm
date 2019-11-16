@@ -15,6 +15,7 @@
 #import <stdio.h>
 #import <stdlib.h>
 #import <string.h>
+#import <vector>
 #import <set>
 
 #import "NNPopObjcMemory.h"
@@ -72,16 +73,13 @@ BOOL nn_pop_class_conformsToProtocol(Class clazz, Protocol *protocol)  {
 /// Returns a Boolean value that indicates whether clazz is in protocol implements.
 /// @param clazz A class
 /// @param protocolExtensions nn_pop_protocol_extension_t list
-/// @param protocolCount nn_pop_protocol_extension_t list count
-BOOL nn_pop_isExtensionClass(Class clazz, nn_pop_protocolExtension_t **protocolExtensions, unsigned int protocolCount) {
+BOOL nn_pop_isExtensionClass(Class clazz, std::vector<nn_pop_protocolExtension *> protocolExtensions) {
     
-    __block BOOL result = false;
+    BOOL result = false;
     
-    for (unsigned int i = 0; i < protocolCount; i++) {
+    for (auto protocolExtension : protocolExtensions) {
         
-        nn_pop_protocolExtension_t protocolExtension = *protocolExtensions[i];
-        
-        nn_pop_extensionListForeach(&(protocolExtension.extension), ^(nn_pop_extensionNode_p item, BOOL *stop) {
+        protocolExtension->extension.foreach([&](nn_pop_extensionNode *item, BOOL *stop) {
             if (clazz == item->clazz) {
                 result = true;
                 *stop = true;
@@ -149,20 +147,19 @@ void nn_pop_injectProtocolExtension(Class extentionClazz, Class clazz, BOOL chec
 /// Injects protocol extension in to clazz
 /// @param protocolExtension A nn_pop_protocol_extension_t struct
 /// @param clazz A class
-void nn_pop_injectProtocol(nn_pop_protocolExtension_t *protocolExtension, Class clazz) {
+void nn_pop_injectProtocol(nn_pop_protocolExtension *protocolExtension, Class clazz) {
     
-    __block nn_pop_extensionNode_p defaultList = nil;
-    __block nn_pop_extensionNode_p constrainedList = nil;
+    nn_pop_extensionList defaultList = nn_pop_extensionList();
+    nn_pop_extensionList constrainedList = nn_pop_extensionList();
     
-    nn_pop_extensionListForeach(&(protocolExtension->extension), ^(nn_pop_extensionNode_p node, BOOL *stop) {
+    protocolExtension->extension.foreach([&](nn_pop_extensionNode *node, BOOL *stop) {
         
         nn_pop_where_value_def matchValue = node->where_fp(clazz);
         
         if (matchValue == nn_pop_where_value_matched_default) {
-            nn_pop_extensionNode_p matchedNode = nn_pop_extensionNodeNew();
-            nn_pop_extensionNodeCopy(matchedNode, node);
+            nn_pop_extensionNode *matchedNode = node->copy();
             matchedNode->next = nil;
-            nn_pop_extensionListAppend(&(defaultList), &(matchedNode));
+            defaultList.append(matchedNode);
         }
         
         if (matchValue == nn_pop_where_value_matched_constrained) {
@@ -175,71 +172,62 @@ void nn_pop_injectProtocol(nn_pop_protocolExtension_t *protocolExtension, Class 
                 }
             }
             if (conform) {
-                nn_pop_extensionNode_p matchedNode = nn_pop_extensionNodeNew();
-                nn_pop_extensionNodeCopy(matchedNode, node);
+                nn_pop_extensionNode *matchedNode = node->copy();
                 matchedNode->next = nil;
-                nn_pop_extensionListAppend(&(constrainedList), &(matchedNode));
+                constrainedList.append(matchedNode);
             }
         }
     });
     
-    __unused NSString *(^assertExtensionDesc)(nn_pop_extensionNode_p *head) = ^(nn_pop_extensionNode_p *head){
+    __unused NSString *(^assertExtensionDesc)(nn_pop_extensionList list) = ^(nn_pop_extensionList list){
         NSMutableArray<NSString *> *extension_names = [NSMutableArray new];
-        nn_pop_extensionListForeach(head, ^(nn_pop_extensionNode_p item, BOOL *stop) {
+        list.foreach([=](nn_pop_extensionNode *item, BOOL *stop) {
             [extension_names addObject:NSStringFromClass(item->clazz)];
         });
         NSString *extensionDesc = [extension_names componentsJoinedByString:@", "];
         return extensionDesc;
     };
-    NSCAssert(!(nn_pop_extensionListCount(&(constrainedList)) > 1),
-              @"Matched multiple constraint protocol extensions for class %@. The matched protocol extensions: %@", @(class_getName(clazz)), assertExtensionDesc(&(constrainedList)));
-    NSCAssert(!(nn_pop_extensionListCount(&(defaultList)) > 1),
-              @"Matched multiple default protocol extensions for class %@. The matched protocol extensions: %@", @(class_getName(clazz)), assertExtensionDesc(&(defaultList)));
-    NSCAssert(!((nn_pop_extensionListCount(&(constrainedList)) == 0) && (nn_pop_extensionListCount(&(defaultList)) == 0)),
+    NSCAssert(!(constrainedList.count() > 1),
+              @"Matched multiple constraint protocol extensions for class %@. The matched protocol extensions: %@", @(class_getName(clazz)), assertExtensionDesc(constrainedList));
+    NSCAssert(!(defaultList.count() > 1),
+              @"Matched multiple default protocol extensions for class %@. The matched protocol extensions: %@", @(class_getName(clazz)), assertExtensionDesc(defaultList));
+    NSCAssert(!((constrainedList.count() == 0) && (defaultList.count() == 0)),
               @"Unmatched to the protocol extension for class %@", @(class_getName(clazz)));
     
-    if (nn_pop_extensionListCount(&(constrainedList)) == 1) {
-        nn_pop_injectProtocolExtension(constrainedList->clazz, clazz, false);
+    if (constrainedList.count() == 1) {
+        nn_pop_injectProtocolExtension(constrainedList.head()->clazz, clazz, false);
     }
-    if (nn_pop_extensionListCount(&(defaultList)) == 1) {
-        nn_pop_injectProtocolExtension(defaultList->clazz, clazz, true);
+    if (defaultList.count() == 1) {
+        nn_pop_injectProtocolExtension(defaultList.head()->clazz, clazz, true);
     }
     
-    nn_pop_extensionListFree(&defaultList);
-    nn_pop_extensionListFree(&constrainedList);
+    defaultList.clear();
+    constrainedList.clear();
     
     return;
 }
 
 /// Injects each protocols extension in to the corresponding class
 /// @param protocolExtensions nn_pop_protocol_extension_t list
-/// @param protocolExtensionCount nn_pop_protocol_extension_t list count
-void nn_pop_injectProtocols (nn_pop_protocolExtension_t **protocolExtensions, unsigned int protocolExtensionCount) {
+void nn_pop_injectProtocols(std::vector<nn_pop_protocolExtension *> protocolExtensions) {
     
-    qsort_b(protocolExtensions, protocolExtensionCount, sizeof(nn_pop_protocolExtension_t *), ^(const void *a, const void *b){
+    std::sort(protocolExtensions.begin(), protocolExtensions.end(), [=](const nn_pop_protocolExtension *a, const nn_pop_protocolExtension *b) {
         
-        if (a == b)
-            return 0;
-        
-        const nn_pop_protocolExtension_t *p_a = *(nn_pop_protocolExtension_t **)a;
-        const nn_pop_protocolExtension_t *p_b = *(nn_pop_protocolExtension_t **)b;
-        
-        int (^protocolInjectionPriority)(const nn_pop_protocolExtension_t *) = ^(const nn_pop_protocolExtension_t *protocol){
+        std::function<int(const nn_pop_protocolExtension *)> protocolInjectionPriority = [=](const nn_pop_protocolExtension *protocolExtension) {
+            
             int runningTotal = 0;
             
-            for (size_t i = 0; i < protocolExtensionCount; ++i) {
-                
-                if (protocol == *(protocolExtensions + i))
+            for (auto _protocolExtension : protocolExtensions) {
+                if (protocolExtension == _protocolExtension)
                     continue;
                 
-                if (protocol_conformsToProtocol(protocol->protocol, protocolExtensions[i]->protocol))
+                if (protocol_conformsToProtocol(protocolExtension->protocol, _protocolExtension->protocol))
                     runningTotal++;
             }
-            
             return runningTotal;
         };
         
-        return protocolInjectionPriority(p_b) - protocolInjectionPriority(p_a);
+        return protocolInjectionPriority(b) - protocolInjectionPriority(a);
     });
     
     int classCount = objc_getClassList(NULL, 0);
@@ -258,9 +246,7 @@ void nn_pop_injectProtocols (nn_pop_protocolExtension_t **protocolExtensions, un
     
     @autoreleasepool {
         
-        for (size_t i = 0; i < protocolExtensionCount; ++i) {
-            
-            nn_pop_protocolExtension_t *protocol = protocolExtensions[i];
+        for (auto protocolExtension : protocolExtensions) {
             
             std::set<const char *> injected;
             
@@ -269,20 +255,20 @@ void nn_pop_injectProtocols (nn_pop_protocolExtension_t **protocolExtensions, un
                 
                 Class clazz = clazzes[i];
                 
-                if (nn_pop_class_conformsToProtocol(clazz, protocol->protocol) == false) {
+                if (nn_pop_class_conformsToProtocol(clazz, protocolExtension->protocol) == false) {
                     continue;
                 }
-                if (nn_pop_isExtensionClass(clazz, protocolExtensions, protocolExtensionCount) == true) {
+                if (nn_pop_isExtensionClass(clazz, protocolExtensions) == true) {
                     continue;
                 }
                 
-                Class rootClazz = nn_pop_class_rootProtocolClass(clazz, protocol->protocol);
+                Class rootClazz = nn_pop_class_rootProtocolClass(clazz, protocolExtension->protocol);
                 if (injected.find(class_getName(rootClazz)) == injected.end()) {
-                    nn_pop_injectProtocol(protocol, rootClazz);
+                    nn_pop_injectProtocol(protocolExtension, rootClazz);
                     injected.insert(class_getName(rootClazz));
                 }
                 if (clazz !=  rootClazz) {
-                    nn_pop_injectProtocol(protocol, clazz);
+                    nn_pop_injectProtocol(protocolExtension, clazz);
                     injected.insert(class_getName(clazz));
                 }
             }
@@ -295,7 +281,9 @@ void nn_pop_injectProtocols (nn_pop_protocolExtension_t **protocolExtensions, un
 /// Loads protocol extensions info from image segment
 /// @param mhp A mach header appears at the very beginning of the object file
 /// @param sectname A section name in __DATA segment
-void nn_pop_loadSection(const nn_pop_mach_header *mhp, const char *sectname, void (^loaded)(nn_pop_protocolExtension_t **protocolExtensions, unsigned int protocolExtensionCount)) {
+void nn_pop_loadSection(const nn_pop_mach_header *mhp,
+                        const char *sectname,
+                        std::function<void (std::vector<nn_pop_protocolExtension *> protocolExtensions)> loaded) {
     
     if (pthread_mutex_lock(&nn_pop_injectLock) != 0) {
         fprintf(stderr, "ERROR: Could not synchronize on special protocol data\n");
@@ -311,60 +299,41 @@ void nn_pop_loadSection(const nn_pop_mach_header *mhp, const char *sectname, voi
     unsigned long sectionItemCount = size / sizeof(nn_pop_extensionDescription_t);
     nn_pop_extensionDescription_t *sectionItems = (nn_pop_extensionDescription_t *)sectionData;
     
-    nn_pop_protocolExtension_t **protocolExtensions = nn_pop_protocolExtensionsNew((size_t) (sectionItemCount + 1));
-    if (protocolExtensions == NULL) {
-        pthread_mutex_unlock(&nn_pop_injectLock);
-        return;
-    }
+    std::vector<nn_pop_protocolExtension *> protocolExtensions;
     
-    for (unsigned int sectionIndex = 0, protocolIndex = 0; sectionIndex < sectionItemCount; sectionIndex++) {
+    for (unsigned int i = 0; i < sectionItemCount; i++) {
         
-        nn_pop_extensionDescription_t *_extensionDescription = &sectionItems[sectionIndex];
-        nn_pop_protocolExtension_t *protocolExtension = nn_pop_protocolExtensionNew();
+        nn_pop_extensionDescription_t *_extensionDescription = &sectionItems[i];
+        nn_pop_protocolExtension *protocolExtension = new nn_pop_protocolExtension(_extensionDescription);
         if (protocolExtension == NULL) {
             continue;
         }
-        nn_pop_protocolExtensionInitWithExtensionDescription(protocolExtension, _extensionDescription);
-        protocolExtensions[protocolIndex++] = protocolExtension;
-    }
-    
-    qsort_b(protocolExtensions, sectionItemCount, sizeof(nn_pop_protocolExtension_t *), ^int(const void *a, const void *b) {
-        const nn_pop_protocolExtension_t *_a = *(nn_pop_protocolExtension_t **)a;
-        const nn_pop_protocolExtension_t *_b = *(nn_pop_protocolExtension_t **)b;
         
-        const char *_aName = protocol_getName(_a->protocol);
-        const char *_bName = protocol_getName(_b->protocol);
+        std::vector<nn_pop_protocolExtension *>::iterator _p = protocolExtensions.begin();
+        while (_p != protocolExtensions.end()) {
+            if (protocol_isEqual((*_p)->protocol, protocolExtension->protocol)) {
+                break;
+            }
+            _p++;
+        }
         
-        int cmp = strcmp(_aName, _bName);
-        return cmp;
-    });
-    
-    unsigned int protocolBaseIndex = 0, protocolForwardIndex = 1;
-    while (protocolForwardIndex < sectionItemCount) {
-        
-        nn_pop_protocolExtension_t *protocolBase = protocolExtensions[protocolBaseIndex];
-        nn_pop_protocolExtension_t *protocolForward = protocolExtensions[protocolForwardIndex];
-        
-        if (protocol_isEqual(protocolBase->protocol, protocolForward->protocol)) {
-            nn_pop_extensionListAppend(&(protocolBase->extension), &(protocolForward->extension));
-            protocolForward->extension = nil;
-            nn_pop_protocolExtensionFree(protocolForward);
+        if (_p != protocolExtensions.end()) {
+            (*_p)->extension.append(protocolExtension->extension.head());
+            protocolExtension->extension.head(NULL);
+            delete protocolExtension;
         }
         else {
-            protocolExtensions[++protocolBaseIndex] = protocolForward;
+            protocolExtensions.push_back(protocolExtension);
         }
-        protocolForwardIndex++;
     }
-    
-    unsigned int protocolCount = protocolBaseIndex + 1;
-    protocolExtensions = (nn_pop_protocolExtension_t **)nn_pop_realloc(protocolExtensions, (protocolCount + 1) * sizeof(nn_pop_protocolExtension_t *));
-    memset(protocolExtensions + protocolCount, 0, sizeof(nn_pop_protocolExtension_t *));
     
     if (loaded) {
-        loaded(protocolExtensions, protocolCount);
+        loaded(protocolExtensions);
     }
     
-    nn_pop_protocolExtensionsFree(protocolExtensions, protocolCount);
+    for (auto protocolExtension : protocolExtensions) {
+        delete protocolExtension;
+    }
     
     pthread_mutex_unlock(&nn_pop_injectLock);
 }
@@ -387,12 +356,18 @@ struct nn_pop_ProgramVars
 /// @param apple apple
 /// @param vars vars
 /// @note dyld project: https://opensource.apple.com/tarballs/dyld/
-__attribute__((constructor)) void nn_pop_prophet(int argc, const char* argv[], const char* envp[], const char* apple[], const nn_pop_ProgramVars* vars) {
+__attribute__((constructor)) void nn_pop_prophet(int argc,
+                                                 const char* argv[],
+                                                 const char* envp[],
+                                                 const char* apple[],
+                                                 const nn_pop_ProgramVars* vars) {
     
     nn_pop_mach_header *mhp = (nn_pop_mach_header *)vars->mh;
     
-    nn_pop_loadSection(mhp, nn_pop_metamacro_stringify(nn_pop_section_name), ^(nn_pop_protocolExtension_t **protocolExtensions, unsigned int protocolExtensionCount) {
-        nn_pop_injectProtocols(protocolExtensions, protocolExtensionCount);
+    nn_pop_loadSection(mhp,
+                       nn_pop_metamacro_stringify(nn_pop_section_name),
+                       [](std::vector<nn_pop_protocolExtension *> protocolExtensions) {
+        nn_pop_injectProtocols(protocolExtensions);
     });
 }
 

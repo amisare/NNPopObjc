@@ -11,44 +11,46 @@
 #import "NNPopObjcMemory.h"
 
 
-nn_pop_extensionNode_p nn_pop_extensionNodeNew(void) {
+nn_pop_extensionNode::nn_pop_extensionNode(nn_pop_extensionDescription_t *extensionDescription) : nn_pop_extensionNode() {
     
-    nn_pop_extensionNode_p _node = (nn_pop_extensionNode_p)nn_pop_malloc(1 * sizeof(nn_pop_extensionNode_t));
-    return _node;
-}
-
-nn_pop_extensionNode_p nn_pop_extensionNodeInit(nn_pop_extensionNode_p *node) {
-    
-    nn_pop_extensionNode_p _node = (nn_pop_extensionNode_p)memset(*node, 0, sizeof(nn_pop_extensionNode_t));
-    return _node;
-}
-
-nn_pop_extensionNode_p nn_pop_extensionNodeInitWithExtensionDescription(nn_pop_extensionNode_p *node,
-                                                                        nn_pop_extensionDescription_t *extensionDescription) {
-    nn_pop_extensionNode_p _node = *node;
     nn_pop_extensionDescription_t *_extensionDescription = extensionDescription;
-    _node->prefix = _extensionDescription->prefix;
-    _node->clazz = objc_getClass(_extensionDescription->clazz);
-    _node->where_fp = _extensionDescription->where_fp;
-    _node->confromProtocolCount = _extensionDescription->confrom_protocol_count;
-    for (unsigned int i = 0; i < _node->confromProtocolCount; i++) {
-        _node->confromProtocols[i] = objc_getProtocol(_extensionDescription->confrom_protocols[i]);
+    this->prefix = _extensionDescription->prefix;
+    this->clazz = objc_getClass(_extensionDescription->clazz);
+    this->where_fp = _extensionDescription->where_fp;
+    this->confromProtocolCount = _extensionDescription->confrom_protocol_count;
+    for (unsigned int i = 0; i < this->confromProtocolCount; i++) {
+        this->confromProtocols[i] = objc_getProtocol(_extensionDescription->confrom_protocols[i]);
     }
-    _node->next = NULL;
-    
-    return _node;
+    this->next = NULL;
 }
 
-nn_pop_extensionNode_p nn_pop_extensionNodeCopy(nn_pop_extensionNode_p dst, nn_pop_extensionNode_p src) {
+nn_pop_extensionNode::~nn_pop_extensionNode(void) {
     
-    nn_pop_extensionNode_p _dst = (nn_pop_extensionNode_p)memcpy(dst, src, sizeof(nn_pop_extensionNode_t));
-    _dst->next = nil;
-    return _dst;
 }
 
-unsigned int nn_pop_extensionListCount(nn_pop_extensionNode_p *head) {
+nn_pop_extensionNode *nn_pop_extensionNode::copy(void) {
     
-    nn_pop_extensionNode_p _head = *head;
+    nn_pop_extensionNode *newNode = new nn_pop_extensionNode();
+    newNode->prefix = this->prefix;
+    newNode->clazz = this->clazz;
+    newNode->where_fp = this->where_fp;
+    newNode->confromProtocolCount = this->confromProtocolCount;
+    for (unsigned int i = 0; i < this->confromProtocolCount; i++) {
+        newNode->confromProtocols[i] = this->confromProtocols[i];
+    }
+    newNode->next = NULL;
+    return newNode;
+}
+
+
+nn_pop_extensionList::~nn_pop_extensionList(void) {
+    
+    this->clear();
+}
+
+unsigned int nn_pop_extensionList::count(void) {
+    
+    nn_pop_extensionNode *_head = this->_head;
     
     unsigned int count = 0;
     while (_head) {
@@ -58,87 +60,63 @@ unsigned int nn_pop_extensionListCount(nn_pop_extensionNode_p *head) {
     return count;
 }
 
-void nn_pop_extensionListAppend(nn_pop_extensionNode_p *head, nn_pop_extensionNode_p *entry) {
+nn_pop_extensionNode *nn_pop_extensionList::head(void) {
     
-    if (*head) {
-        nn_pop_extensionNode_p node = *head;
-        while (node->next != NULL) {
-            node = node->next;
-        }
-        node->next = *entry;
-    }
-    else {
-        *head = *entry;
-    }
+    return this->_head;
 }
 
-void nn_pop_extensionListFree(nn_pop_extensionNode_p *head) {
+void nn_pop_extensionList::head(nn_pop_extensionNode *node) {
     
-    while (*head) {
-        nn_pop_extensionNode_p node = *head;
-        *head = node->next;
-        free(node);
-    }
+    this->_head = node;
 }
 
-void nn_pop_extensionListForeach(nn_pop_extensionNode_p *head, void (^enumerateBlock)(nn_pop_extensionNode_p item, BOOL *stop)) {
+void nn_pop_extensionList::append(nn_pop_extensionNode *entry) {
     
-    nn_pop_extensionNode_p node = *head;
+    nn_pop_extensionNode *_head = this->_head;
+    
+    if (_head) {
+          nn_pop_extensionNode *node = _head;
+          while (node->next != NULL) {
+              node = node->next;
+          }
+          node->next = entry;
+      }
+      else {
+          this->_head = entry;
+      }
+}
+
+void nn_pop_extensionList::foreach(std::function<void(nn_pop_extensionNode *item, BOOL *stop)> enumerater) {
+    
+    nn_pop_extensionNode *node = this->_head;
     
     BOOL stop = false;
     while (node) {
-        if (enumerateBlock && stop == false) {
-            enumerateBlock(node, &stop);
+        if (enumerater && stop == false) {
+            enumerater(node, &stop);
         }
         node = node->next;
     }
 }
 
-nn_pop_protocolExtension_t *nn_pop_protocolExtensionNew() {
+void nn_pop_extensionList::clear(void) {
     
-    nn_pop_protocolExtension_t *_protocol = (nn_pop_protocolExtension_t *)nn_pop_malloc(1 * sizeof(nn_pop_protocolExtension_t));
-    return _protocol;
-}
-
-void nn_pop_protocolExtensionFree(nn_pop_protocolExtension_t *protocolExtension) {
-    
-    nn_pop_protocolExtension_t *_protocolExtension = protocolExtension;
-    nn_pop_extensionListFree(&(_protocolExtension->extension));
-    free(_protocolExtension);
-}
-
-nn_pop_protocolExtension_t *nn_pop_protocolExtensionInit(nn_pop_protocolExtension_t *protocolExtension) {
-    
-    nn_pop_protocolExtension_t *_protocolExtension = (nn_pop_protocolExtension_t *)memset(protocolExtension, 0, sizeof(nn_pop_protocolExtension_t));
-    nn_pop_extensionListFree(&(_protocolExtension->extension));
-    return _protocolExtension;
-}
-
-nn_pop_protocolExtension_t *nn_pop_protocolExtensionInitWithExtensionDescription(nn_pop_protocolExtension_t *protocolExtension,
-                                                                                 nn_pop_extensionDescription_t *extensionDescription) {
-    
-    nn_pop_protocolExtension_t *_protocolExtension = nn_pop_protocolExtensionInit(protocolExtension);
-    nn_pop_extensionDescription_t *_extensionDescription = extensionDescription;
-    
-    _protocolExtension->protocol = objc_getProtocol(_extensionDescription->protocol);
-    
-    nn_pop_extensionNode_p _extension = nn_pop_extensionNodeNew();
-    nn_pop_extensionNodeInitWithExtensionDescription(&_extension, extensionDescription);
-    nn_pop_extensionListAppend(&(_protocolExtension->extension), &_extension);
-    
-    return _protocolExtension;
-}
-
-nn_pop_protocolExtension_t **nn_pop_protocolExtensionsNew(size_t protocolExtensionCount) {
-    
-    nn_pop_protocolExtension_t **_protocolExtensions = (nn_pop_protocolExtension_t **)nn_pop_malloc(protocolExtensionCount * sizeof(nn_pop_protocolExtension_t *));
-    return _protocolExtensions;
-}
-
-void nn_pop_protocolExtensionsFree(nn_pop_protocolExtension_t **protocolExtensions, unsigned int protocolExtensionCount) {
-    
-    for (unsigned int i = 0; i < protocolExtensionCount; i++) {
-        nn_pop_protocolExtensionFree(protocolExtensions[i]);
+    while (this->_head) {
+        nn_pop_extensionNode *node = this->_head;
+        this->_head = node->next;
+        delete node;
     }
-    free(protocolExtensions);
 }
+
+
+nn_pop_protocolExtension::nn_pop_protocolExtension(nn_pop_extensionDescription_t *extensionDescription) : nn_pop_protocolExtension() {
+    
+    nn_pop_extensionNode *_extension = new nn_pop_extensionNode(extensionDescription);
+    this->protocol = objc_getProtocol(extensionDescription->protocol);
+    this->extension.append(_extension);
+}
+
+nn_pop_protocolExtension::~nn_pop_protocolExtension(void) {
+    
+}
+
