@@ -10,18 +10,8 @@
 #define NNPopObjcInjection_h
 
 #import <Foundation/Foundation.h>
-#include <mach-o/getsect.h>
-#include <mach-o/dyld.h>
 
 namespace popobjc {
-
-typedef struct
-#ifdef __LP64__
-mach_header_64
-#else
-mach_header
-#endif
-nn_pop_mach_header;
 
 } // namespace popobjc
 

@@ -13,7 +13,6 @@
 namespace popobjc {
 
 void *nn_pop_malloc(size_t size);
-void *nn_pop_realloc(void *ptr, size_t size);
 
 } // namespace popobjc
 

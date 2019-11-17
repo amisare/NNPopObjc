@@ -7,14 +7,17 @@
 //
 
 #import "NNPopObjcInjection.h"
+#import <mach-o/getsect.h>
+#import <mach-o/dyld.h>
 #import <objc/runtime.h>
 #import <ctype.h>
-#import <objc/message.h>
 #import <os/lock.h>
 #import <pthread.h>
 #import <stdio.h>
 #import <stdlib.h>
 #import <string.h>
+
+#import <iostream>
 #import <vector>
 #import <set>
 
@@ -22,6 +25,14 @@
 #import "NNPopObjcProtocol.h"
 
 namespace popobjc {
+
+typedef struct
+#ifdef __LP64__
+mach_header_64
+#else
+mach_header
+#endif
+nn_pop_mach_header;
 
 static pthread_mutex_t injectLock = PTHREAD_MUTEX_INITIALIZER;
 
@@ -233,13 +244,13 @@ void injectProtocolExtensions(std::vector<ProtocolExtension *> protocolExtension
     
     int classCount = objc_getClassList(NULL, 0);
     if (!classCount) {
-        fprintf(stderr, "ERROR: No clazzes registered with the runtime\n");
+        std::cout << "ERROR: No clazzes registered with the runtime" << std::endl;
         return;
     }
     
     Class *clazzes = (Class *)nn_pop_malloc((size_t)(classCount + 1) * sizeof(Class));
     if (!clazzes) {
-        fprintf(stderr, "ERROR: Could not allocate space for %d clazzes\n", classCount);
+        std::cout << "ERROR: Could not allocate space for " << classCount << " clazzes" << std::endl;
         return;
     }
     
@@ -287,7 +298,8 @@ void loadSection(const nn_pop_mach_header *mhp,
                  std::function<void (std::vector<ProtocolExtension *> protocolExtensions)> loaded) {
     
     if (pthread_mutex_lock(&injectLock) != 0) {
-        fprintf(stderr, "ERROR: Could not synchronize on special protocol data\n");
+        std::cout << "ERROR: inject thread lock failed" << std::endl;
+        return;
     }
     
     unsigned long size = 0;
