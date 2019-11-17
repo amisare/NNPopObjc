@@ -13,16 +13,14 @@
 
 #import "NNPopObjcDescription.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
+namespace popobjc {
 
 /// Extension description struct.
-typedef nn_pop_extension_description_t nn_pop_extensionDescription_t;
+typedef nn_pop_extension_description_t ExtensionDescription;
+
 
 /// Extension list node.
-struct nn_pop_extensionNode {
+struct ExtensionNode {
         
 public:
     /// Prefix of extension implementation class name.
@@ -36,52 +34,50 @@ public:
     /// Protocols that the adopted class should be confrom to.
     Protocol *confromProtocols[20];
     /// Next extension list node.
-    nn_pop_extensionNode *next;
+    ExtensionNode *next;
     
-    nn_pop_extensionNode(void) = default;
-    nn_pop_extensionNode(nn_pop_extensionDescription_t *extensionDescription);
-    ~nn_pop_extensionNode(void);
-    
-    nn_pop_extensionNode *copy(void);
+    ExtensionNode() = default;
+    ExtensionNode(const ExtensionDescription *extensionDescription);
+    ExtensionNode(const ExtensionNode *extensionNode);
+    ~ExtensionNode();
     
 };
 
-struct nn_pop_extensionList {
+
+struct ExtensionList {
 
 private:
-    nn_pop_extensionNode *_head;
+    ExtensionNode *_head;
 
 public:
-    nn_pop_extensionList(void) = default;
-    ~nn_pop_extensionList(void);
+    ExtensionList() = default;
+    ~ExtensionList();
     
-    unsigned int count(void);
-    nn_pop_extensionNode *head(void);
-    void head(nn_pop_extensionNode *node);
-    void append(nn_pop_extensionNode *entry);
-    void foreach(std::function<void(nn_pop_extensionNode *item, BOOL *stop)> enumerater);
-    void clear(void);
+    unsigned int count();
+    ExtensionNode *head();
+    void head(ExtensionNode *node);
+    void append(ExtensionNode *entry);
+    void foreach(std::function<void(ExtensionNode *item, BOOL *stop)> enumerater);
+    void clear();
     
 };
 
 
 /// Protocol extension struct.
-struct nn_pop_protocolExtension{
+struct ProtocolExtension{
 
 public:
     /// Protocol be extended.
     Protocol *protocol;
     /// Protocol extension descriptions.
-    nn_pop_extensionList extension;
+    ExtensionList extension;
     
-    nn_pop_protocolExtension(void) = default;
-    nn_pop_protocolExtension(nn_pop_extensionDescription_t *extensionDescription);
-    ~nn_pop_protocolExtension(void);
+    ProtocolExtension() = default;
+    ProtocolExtension(const ExtensionDescription *extensionDescription);
+    ~ProtocolExtension();
     
 };
 
-#ifdef __cplusplus
 }
-#endif /* __cplusplus */
 
 #endif /* NNPopObjcProtocol_h */

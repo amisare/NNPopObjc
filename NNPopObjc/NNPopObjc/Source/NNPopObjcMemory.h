@@ -10,16 +10,11 @@
 
 #import <Foundation/Foundation.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
+namespace popobjc {
 
 void *nn_pop_malloc(size_t size);
 void *nn_pop_realloc(void *ptr, size_t size);
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+} // namespace popobjc
 
 #endif /* NNPopObjcMemory_h */

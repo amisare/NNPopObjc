@@ -13,10 +13,7 @@
 #include <mach-o/getsect.h>
 #include <mach-o/dyld.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
+namespace popobjc {
 
 typedef struct
 #ifdef __LP64__
@@ -26,8 +23,6 @@ mach_header
 #endif
 nn_pop_mach_header;
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+} // namespace popobjc
 
 #endif /* NNPopObjcInjection_h */

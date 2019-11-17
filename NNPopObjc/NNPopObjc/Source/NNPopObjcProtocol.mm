@@ -8,12 +8,24 @@
 #import "NNPopObjcProtocol.h"
 #import <objc/runtime.h>
 
-#import "NNPopObjcMemory.h"
+namespace popobjc {
 
-
-nn_pop_extensionNode::nn_pop_extensionNode(nn_pop_extensionDescription_t *extensionDescription) : nn_pop_extensionNode() {
+ExtensionNode::ExtensionNode(const ExtensionNode *extensionNode) : ExtensionNode() {
     
-    nn_pop_extensionDescription_t *_extensionDescription = extensionDescription;
+    const ExtensionNode *_extensionNode = extensionNode;
+    this->prefix = _extensionNode->prefix;
+    this->clazz = _extensionNode->clazz;
+    this->where_fp = _extensionNode->where_fp;
+    this->confromProtocolCount = _extensionNode->confromProtocolCount;
+    for (unsigned int i = 0; i < this->confromProtocolCount; i++) {
+        this->confromProtocols[i] = _extensionNode->confromProtocols[i];
+    }
+    this->next = NULL;
+}
+
+ExtensionNode::ExtensionNode(const ExtensionDescription *extensionDescription) : ExtensionNode() {
+    
+    const ExtensionDescription *_extensionDescription = extensionDescription;
     this->prefix = _extensionDescription->prefix;
     this->clazz = objc_getClass(_extensionDescription->clazz);
     this->where_fp = _extensionDescription->where_fp;
@@ -24,33 +36,19 @@ nn_pop_extensionNode::nn_pop_extensionNode(nn_pop_extensionDescription_t *extens
     this->next = NULL;
 }
 
-nn_pop_extensionNode::~nn_pop_extensionNode(void) {
+ExtensionNode::~ExtensionNode() {
     
 }
 
-nn_pop_extensionNode *nn_pop_extensionNode::copy(void) {
-    
-    nn_pop_extensionNode *newNode = new nn_pop_extensionNode();
-    newNode->prefix = this->prefix;
-    newNode->clazz = this->clazz;
-    newNode->where_fp = this->where_fp;
-    newNode->confromProtocolCount = this->confromProtocolCount;
-    for (unsigned int i = 0; i < this->confromProtocolCount; i++) {
-        newNode->confromProtocols[i] = this->confromProtocols[i];
-    }
-    newNode->next = NULL;
-    return newNode;
-}
 
-
-nn_pop_extensionList::~nn_pop_extensionList(void) {
+ExtensionList::~ExtensionList() {
     
     this->clear();
 }
 
-unsigned int nn_pop_extensionList::count(void) {
+unsigned int ExtensionList::count() {
     
-    nn_pop_extensionNode *_head = this->_head;
+    ExtensionNode *_head = this->_head;
     
     unsigned int count = 0;
     while (_head) {
@@ -60,35 +58,35 @@ unsigned int nn_pop_extensionList::count(void) {
     return count;
 }
 
-nn_pop_extensionNode *nn_pop_extensionList::head(void) {
+ExtensionNode *ExtensionList::head() {
     
     return this->_head;
 }
 
-void nn_pop_extensionList::head(nn_pop_extensionNode *node) {
+void ExtensionList::head(ExtensionNode *node) {
     
     this->_head = node;
 }
 
-void nn_pop_extensionList::append(nn_pop_extensionNode *entry) {
+void ExtensionList::append(ExtensionNode *entry) {
     
-    nn_pop_extensionNode *_head = this->_head;
+    ExtensionNode *_head = this->_head;
     
     if (_head) {
-          nn_pop_extensionNode *node = _head;
-          while (node->next != NULL) {
-              node = node->next;
-          }
-          node->next = entry;
-      }
-      else {
-          this->_head = entry;
-      }
+        ExtensionNode *node = _head;
+        while (node->next != NULL) {
+            node = node->next;
+        }
+        node->next = entry;
+    }
+    else {
+        this->_head = entry;
+    }
 }
 
-void nn_pop_extensionList::foreach(std::function<void(nn_pop_extensionNode *item, BOOL *stop)> enumerater) {
+void ExtensionList::foreach(std::function<void(ExtensionNode *item, BOOL *stop)> enumerater) {
     
-    nn_pop_extensionNode *node = this->_head;
+    ExtensionNode *node = this->_head;
     
     BOOL stop = false;
     while (node) {
@@ -99,24 +97,26 @@ void nn_pop_extensionList::foreach(std::function<void(nn_pop_extensionNode *item
     }
 }
 
-void nn_pop_extensionList::clear(void) {
+void ExtensionList::clear() {
     
     while (this->_head) {
-        nn_pop_extensionNode *node = this->_head;
+        ExtensionNode *node = this->_head;
         this->_head = node->next;
         delete node;
     }
 }
 
 
-nn_pop_protocolExtension::nn_pop_protocolExtension(nn_pop_extensionDescription_t *extensionDescription) : nn_pop_protocolExtension() {
+ProtocolExtension::ProtocolExtension(const ExtensionDescription *extensionDescription) : ProtocolExtension() {
     
-    nn_pop_extensionNode *_extension = new nn_pop_extensionNode(extensionDescription);
+    ExtensionNode *_extension = new ExtensionNode(extensionDescription);
     this->protocol = objc_getProtocol(extensionDescription->protocol);
     this->extension.append(_extension);
 }
 
-nn_pop_protocolExtension::~nn_pop_protocolExtension(void) {
+ProtocolExtension::~ProtocolExtension() {
     
 }
+
+} // namespace popobjc
 
