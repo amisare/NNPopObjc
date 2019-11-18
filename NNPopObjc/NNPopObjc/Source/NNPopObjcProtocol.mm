@@ -7,6 +7,7 @@
 
 #import "NNPopObjcProtocol.h"
 #import <objc/runtime.h>
+#import "NNPopObjcLogging.h"
 
 namespace popobjc {
 

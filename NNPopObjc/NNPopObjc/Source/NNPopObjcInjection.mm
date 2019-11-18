@@ -23,6 +23,8 @@
 
 #import "NNPopObjcMemory.h"
 #import "NNPopObjcProtocol.h"
+#import "NNPopObjcLogging.h"
+
 
 namespace popobjc {
 
@@ -244,13 +246,13 @@ void injectProtocolExtensions(std::vector<ProtocolExtension *> protocolExtension
     
     int classCount = objc_getClassList(NULL, 0);
     if (!classCount) {
-        std::cout << "ERROR: No clazzes registered with the runtime" << std::endl;
+        POP_LOG(FATAL) << "No clazzes registered with the runtime";
         return;
     }
     
     Class *clazzes = (Class *)nn_pop_malloc((size_t)(classCount + 1) * sizeof(Class));
     if (!clazzes) {
-        std::cout << "ERROR: Could not allocate space for " << classCount << " clazzes" << std::endl;
+        POP_LOG(FATAL) << "Could not allocate space for " << classCount << " clazzes";
         return;
     }
     
@@ -298,7 +300,7 @@ void loadSection(const nn_pop_mach_header *mhp,
                  std::function<void (std::vector<ProtocolExtension *> protocolExtensions)> loaded) {
     
     if (pthread_mutex_lock(&injectLock) != 0) {
-        std::cout << "ERROR: inject thread lock failed" << std::endl;
+        POP_LOG(FATAL) << "Lock injection thread failed";
         return;
     }
     
@@ -309,43 +311,46 @@ void loadSection(const nn_pop_mach_header *mhp,
         return;
     }
     
-    unsigned long sectionItemCount = size / sizeof(ExtensionDescription);
-    ExtensionDescription *sectionItems = (ExtensionDescription *)sectionData;
-    
-    std::vector<ProtocolExtension *> protocolExtensions;
-    
-    for (unsigned int i = 0; i < sectionItemCount; i++) {
+    @autoreleasepool {
         
-        ExtensionDescription *_extensionDescription = &sectionItems[i];
-        ProtocolExtension *protocolExtension = new ProtocolExtension(_extensionDescription);
-        if (protocolExtension == NULL) {
-            continue;
-        }
+        unsigned long sectionItemCount = size / sizeof(ExtensionDescription);
+        ExtensionDescription *sectionItems = (ExtensionDescription *)sectionData;
         
-        std::vector<ProtocolExtension *>::iterator _p = protocolExtensions.begin();
-        while (_p != protocolExtensions.end()) {
-            if (protocol_isEqual((*_p)->protocol, protocolExtension->protocol)) {
-                break;
+        std::vector<ProtocolExtension *> protocolExtensions;
+        
+        for (unsigned int i = 0; i < sectionItemCount; i++) {
+            
+            ExtensionDescription *_extensionDescription = &sectionItems[i];
+            ProtocolExtension *protocolExtension = new ProtocolExtension(_extensionDescription);
+            if (protocolExtension == NULL) {
+                continue;
             }
-            _p++;
+            
+            std::vector<ProtocolExtension *>::iterator _p = protocolExtensions.begin();
+            while (_p != protocolExtensions.end()) {
+                if (protocol_isEqual((*_p)->protocol, protocolExtension->protocol)) {
+                    break;
+                }
+                _p++;
+            }
+            
+            if (_p != protocolExtensions.end()) {
+                (*_p)->extension.append(protocolExtension->extension.head());
+                protocolExtension->extension.head(NULL);
+                delete protocolExtension;
+            }
+            else {
+                protocolExtensions.push_back(protocolExtension);
+            }
         }
         
-        if (_p != protocolExtensions.end()) {
-            (*_p)->extension.append(protocolExtension->extension.head());
-            protocolExtension->extension.head(NULL);
+        if (loaded) {
+            loaded(protocolExtensions);
+        }
+        
+        for (auto protocolExtension : protocolExtensions) {
             delete protocolExtension;
         }
-        else {
-            protocolExtensions.push_back(protocolExtension);
-        }
-    }
-    
-    if (loaded) {
-        loaded(protocolExtensions);
-    }
-    
-    for (auto protocolExtension : protocolExtensions) {
-        delete protocolExtension;
     }
     
     pthread_mutex_unlock(&injectLock);
