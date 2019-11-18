@@ -12,13 +12,10 @@ Pod::Spec.new do |s|
   s.homepage      = "https://github.com/amisare/NNPopObjc"
   s.license       = { :type => "MIT", :file => "LICENSE" }
   s.author        = { "Haijun Gu" => "243297288@qq.com" }
-  s.social_media_url        = "http://www.jianshu.com/users/9df9f28ff266/latest_articles"
+  s.social_media_url        = "https://www.jianshu.com/u/9df9f28ff266"
 
   s.source        = { :git => "https://github.com/amisare/NNPopObjc.git", :tag => s.version.to_s }
   
-  s.user_target_xcconfig = { 'OTHER_LDFLAGS' => '-ObjC' }
-  
-  s.ios.deployment_target   = '7.0'
   s.requires_arc  = true
   
   s.source_files            = 'NNPopObjc/NNPopObjc/*.{h,m,mm}'
