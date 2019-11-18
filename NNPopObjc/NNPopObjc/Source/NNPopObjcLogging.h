@@ -86,38 +86,37 @@ extern LogSettings settings;
 
 
 #define POP_LOG_STREAM(severity) \
-  ::popobjc::LogMessage(::popobjc::LOG_SEVERITY_##severity, __FILE__, __LINE__, nullptr).stream()
+        ::popobjc::LogMessage(::popobjc::LOG_SEVERITY_##severity, __FILE__, __LINE__, nullptr).stream()
 
 #define POP_LAZY_STREAM(stream, condition) \
-  !(condition) ? (void)0 : ::popobjc::LogMessageVoidify() & (stream)
+        !(condition) ? (void)0 : ::popobjc::LogMessageVoidify() & (stream)
 
 #define POP_EAT_STREAM_PARAMETERS(ignored) \
-  true || (ignored)                        \
-      ? (void)0                            \
-      : ::popobjc::LogMessageVoidify() &       \
-            ::popobjc::LogMessage(::popobjc::LOG_SEVERITY_FATAL, 0, 0, nullptr).stream()
+        true || (ignored)                  \
+            ? (void)0                      \
+            : ::popobjc::LogMessageVoidify() & \
+              ::popobjc::LogMessage(::popobjc::LOG_SEVERITY_FATAL, 0, 0, nullptr).stream()
 
 #define POP_LOG_IS_ON(severity) \
-  (::popobjc::ShouldCreateLogMessage(::popobjc::LOG_SEVERITY_##severity))
+        (::popobjc::ShouldCreateLogMessage(::popobjc::LOG_SEVERITY_##severity))
 
 #define POP_LOG(severity) \
-  POP_LAZY_STREAM(POP_LOG_STREAM(severity), POP_LOG_IS_ON(severity))
+        POP_LAZY_STREAM(POP_LOG_STREAM(severity), POP_LOG_IS_ON(severity))
 
-#define POP_CHECK(condition)                                              \
-  POP_LAZY_STREAM(                                                        \
-      ::popobjc::LogMessage(::popobjc::LOG_SEVERITY_FATAL, __FILE__, __LINE__, #condition) \
-          .stream(),                                                      \
-      !(condition))
+#define POP_CHECK(condition) \
+        POP_LAZY_STREAM( \
+            ::popobjc::LogMessage(::popobjc::LOG_SEVERITY_FATAL, __FILE__, __LINE__, #condition).stream(), \
+            !(condition))
 
 #define POP_VLOG_IS_ON(verbose_level) \
-  ((verbose_level) <= ::popobjc::GetVlogVerbosity())
+        ((verbose_level) <= ::popobjc::GetVlogVerbosity())
 
 // The VLOG macros log with negative verbosities.
 #define POP_VLOG_STREAM(verbose_level) \
-  ::popobjc::LogMessage(-verbose_level, __FILE__, __LINE__, nullptr).stream()
+        ::popobjc::LogMessage(-verbose_level, __FILE__, __LINE__, nullptr).stream()
 
 #define POP_VLOG(verbose_level) \
-  POP_LAZY_STREAM(POP_VLOG_STREAM(verbose_level), POP_VLOG_IS_ON(verbose_level))
+        POP_LAZY_STREAM(POP_VLOG_STREAM(verbose_level), POP_VLOG_IS_ON(verbose_level))
 
 #ifdef DEBUG
 #define POP_DLOG(severity) POP_LOG(severity)
@@ -130,4 +129,4 @@ extern LogSettings settings;
 #define POP_NOTREACHED() POP_DCHECK(false)
 
 #define POP_NOTIMPLEMENTED() \
-  POP_LOG(ERROR) << "Not implemented in: " << __PRETTY_FUNCTION__
+        POP_LOG(ERROR) << "Not implemented in: " << __PRETTY_FUNCTION__
