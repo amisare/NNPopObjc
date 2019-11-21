@@ -18,9 +18,9 @@
 		676979E62345C7A200E13282 /* NNPopObjcDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979E52345C7A200E13282 /* NNPopObjcDemoUITests.m */; };
 		67697A052345C8B600E13282 /* NNCodeProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979FC2345C8B600E13282 /* NNCodeProtocol.m */; };
 		67697A062345C8B600E13282 /* NNCodeObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979FD2345C8B600E13282 /* NNCodeObjc.m */; };
-		67697A072345C8B600E13282 /* NNCodeSwift.m in Sources */ = {isa = PBXBuildFile; fileRef = 67697A022345C8B600E13282 /* NNCodeSwift.m */; };
 		67697A0B2345D08700E13282 /* NNCodeC.m in Sources */ = {isa = PBXBuildFile; fileRef = 67697A0A2345D08700E13282 /* NNCodeC.m */; };
 		67697A112345D12100E13282 /* NNCodeCpp.m in Sources */ = {isa = PBXBuildFile; fileRef = 67697A102345D12100E13282 /* NNCodeCpp.m */; };
+		7A435728238672A700973CA9 /* NNCodeSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A435727238672A700973CA9 /* NNCodeSwift.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,16 +61,16 @@
 		676979E72345C7A200E13282 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		676979FC2345C8B600E13282 /* NNCodeProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNCodeProtocol.m; sourceTree = "<group>"; };
 		676979FD2345C8B600E13282 /* NNCodeObjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNCodeObjc.m; sourceTree = "<group>"; };
-		676979FE2345C8B600E13282 /* NNCodeSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNCodeSwift.h; sourceTree = "<group>"; };
 		676979FF2345C8B600E13282 /* NNCodeLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNCodeLog.h; sourceTree = "<group>"; };
 		67697A012345C8B600E13282 /* NNCodeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNCodeProtocol.h; sourceTree = "<group>"; };
-		67697A022345C8B600E13282 /* NNCodeSwift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNCodeSwift.m; sourceTree = "<group>"; };
 		67697A032345C8B600E13282 /* NNCodeObjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNCodeObjc.h; sourceTree = "<group>"; };
 		67697A082345C97A00E13282 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		67697A092345D08700E13282 /* NNCodeC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNCodeC.h; sourceTree = "<group>"; };
 		67697A0A2345D08700E13282 /* NNCodeC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNCodeC.m; sourceTree = "<group>"; };
 		67697A0F2345D12100E13282 /* NNCodeCpp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNCodeCpp.h; sourceTree = "<group>"; };
 		67697A102345D12100E13282 /* NNCodeCpp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNCodeCpp.m; sourceTree = "<group>"; };
+		7A435726238672A600973CA9 /* NNPopObjcDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NNPopObjcDemo-Bridging-Header.h"; sourceTree = "<group>"; };
+		7A435727238672A700973CA9 /* NNCodeSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NNCodeSwift.swift; sourceTree = "<group>"; };
 		9800FE6F500BD0D25B0C6180 /* Pods-NNPopObjcDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NNPopObjcDemo.release.xcconfig"; path = "Target Support Files/Pods-NNPopObjcDemo/Pods-NNPopObjcDemo.release.xcconfig"; sourceTree = "<group>"; };
 		B1AAC29DB22B62E90A706662 /* Pods-NNPopObjcDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NNPopObjcDemo.debug.xcconfig"; path = "Target Support Files/Pods-NNPopObjcDemo/Pods-NNPopObjcDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -135,9 +135,7 @@
 				676979C72345C7A000E13282 /* Main.storyboard */,
 				676979CA2345C7A200E13282 /* Assets.xcassets */,
 				676979CC2345C7A200E13282 /* LaunchScreen.storyboard */,
-				676979CF2345C7A200E13282 /* Info.plist */,
-				676979D02345C7A200E13282 /* main.m */,
-				67697A082345C97A00E13282 /* PrefixHeader.pch */,
+				7A4357292386792C00973CA9 /* Supporting Files */,
 			);
 			path = NNPopObjcDemo;
 			sourceTree = "<group>";
@@ -171,10 +169,20 @@
 				676979FD2345C8B600E13282 /* NNCodeObjc.m */,
 				67697A0F2345D12100E13282 /* NNCodeCpp.h */,
 				67697A102345D12100E13282 /* NNCodeCpp.m */,
-				676979FE2345C8B600E13282 /* NNCodeSwift.h */,
-				67697A022345C8B600E13282 /* NNCodeSwift.m */,
+				7A435727238672A700973CA9 /* NNCodeSwift.swift */,
 			);
 			path = Demo;
+			sourceTree = "<group>";
+		};
+		7A4357292386792C00973CA9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				676979CF2345C7A200E13282 /* Info.plist */,
+				676979D02345C7A200E13282 /* main.m */,
+				67697A082345C97A00E13282 /* PrefixHeader.pch */,
+				7A435726238672A600973CA9 /* NNPopObjcDemo-Bridging-Header.h */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		D03380877EFB636E7BD0B681 /* Frameworks */ = {
@@ -265,6 +273,7 @@
 				TargetAttributes = {
 					676979BA2345C7A000E13282 = {
 						CreatedOnToolsVersion = 11.0;
+						LastSwiftMigration = 1110;
 					};
 					676979D52345C7A200E13282 = {
 						CreatedOnToolsVersion = 11.0;
@@ -371,7 +380,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				67697A0B2345D08700E13282 /* NNCodeC.m in Sources */,
-				67697A072345C8B600E13282 /* NNCodeSwift.m in Sources */,
+				7A435728238672A700973CA9 /* NNCodeSwift.swift in Sources */,
 				67697A112345D12100E13282 /* NNCodeCpp.m in Sources */,
 				67697A062345C8B600E13282 /* NNCodeObjc.m in Sources */,
 				676979C62345C7A000E13282 /* ViewController.m in Sources */,
@@ -547,15 +556,19 @@
 			baseConfigurationReference = B1AAC29DB22B62E90A706662 /* Pods-NNPopObjcDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/NNPopObjcDemo/PrefixHeader.pch";
-				INFOPLIST_FILE = NNPopObjcDemo/Info.plist;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/NNPopObjcDemo/Supporting Files/PrefixHeader.pch";
+				INFOPLIST_FILE = "NNPopObjcDemo/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nn.NNPopObjcDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "NNPopObjcDemo/Supporting Files/NNPopObjcDemo-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -565,15 +578,18 @@
 			baseConfigurationReference = 9800FE6F500BD0D25B0C6180 /* Pods-NNPopObjcDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/NNPopObjcDemo/PrefixHeader.pch";
-				INFOPLIST_FILE = NNPopObjcDemo/Info.plist;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/NNPopObjcDemo/Supporting Files/PrefixHeader.pch";
+				INFOPLIST_FILE = "NNPopObjcDemo/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nn.NNPopObjcDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "NNPopObjcDemo/Supporting Files/NNPopObjcDemo-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -581,6 +597,7 @@
 		676979EE2345C7A200E13282 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = NNPopObjcDemoTests/Info.plist;
@@ -600,6 +617,7 @@
 		676979EF2345C7A200E13282 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = NNPopObjcDemoTests/Info.plist;
@@ -619,6 +637,7 @@
 		676979F12345C7A200E13282 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = NNPopObjcDemoUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -636,6 +655,7 @@
 		676979F22345C7A200E13282 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = NNPopObjcDemoUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
