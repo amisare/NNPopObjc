@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name          = "NNPopObjc"
-  s.version       = "0.2.4"
+  s.version       = "1.0.0"
   s.summary       = "Implement protocol extensions for protocol-oriented programming."
 
   s.description   = <<-DESC
@@ -17,7 +17,13 @@ Pod::Spec.new do |s|
   s.source        = { :git => "https://github.com/amisare/NNPopObjc.git", :tag => s.version.to_s }
   
   s.requires_arc  = true
-  
+  s.libraries     = 'c++'
+
+  s.osx.deployment_target       = '10.7'
+  s.ios.deployment_target       = '6.0'
+  s.tvos.deployment_target      = '9.0'
+  s.watchos.deployment_target   = '2.0'
+
   s.source_files            = 'NNPopObjc/NNPopObjc/*.{h,m,mm}'
   
   s.subspec 'extobjc' do |ss|
