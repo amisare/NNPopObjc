@@ -356,36 +356,25 @@ void loadSection(const nn_pop_mach_header *mhp,
     pthread_mutex_unlock(&injectLock);
 }
 
-/// ProgramVars, it is defined in ImageLoader.h at dyld project.
-/// @note dyld project: https://opensource.apple.com/tarballs/dyld/
-struct ProgramVars {
-    const void*        mh;
-    int*            NXArgcPtr;
-    const char***    NXArgvPtr;
-    const char***    environPtr;
-    const char**    __prognamePtr;
-};
-
-/// Initializer function is called by ImageLoaderMachO::doModInitFunctions at dyld project.
-/// @param argc argc
-/// @param argv argv
-/// @param envp envp
-/// @param apple apple
-/// @param vars vars
-/// @note dyld project: https://opensource.apple.com/tarballs/dyld/
-__attribute__((constructor)) void initializer(int argc,
-                                              const char **argv,
-                                              const char **envp,
-                                              const char **apple,
-                                              const ProgramVars* vars) {
+/// Image loaded callback function.
+/// @param mhp mhp
+/// @param vmaddr_slide vmaddr_slide
+void imageLoadedCallback(const struct mach_header *mhp, intptr_t vmaddr_slide) {
     
-    nn_pop_mach_header *mhp = (nn_pop_mach_header *)vars->mh;
+    nn_pop_mach_header *_mhp = (nn_pop_mach_header *)mhp;
     
-    loadSection(mhp,
+    loadSection(_mhp,
                 nn_pop_metamacro_stringify(nn_pop_section_name),
                 [](std::vector<ProtocolExtension *> protocolExtensions) {
         injectProtocolExtensions(protocolExtensions);
     });
+}
+
+/// Initializer function is called by ImageLoaderMachO::doModInitFunctions at dyld project.
+/// @note dyld project: https://opensource.apple.com/tarballs/dyld/
+__attribute__((constructor)) void initializer() {
+    
+    _dyld_register_func_for_add_image(imageLoadedCallback);
 }
 
 } // namespace popobjc
