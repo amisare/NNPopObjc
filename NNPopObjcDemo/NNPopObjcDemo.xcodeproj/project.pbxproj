@@ -126,7 +126,6 @@
 		676979BD2345C7A000E13282 /* NNPopObjcDemo */ = {
 			isa = PBXGroup;
 			children = (
-				676979FF2345C8B600E13282 /* NNCodeLog.h */,
 				676979FA2345C8B600E13282 /* Demo */,
 				676979BE2345C7A000E13282 /* AppDelegate.h */,
 				676979BF2345C7A000E13282 /* AppDelegate.m */,
@@ -161,6 +160,7 @@
 		676979FA2345C8B600E13282 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				676979FF2345C8B600E13282 /* NNCodeLog.h */,
 				67697A012345C8B600E13282 /* NNCodeProtocol.h */,
 				676979FC2345C8B600E13282 /* NNCodeProtocol.m */,
 				67697A092345D08700E13282 /* NNCodeC.h */,
