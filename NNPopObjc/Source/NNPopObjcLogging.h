@@ -2,7 +2,7 @@
 //  NNPopObjcLogging.h
 //  NNPopObjc
 //
-//  Created by 顾海军 on 2019/11/18.
+//  Created by GuHaijun on 2019/11/18.
 //  Copyright © 2019 GuHaiJun. All rights reserved.
 //
 

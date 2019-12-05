@@ -2,8 +2,8 @@
 //  NNPopObjcExampleTests.m
 //  NNPopObjcExampleTests
 //
-//  Created by 顾海军 on 2019/12/5.
-//  Copyright © 2019 顾海军. All rights reserved.
+//  Created by GuHaijun on 2019/12/5.
+//  Copyright © 2019 GuHaijun. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>

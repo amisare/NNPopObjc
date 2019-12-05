@@ -2,7 +2,8 @@
 //  NNPopObjcProtocol.m
 //  NNPopObjc
 //
-//  Created by 顾海军 on 2019/11/8.
+//  Created by GuHaijun on 2019/11/8.
+//  Copyright © 2019 GuHaiJun. All rights reserved.
 //
 
 #import "NNPopObjcProtocol.h"

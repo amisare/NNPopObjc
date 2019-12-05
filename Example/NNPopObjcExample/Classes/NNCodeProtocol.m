@@ -56,7 +56,10 @@
 }
 
 - (void)setWho:(NSString *)who {
-    self.name = who;
+	@nn_exscope(self) {
+		@nn_inscope(NNCodeObjc *, self)
+		self.name = who;
+	}
 }
 
 @end

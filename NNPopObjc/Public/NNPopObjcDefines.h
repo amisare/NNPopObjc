@@ -1,8 +1,9 @@
 //
 //  NNPopObjcDefines.h
-//  Pods
+//  NNPopObjc
 //
-//  Created by 顾海军 on 2019/11/4.
+//  Created by GuHaijun on 2019/11/4.
+//  Copyright © 2019 GuHaiJun. All rights reserved.
 //
 
 #ifndef NNPopObjcDefines_h

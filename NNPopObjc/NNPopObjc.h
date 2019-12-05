@@ -23,6 +23,7 @@ FOUNDATION_EXPORT const unsigned char NNPopObjcVersionString[];
 #import <NNPopObjc/NNPopObjcWhere.h>
 #import <NNPopObjc/NNPopObjcDescription.h>
 #import <NNPopObjc/NNPopObjcExtension.h>
+#import <NNPopObjc/NNPopObjcScope.h>
 #else
 #import "NNPopObjcMetaMacros.h"
 #import "NNPopObjcMacros.h"
@@ -30,6 +31,7 @@ FOUNDATION_EXPORT const unsigned char NNPopObjcVersionString[];
 #import "NNPopObjcWhere.h"
 #import "NNPopObjcDescription.h"
 #import "NNPopObjcExtension.h"
+#import "NNPopObjcScope.h"
 #endif
 
 /**
@@ -118,3 +120,22 @@ FOUNDATION_EXPORT const unsigned char NNPopObjcVersionString[];
  *
  */
 #define nn_where(...)                   nn_pop_where_(__VA_ARGS__)
+
+/**
+ * Simplify the type cast
+ *
+ * @discussion  The type of \c self is lost in the implementation of protocol extension
+ *
+ * @code
+ 
+	A *a = [A new];
+	@nn_exscope(a) {
+		@nn_inscope(B *, a)
+		a.var = @"var";
+		...
+	}
+ 
+ * @endcode
+ */
+#define nn_exscope(VAR)					nn_pop_exscope(VAR)
+#define nn_inscope(TYPE, VAR)			nn_pop_inscope(TYPE, VAR)

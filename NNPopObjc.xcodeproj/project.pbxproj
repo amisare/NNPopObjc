@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		676979A22345C78300E13282 /* NNPopObjc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 676979982345C78200E13282 /* NNPopObjc.framework */; };
 		676979A72345C78300E13282 /* NNPopObjcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979A62345C78300E13282 /* NNPopObjcTests.m */; };
+		7A67D44B2398D26200EEDF5B /* NNPopObjcScope.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A67D44A2398D1C100EEDF5B /* NNPopObjcScope.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7A826867237E7ED600FF9359 /* NNPopObjcMemory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A82685A237E7ED600FF9359 /* NNPopObjcMemory.mm */; };
 		7A826868237E7ED600FF9359 /* NNPopObjcInjection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A82685B237E7ED600FF9359 /* NNPopObjcInjection.mm */; };
 		7A82686A237E7ED600FF9359 /* NNPopObjcProtocol.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A82685D237E7ED600FF9359 /* NNPopObjcProtocol.mm */; };
@@ -42,6 +43,7 @@
 		676979A12345C78300E13282 /* NNPopObjcTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NNPopObjcTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		676979A62345C78300E13282 /* NNPopObjcTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNPopObjcTests.m; sourceTree = "<group>"; };
 		676979A82345C78300E13282 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7A67D44A2398D1C100EEDF5B /* NNPopObjcScope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNPopObjcScope.h; sourceTree = "<group>"; };
 		7A826850237E7ED500FF9359 /* NNPopObjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNPopObjc.h; sourceTree = "<group>"; };
 		7A826852237E7ED600FF9359 /* NNPopObjcDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNPopObjcDescription.h; sourceTree = "<group>"; };
 		7A826853237E7ED600FF9359 /* NNPopObjcDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNPopObjcDefines.h; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				7A826855237E7ED600FF9359 /* NNPopObjcExtension.h */,
 				7A826856237E7ED600FF9359 /* NNPopObjcMacros.h */,
 				7A826854237E7ED600FF9359 /* NNPopObjcWhere.h */,
+				7A67D44A2398D1C100EEDF5B /* NNPopObjcScope.h */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -165,6 +168,7 @@
 				7A82686F237E8A5A00FF9359 /* NNPopObjcExtension.h in Headers */,
 				7A826870237E8A5A00FF9359 /* NNPopObjcMacros.h in Headers */,
 				7A82688F238244D300FF9359 /* NNPopObjcLogging.h in Headers */,
+				7A67D44B2398D26200EEDF5B /* NNPopObjcScope.h in Headers */,
 				7A826871237E8A5A00FF9359 /* NNPopObjcWhere.h in Headers */,
 				7A826873237E8B2800FF9359 /* NNPopObjcMetaMacros.h in Headers */,
 				7A826874237E8B3500FF9359 /* NNPopObjcInjection.h in Headers */,
