@@ -1,6 +1,6 @@
 # NNPopObjc 的使用
 
-本文档是 NNPopObjc 的使用指南 (0.2.x 版本) 。
+本文档是 NNPopObjc 的使用指南。
 
 ## @nn_extension (协议扩展)
 
