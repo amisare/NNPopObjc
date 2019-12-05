@@ -12,7 +12,7 @@ NNPopObjc 受面向协议编程的启发，为协议提供了实现扩展的功�
 
 ## 文档
 
-* 阅读 [NNPopObjc Guide](Docs/0.2.x/usage_zh_CN.md) 文档。
+* 阅读 [NNPopObjc Guide](Doc/1.0.x/usage_zh_CN.md) 文档。
 
 ## 快速开始
 

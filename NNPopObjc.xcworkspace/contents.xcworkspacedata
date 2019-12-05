@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:NNPopObjcDemo/NNPopObjcDemo.xcodeproj">
+      location = "group:NNPopObjc.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Pods/Pods.xcodeproj">
+      location = "group:Example/NNPopObjcExample.xcodeproj">
    </FileRef>
 </Workspace>

@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name          = "NNPopObjc"
-  s.version       = "1.0.0"
+  s.version       = "1.0.1"
   s.summary       = "Implement protocol extensions for protocol-oriented programming."
 
   s.description   = <<-DESC
@@ -24,19 +24,19 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target      = '9.0'
   s.watchos.deployment_target   = '2.0'
 
-  s.source_files            = 'NNPopObjc/NNPopObjc/*.{h,m,mm}'
+  s.source_files            = 'NNPopObjc/*.{h,m,mm}'
   
   s.subspec 'extobjc' do |ss|
-    ss.source_files         = 'NNPopObjc/NNPopObjc/extobjc/*.{h,m}'
+    ss.source_files         = 'NNPopObjc/extobjc/*.{h,m}'
   end
   
   s.subspec 'Public' do |ss|
-    ss.source_files         = 'NNPopObjc/NNPopObjc/Public/*.{h,m,mm}'
+    ss.source_files         = 'NNPopObjc/Public/*.{h,m,mm}'
   end
   
   s.subspec 'Source' do |ss|
-    ss.source_files         = 'NNPopObjc/NNPopObjc/Source/*.{h,m,mm}'
-    ss.private_header_files = 'NNPopObjc/NNPopObjc/Source/*.{h}'
+    ss.source_files         = 'NNPopObjc/Source/*.{h,m,mm}'
+    ss.private_header_files = 'NNPopObjc/Source/*.{h}'
     ss.dependency           'NNPopObjc/extobjc'
     ss.dependency           'NNPopObjc/Public'
   end

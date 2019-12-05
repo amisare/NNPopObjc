@@ -12,7 +12,7 @@ NNPopObjc is inspired by protocol oriented programming, it provides extensibilit
 
 ## Documents
 
-* Read the [NNPopObjc Guide](Docs/0.2.x/usage_en.md) document.
+* Read the [NNPopObjc Guide](Doc/1.0.x/usage_en.md) document.
 
 ## Quick Start
 
