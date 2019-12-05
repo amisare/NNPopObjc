@@ -85,9 +85,9 @@ NNPopObjc 受面向协议编程的启发，为协议提供了实现扩展的功�
 
 ## 安装
 
-NNPopObjc 支持 CocoaPods 方式集成。
+NNPopObjc 支持多种方式集成方式。
 
-### 安装 CocoaPods
+### 通过 CocoaPods 集成
 
 使用以下命令安装：
 
@@ -95,7 +95,7 @@ NNPopObjc 支持 CocoaPods 方式集成。
 $ gem install cocoapods
 ```
 
-### Podfile
+#### Podfile
 
 将 NNPopObjc 添加到 `Podfile` ，通过 CocoaPods 集成 NNPopObjc 到 Xcode 项目：
 
@@ -125,3 +125,22 @@ pod install
 ```bash
 pod install --repo-update
 ```
+
+### 通过 Carthage 集成
+
+[Carthage](https://github.com/Carthage/Carthage) 是一个去中心化的依赖管理器，用于构建依赖和提供二进制 Framework 。
+
+可以通过以下 [Homebrew](http://brew.sh/) 命令安装 Carthage ：
+
+```bash
+$ brew update
+$ brew install carthage
+```
+
+通过 Carthage 将 NNPopObjc 集成到 Xcode 项目中，需要在 `Cartfile` 中添加：
+
+```ogdl
+github "amisare/NNPopObjc" ~> 1.0.1
+```
+
+执行 `carthage` 构建 Framework ，并将 `NNPopObjc.framework` 添加到 Xcode 项目中。
