@@ -1,0 +1,87 @@
+language: objective-c
+osx_image: xcode10.2
+gemfile: Gemfile
+
+branches:
+  only:
+    - master
+    - stable
+    - travis-stages
+
+cache:
+  - cocoapods
+  - bundler
+  - $HOME/Library/Caches/Homebrew
+
+env:
+   global:
+   - LANG=en_US.UTF-8
+
+   - POP_OBJC_WORKSPACE="NNPopObjc.xcworkspace"
+   - POP_OBJC_PROJECT="NNPopObjc.xcodeproj"
+   - POP_OBJC_SCHEME_SDK="NNPopObjc"
+   - POP_OBJC_SCHEME_EXAMPLE="NNPopObjcExample"
+
+   - SDK_IOS=iphonesimulator12.2
+   - SDK_MACOS=macosx10.14
+   - SDK_TVOS=appletvsimulator12.2
+
+   # iOS Destinations
+   - DESTINATION_IOS_12="OS=12.2,name=iPhone Xʀ"
+   - DESTINATION_IOS_11="OS=11.3,name=iPhone X"
+
+   # macOS Destinations
+   - DESTINATION_MACOS="arch=x86_64"
+
+   # tvOS Destinations
+   - DESTINATION_TVOS_10="OS=10.2,name=Apple TV 1080p"
+   - DESTINATION_TVOS_11="OS=11.3,name=Apple TV 4K"
+   - DESTINATION_TVOS_12="OS=12.2,name=Apple TV 4K"
+
+before_install:
+  # Bundler 2.0
+  - gem update --system
+  - gem install bundler
+
+jobs:
+  include:
+    - stage: pod lint
+      name: Cocoapods Lint
+      script: bundle exec pod lib lint --allow-warnings
+
+    # Build example projects
+    - &build-examples
+      stage: build examples
+      name: "iOS 12.2"
+      env: DESTINATION="$DESTINATION_IOS_12" WORKSPACE="$POP_OBJC_WORKSPACE" SDK="$SDK_IOS" SCHEME="$POP_OBJC_SCHEME_EXAMPLE"
+      script:
+        - set -o pipefail
+        - xcodebuild -version -sdk
+        - xcodebuild build -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | bundle exec xcpretty -c;
+
+    - <<: *build-examples
+      name: "iOS 11.3"
+      env: DESTINATION="$DESTINATION_IOS_11" WORKSPACE="$POP_OBJC_WORKSPACE" SDK="$SDK_IOS" SCHEME="$POP_OBJC_SCHEME_EXAMPLE"
+
+    # Unit Tests
+    - &unit-tests
+      stage: tests
+      name: "Tests: iOS 12.2"
+      env: DESTINATION="$DESTINATION_IOS_12" PROJECT="$POP_OBJC_PROJECT" SDK="$SDK_IOS" SCHEME="$POP_OBJC_SCHEME_SDK"
+      script:
+        - set -o pipefail
+        - xcodebuild build build-for-testing -project "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES ONLY_ACTIVE_ARCH=YES | bundle exec xcpretty -c;
+        - xcodebuild analyze test-without-building -project "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES ONLY_ACTIVE_ARCH=YES | bundle exec xcpretty -c;
+      after_success:
+        - bundle exec slather
+
+    - <<: *unit-tests
+      name: "Tests: iOS 11.3"
+      env: DESTINATION="$DESTINATION_IOS_11" WORKSPACE="$POP_OBJC_PROJECT" SDK="$SDK_IOS" SCHEME="$POP_OBJC_SCHEME_SDK"
+
+
+stages:
+  - pod lint
+  - build examples
+  - tests
+
