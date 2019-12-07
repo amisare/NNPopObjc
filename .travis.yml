@@ -105,6 +105,7 @@ jobs:
 
 stages:
   - pod lint
+  - carthage lint
   - build examples
   - tests
 
