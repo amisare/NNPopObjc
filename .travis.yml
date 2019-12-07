@@ -27,7 +27,7 @@ env:
    - SDK_TVOS=appletvsimulator12.2
 
    # iOS Destinations
-   - DESTINATION_IOS_13="OS=13.2,name=iPhone 11 Pro Max"
+   - DESTINATION_IOS_13="OS=13.2.2,name=iPhone 11 Pro Max"
    - DESTINATION_IOS_12="OS=12.2,name=iPhone Xʀ"
    - DESTINATION_IOS_11="OS=11.3,name=iPhone X"
 
