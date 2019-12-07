@@ -1,3 +1,4 @@
+os: osx
 language: objective-c
 osx_image: xcode11.2
 gemfile: Gemfile
@@ -9,10 +10,11 @@ branches:
     - travis-stages
 
 cache:
-  - cocoapods
-  - bundler
-  - $HOME/Library/Caches/Homebrew
+  bundler: true
+  cocoapods: true
+  directories:
   - Carthage
+  - $HOME/Library/Caches/Homebrew
 
 env:
    global:
@@ -47,11 +49,6 @@ before_install:
   - gem install bundler
   - brew update
   - brew outdated carthage || brew upgrade carthage
-
-before_script:
-  # bootstrap the dependencies for the project
-  # you can remove if you don't have dependencies
-  - carthage bootstrap
 
 jobs:
   include:
