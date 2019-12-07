@@ -7,9 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <objc/runtime.h>
 #import <NNPopObjc/NNPopObjc.h>
-#import "NNTestClassA.h"
 
 @interface NNPopObjcTests : XCTestCase
 

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7A67D3FA2398977500EEDF5B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A67D3F92398977500EEDF5B /* AppDelegate.m */; };
-		7A67D3FD2398977500EEDF5B /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A67D3FC2398977500EEDF5B /* SceneDelegate.m */; };
 		7A67D4002398977500EEDF5B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A67D3FF2398977500EEDF5B /* ViewController.m */; };
 		7A67D4032398977500EEDF5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A67D4012398977500EEDF5B /* Main.storyboard */; };
 		7A67D4052398977500EEDF5B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A67D4042398977500EEDF5B /* Assets.xcassets */; };
@@ -60,8 +59,6 @@
 		7A67D3F52398977500EEDF5B /* NNPopObjcExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NNPopObjcExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A67D3F82398977500EEDF5B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7A67D3F92398977500EEDF5B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		7A67D3FB2398977500EEDF5B /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
-		7A67D3FC2398977500EEDF5B /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		7A67D3FE2398977500EEDF5B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		7A67D3FF2398977500EEDF5B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		7A67D4022398977500EEDF5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -143,8 +140,6 @@
 				7A67D4352398998500EEDF5B /* Classes */,
 				7A67D3F82398977500EEDF5B /* AppDelegate.h */,
 				7A67D3F92398977500EEDF5B /* AppDelegate.m */,
-				7A67D3FB2398977500EEDF5B /* SceneDelegate.h */,
-				7A67D3FC2398977500EEDF5B /* SceneDelegate.m */,
 				7A67D3FE2398977500EEDF5B /* ViewController.h */,
 				7A67D3FF2398977500EEDF5B /* ViewController.m */,
 				7A67D4012398977500EEDF5B /* Main.storyboard */,
@@ -348,7 +343,6 @@
 				7A67D4442398998500EEDF5B /* NNCodeProtocol.m in Sources */,
 				7A67D3FA2398977500EEDF5B /* AppDelegate.m in Sources */,
 				7A67D432239898BB00EEDF5B /* main.m in Sources */,
-				7A67D3FD2398977500EEDF5B /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,7 +447,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -505,7 +499,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

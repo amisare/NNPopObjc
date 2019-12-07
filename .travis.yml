@@ -71,14 +71,14 @@ jobs:
       env: DESTINATION="$DESTINATION_IOS_12" PROJECT="$POP_OBJC_PROJECT" SDK="$SDK_IOS" SCHEME="$POP_OBJC_SCHEME_SDK"
       script:
         - set -o pipefail
-        - xcodebuild build build-for-testing -project "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES ONLY_ACTIVE_ARCH=YES | bundle exec xcpretty -c;
-        - xcodebuild analyze test-without-building -project "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES ONLY_ACTIVE_ARCH=YES | bundle exec xcpretty -c;
+        - xcodebuild build build-for-testing -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES ONLY_ACTIVE_ARCH=YES | bundle exec xcpretty -c;
+        - xcodebuild analyze test-without-building -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES ONLY_ACTIVE_ARCH=YES | bundle exec xcpretty -c;
       after_success:
         - bundle exec slather
 
     - <<: *unit-tests
       name: "Tests: iOS 11.3"
-      env: DESTINATION="$DESTINATION_IOS_11" WORKSPACE="$POP_OBJC_PROJECT" SDK="$SDK_IOS" SCHEME="$POP_OBJC_SCHEME_SDK"
+      env: DESTINATION="$DESTINATION_IOS_11" PROJECT="$POP_OBJC_PROJECT" SDK="$SDK_IOS" SCHEME="$POP_OBJC_SCHEME_SDK"
 
 
 stages:
