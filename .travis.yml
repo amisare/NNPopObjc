@@ -12,6 +12,8 @@ cache:
   - cocoapods
   - bundler
   - $HOME/Library/Caches/Homebrew
+  directories:
+  - Carthage
 
 env:
    global:
@@ -22,6 +24,7 @@ env:
    - POP_OBJC_SCHEME_SDK="NNPopObjc"
    - POP_OBJC_SCHEME_EXAMPLE="NNPopObjcExample"
 
+   # SDKs
    - SDK_IOS=iphonesimulator13.2
    - SDK_MACOS=macosx10.14
    - SDK_TVOS=appletvsimulator12.2
@@ -43,12 +46,25 @@ before_install:
   # Bundler 2.0
   - gem update --system
   - gem install bundler
+  - brew update
+  - brew outdated carthage || brew upgrade carthage
+
+before_script:
+  # bootstrap the dependencies for the project
+  # you can remove if you don't have dependencies
+  - carthage bootstrap
 
 jobs:
   include:
+    # Pod lint
     - stage: pod lint
       name: Cocoapods Lint
       script: bundle exec pod lib lint --allow-warnings
+
+    # Carthage lint
+    - stage: carthage lint
+      name: Carthage Lint
+      script: carthage build --no-skip-current
 
     # Build example projects
     - &build-examples
