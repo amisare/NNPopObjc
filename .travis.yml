@@ -12,7 +12,6 @@ cache:
   - cocoapods
   - bundler
   - $HOME/Library/Caches/Homebrew
-  directories:
   - Carthage
 
 env:
