@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		676979A22345C78300E13282 /* NNPopObjc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 676979982345C78200E13282 /* NNPopObjc.framework */; };
 		676979A72345C78300E13282 /* NNPopObjcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 676979A62345C78300E13282 /* NNPopObjcTests.m */; };
+		67832E04239C834E0096DCCE /* NNTestProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 67832E03239C834E0096DCCE /* NNTestProtocol.m */; };
+		67832E0C239C8D290096DCCE /* NNTestClassCase0.m in Sources */ = {isa = PBXBuildFile; fileRef = 67832E0B239C8D290096DCCE /* NNTestClassCase0.m */; };
 		7A67D44B2398D26200EEDF5B /* NNPopObjcScope.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A67D44A2398D1C100EEDF5B /* NNPopObjcScope.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7A826867237E7ED600FF9359 /* NNPopObjcMemory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A82685A237E7ED600FF9359 /* NNPopObjcMemory.mm */; };
 		7A826868237E7ED600FF9359 /* NNPopObjcInjection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A82685B237E7ED600FF9359 /* NNPopObjcInjection.mm */; };
@@ -43,6 +45,10 @@
 		676979A12345C78300E13282 /* NNPopObjcTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NNPopObjcTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		676979A62345C78300E13282 /* NNPopObjcTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNPopObjcTests.m; sourceTree = "<group>"; };
 		676979A82345C78300E13282 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		67832E02239C834E0096DCCE /* NNTestProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNTestProtocol.h; sourceTree = "<group>"; };
+		67832E03239C834E0096DCCE /* NNTestProtocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNTestProtocol.m; sourceTree = "<group>"; };
+		67832E0A239C8D290096DCCE /* NNTestClassCase0.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNTestClassCase0.h; sourceTree = "<group>"; };
+		67832E0B239C8D290096DCCE /* NNTestClassCase0.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNTestClassCase0.m; sourceTree = "<group>"; };
 		7A67D44A2398D1C100EEDF5B /* NNPopObjcScope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNPopObjcScope.h; sourceTree = "<group>"; };
 		7A826850237E7ED500FF9359 /* NNPopObjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNPopObjc.h; sourceTree = "<group>"; };
 		7A826852237E7ED600FF9359 /* NNPopObjcDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNPopObjcDescription.h; sourceTree = "<group>"; };
@@ -113,10 +119,30 @@
 		676979A52345C78300E13282 /* NNPopObjcTests */ = {
 			isa = PBXGroup;
 			children = (
+				67832E0D239C8DC30096DCCE /* NNTestProtocol */,
+				67832E09239C8CFB0096DCCE /* NNTestClasses */,
 				676979A62345C78300E13282 /* NNPopObjcTests.m */,
 				676979A82345C78300E13282 /* Info.plist */,
 			);
 			path = NNPopObjcTests;
+			sourceTree = "<group>";
+		};
+		67832E09239C8CFB0096DCCE /* NNTestClasses */ = {
+			isa = PBXGroup;
+			children = (
+				67832E0A239C8D290096DCCE /* NNTestClassCase0.h */,
+				67832E0B239C8D290096DCCE /* NNTestClassCase0.m */,
+			);
+			path = NNTestClasses;
+			sourceTree = "<group>";
+		};
+		67832E0D239C8DC30096DCCE /* NNTestProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				67832E02239C834E0096DCCE /* NNTestProtocol.h */,
+				67832E03239C834E0096DCCE /* NNTestProtocol.m */,
+			);
+			path = NNTestProtocol;
 			sourceTree = "<group>";
 		};
 		7A826851237E7ED600FF9359 /* Public */ = {
@@ -286,6 +312,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				676979A72345C78300E13282 /* NNPopObjcTests.m in Sources */,
+				67832E0C239C8D290096DCCE /* NNTestClassCase0.m in Sources */,
+				67832E04239C834E0096DCCE /* NNTestProtocol.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
