@@ -7,7 +7,7 @@ branches:
   only:
     - master
     - develop
-    - /^\develop-.*$/
+    - /^develop-.*$/
     - travis-stages
 
 cache:
