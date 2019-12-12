@@ -8,11 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+@interface NSString (NNTestMark)
+
+@property (nonatomic, strong) NSMutableArray<NSString *> *marks;
+
+@end
+
 @protocol NNTestProtocol <NSObject>
 
 @optional
-+ (NSString *)className;
-- (NSString *)className;
++ (NSString *)nameOfClass;
+- (NSString *)nameOfClass;
 
 @end
 

@@ -27,6 +27,8 @@
 		7A826876237E8B3500FF9359 /* NNPopObjcProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A82685E237E7ED600FF9359 /* NNPopObjcProtocol.h */; };
 		7A82688F238244D300FF9359 /* NNPopObjcLogging.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A82688D238244D300FF9359 /* NNPopObjcLogging.h */; };
 		7A826890238244D300FF9359 /* NNPopObjcLogging.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A82688E238244D300FF9359 /* NNPopObjcLogging.mm */; };
+		7A9E8D6E23A20DD2007FC1EC /* NNTestClassCase1.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9E8D6D23A20DD2007FC1EC /* NNTestClassCase1.m */; };
+		7A9E8DB223A21A22007FC1EC /* NNTestClassCase2.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9E8DB123A21A22007FC1EC /* NNTestClassCase2.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,10 @@
 		7A82685F237E7ED600FF9359 /* NNPopObjcMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNPopObjcMemory.h; sourceTree = "<group>"; };
 		7A82688D238244D300FF9359 /* NNPopObjcLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNPopObjcLogging.h; sourceTree = "<group>"; };
 		7A82688E238244D300FF9359 /* NNPopObjcLogging.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NNPopObjcLogging.mm; sourceTree = "<group>"; };
+		7A9E8D6C23A20DD2007FC1EC /* NNTestClassCase1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNTestClassCase1.h; sourceTree = "<group>"; };
+		7A9E8D6D23A20DD2007FC1EC /* NNTestClassCase1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNTestClassCase1.m; sourceTree = "<group>"; };
+		7A9E8DB023A21A22007FC1EC /* NNTestClassCase2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNTestClassCase2.h; sourceTree = "<group>"; };
+		7A9E8DB123A21A22007FC1EC /* NNTestClassCase2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNTestClassCase2.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +138,10 @@
 			children = (
 				67832E0A239C8D290096DCCE /* NNTestClassCase0.h */,
 				67832E0B239C8D290096DCCE /* NNTestClassCase0.m */,
+				7A9E8D6C23A20DD2007FC1EC /* NNTestClassCase1.h */,
+				7A9E8D6D23A20DD2007FC1EC /* NNTestClassCase1.m */,
+				7A9E8DB023A21A22007FC1EC /* NNTestClassCase2.h */,
+				7A9E8DB123A21A22007FC1EC /* NNTestClassCase2.m */,
 			);
 			path = NNTestClasses;
 			sourceTree = "<group>";
@@ -311,9 +321,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A9E8D6E23A20DD2007FC1EC /* NNTestClassCase1.m in Sources */,
 				676979A72345C78300E13282 /* NNPopObjcTests.m in Sources */,
 				67832E0C239C8D290096DCCE /* NNTestClassCase0.m in Sources */,
 				67832E04239C834E0096DCCE /* NNTestProtocol.m in Sources */,
+				7A9E8DB223A21A22007FC1EC /* NNTestClassCase2.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

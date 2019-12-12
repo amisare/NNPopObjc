@@ -10,6 +10,8 @@
 #import <NNPopObjc/NNPopObjc.h>
 #import "NNTestProtocol.h"
 #import "NNTestClassCase0.h"
+#import "NNTestClassCase1.h"
+#import "NNTestClassCase2.h"
 
 @interface NNPopObjcTests : XCTestCase
 
@@ -26,22 +28,83 @@
 }
 
 - (void)testCase0 {
+	// NNTestClassCase0
+	{
+        XCTAssertFalse([NNTestClassCase0 respondsToSelector:@selector(nameOfClass)]);
+        XCTAssertFalse([[NNTestClassCase0 new] respondsToSelector:@selector(nameOfClass)]);
+        XCTAssertFalse([[NNTestClassCase0 new] respondsToSelector:@selector(stringValue)]);
+        XCTAssertFalse([[NNTestClassCase0 new] respondsToSelector:@selector(setStringValue:)]);
+    }
+	// NNTestClassCase00
     {
         NSString *className = NSStringFromClass([NNTestClassCase00 class]);
-        XCTAssertTrue([[NNTestClassCase00 className] isEqualToString:className]);
-        NNTestClassCase00 *case00 = [NNTestClassCase00 new];
-        XCTAssertTrue([[case00 className] isEqualToString:className]);
+        XCTAssertTrue([className isEqualToString:[NNTestClassCase00 nameOfClass]]);
+        NNTestClassCase00 *obj = [NNTestClassCase00 new];
+        XCTAssertTrue([className isEqualToString:[obj nameOfClass]]);
+		
+        XCTAssertFalse([[NNTestClassCase0 new] respondsToSelector:@selector(stringValue)]);
+        XCTAssertFalse([[NNTestClassCase0 new] respondsToSelector:@selector(setStringValue:)]);
     }
-    
+	// NNTestClassCase01
     {
         NSString *className = NSStringFromClass([NNTestClassCase01 class]);
-        XCTAssertTrue([[NNTestClassCase01 className] isEqualToString:className]);
-        NNTestClassCase01 *case00 = [NNTestClassCase01 new];
-        XCTAssertTrue([[case00 className] isEqualToString:className]);
+        XCTAssertTrue([className isEqualToString:[NNTestClassCase01 nameOfClass]]);
+        NNTestClassCase01 *obj = [NNTestClassCase01 new];
+        XCTAssertTrue([className isEqualToString:[obj nameOfClass]]);
         
-        case00.stringValue = className;
-        XCTAssertTrue([case00.stringValue isEqualToString:className]);
+        obj.stringValue = className;
+        XCTAssertTrue([className isEqualToString:obj.stringValue]);
     }
+}
+
+- (void)testCase1 {
+	// NNTestClassCase10
+    {
+        NSString *className = NSStringFromClass([NNTestClassCase10 class]);
+        XCTAssertTrue([className isEqualToString:[NNTestClassCase10 nameOfClass]]);
+        NNTestClassCase10 *obj = [NNTestClassCase10 new];
+        XCTAssertTrue([className isEqualToString:[obj nameOfClass]]);
+        
+        obj.stringValue = className;
+        XCTAssertTrue([className isEqualToString:obj.stringValue]);
+    }
+}
+
+- (void)testCase2 {
+	// NNTestClassCase20
+    {
+        NSString *className = NSStringFromClass([NNTestClassCase20 class]);
+        XCTAssertTrue([className isEqualToString:[NNTestClassCase20 nameOfClass]]);
+        XCTAssertTrue([@"NNTestProtocol" isEqualToString:[[[NNTestClassCase20 nameOfClass] marks] lastObject]]);
+        NNTestClassCase20 *obj = [NNTestClassCase20 new];
+        XCTAssertTrue([className isEqualToString:[obj nameOfClass]]);
+        XCTAssertTrue([@"NNTestProtocol" isEqualToString:[[[obj nameOfClass] marks] lastObject]]);
+        
+        obj.stringValue = className;
+		NSArray<NSString *> *marks = [[obj.stringValue marks] copy];
+        XCTAssertTrue([className isEqualToString:obj.stringValue]);
+        XCTAssertTrue([@"NNTestSubProtocol" isEqualToString:marks[0]]);
+        XCTAssertTrue([@"setStringValue:" isEqualToString:marks[1]]);
+        XCTAssertTrue([@"NNTestSubProtocol" isEqualToString:marks[2]]);
+        XCTAssertTrue([@"stringValue" isEqualToString:marks[3]]);
+    }
+	// NNTestClassCase21
+	{
+        NSString *className = NSStringFromClass([NNTestClassCase21 class]);
+        XCTAssertTrue([className isEqualToString:[NNTestClassCase21 nameOfClass]]);
+        XCTAssertTrue([@"NNTestClassCase2" isEqualToString:[[[NNTestClassCase21 nameOfClass] marks] lastObject]]);
+        NNTestClassCase21 *obj = [NNTestClassCase21 new];
+        XCTAssertTrue([className isEqualToString:[obj nameOfClass]]);
+        XCTAssertTrue([@"NNTestClassCase2" isEqualToString:[[[obj nameOfClass] marks] lastObject]]);
+        
+        obj.stringValue = className;
+		NSArray<NSString *> *marks = [[obj.stringValue marks] copy];
+        XCTAssertTrue([className isEqualToString:obj.stringValue]);
+        XCTAssertTrue([@"NNTestClassCase2" isEqualToString:marks[0]]);
+        XCTAssertTrue([@"setStringValue:" isEqualToString:marks[1]]);
+        XCTAssertTrue([@"NNTestClassCase2" isEqualToString:marks[2]]);
+        XCTAssertTrue([@"stringValue" isEqualToString:marks[3]]);
+	}
 }
 
 - (void)testPerformanceExample {

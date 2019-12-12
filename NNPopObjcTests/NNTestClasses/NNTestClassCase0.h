@@ -9,10 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "NNTestProtocol.h"
 
-@interface NNTestClassCase00 : NSObject<NNTestProtocol>
+@interface NNTestClassCase0 : NSObject
 
 @end
 
-@interface NNTestClassCase01 : NSObject<NNTestSubProtocol>
+
+@interface NNTestClassCase00 : NNTestClassCase0<NNTestProtocol>
+
+@end
+
+
+@interface NNTestClassCase01 : NNTestClassCase0<NNTestSubProtocol>
 
 @end

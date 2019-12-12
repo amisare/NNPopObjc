@@ -8,9 +8,15 @@
 
 #import "NNTestClassCase0.h"
 
+@implementation NNTestClassCase0
+
+@end
+
+
 @implementation NNTestClassCase00
 
 @end
+
 
 @implementation NNTestClassCase01
 
