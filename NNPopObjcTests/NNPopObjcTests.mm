@@ -12,6 +12,22 @@
 #import "NNTestClassCase0.h"
 #import "NNTestClassCase1.h"
 #import "NNTestClassCase2.h"
+#import "NNTestClassCase3.h"
+#import "NNTestClassCase4.h"
+
+@interface NSString (XCTAssert)
+
+- (BOOL)xct_isEqualToString:(NSString *)string;
+
+@end
+
+@implementation NSString (XCTAssert)
+
+- (BOOL)xct_isEqualToString:(NSString *)string {
+	return [self isEqualToString:string];
+}
+
+@end
 
 @interface NNPopObjcTests : XCTestCase
 
@@ -30,212 +46,323 @@
 - (void)testCase0 {
 	// NNTestClassCase0
 	{
-		XCTAssertFalse([NNTestClassCase0 respondsToSelector:@selector(nameOfClass)]);
-		XCTAssertFalse([[NNTestClassCase0 new] respondsToSelector:@selector(nameOfClass)]);
-		XCTAssertFalse([[NNTestClassCase0 new] respondsToSelector:@selector(stringValue)]);
-		XCTAssertFalse([[NNTestClassCase0 new] respondsToSelector:@selector(setStringValue:)]);
-	}
-	// NNTestClassCase00
-	{
-		NSString *className = NSStringFromClass([NNTestClassCase00 class]);
-		XCTAssertTrue([className isEqualToString:[NNTestClassCase00 nameOfClass]]);
-		NNTestClassCase00 *obj = [NNTestClassCase00 new];
-		XCTAssertTrue([className isEqualToString:[obj nameOfClass]]);
-		
-		XCTAssertFalse([[NNTestClassCase0 new] respondsToSelector:@selector(stringValue)]);
-		XCTAssertFalse([[NNTestClassCase0 new] respondsToSelector:@selector(setStringValue:)]);
-	}
-	// NNTestClassCase01
-	{
-		NSString *className = NSStringFromClass([NNTestClassCase01 class]);
-		XCTAssertTrue([className isEqualToString:[NNTestClassCase01 nameOfClass]]);
-		NNTestClassCase01 *obj = [NNTestClassCase01 new];
-		XCTAssertTrue([className isEqualToString:[obj nameOfClass]]);
-		
-		obj.stringValue = className;
-		XCTAssertTrue([className isEqualToString:obj.stringValue]);
+		Class clazz = [NNTestClassCase0 class];
+		XCTAssertFalse([clazz respondsToSelector:@selector(nameOfClass)]);
+		XCTAssertFalse([[clazz new] respondsToSelector:@selector(nameOfClass)]);
+		XCTAssertFalse([[clazz new] respondsToSelector:@selector(stringValue)]);
+		XCTAssertFalse([[clazz new] respondsToSelector:@selector(setStringValue:)]);
 	}
 }
 
 - (void)testCase1 {
 	// NNTestClassCase10
 	{
-		NSString *className = NSStringFromClass([NNTestClassCase10 class]);
-		XCTAssertTrue([className isEqualToString:[NNTestClassCase10 nameOfClass]]);
-		NNTestClassCase10 *obj = [NNTestClassCase10 new];
-		XCTAssertTrue([className isEqualToString:[obj nameOfClass]]);
-		
-		obj.stringValue = className;
-		XCTAssertTrue([className isEqualToString:obj.stringValue]);
+		Class clazz = [NNTestClassCase10 class];
+		NSString *clazzName = NSStringFromClass(clazz);
+		// + nameOfClass
+		{
+			NSString *v = [clazz nameOfClass];
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
+			});
+		}
+		// - nameOfClass
+		{
+			NSString *v = [[clazz new] nameOfClass];
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
+			});
+		}
+	}
+	// NNTestClassCase11
+	{
+		Class clazz = [NNTestClassCase11 class];
+		NSString *clazzName = NSStringFromClass(clazz);
+		// + nameOfClass
+		{
+			NSString *v = [clazz nameOfClass];
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
+			});
+		}
+		// - nameOfClass
+		{
+			NSString *v = [[clazz new] nameOfClass];
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
+			});
+		}
+		{
+			id<NNTestSubProtocol> obj = [clazz new];
+			obj.stringValue = clazzName;
+			NSString *v = obj.stringValue;
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestSubProtocol,,)))];
+			});
+			XCTAssertTrue({
+				[track.stack->top().methodName
+				 xct_isEqualToString:
+				 @"stringValue"];
+			});
+			track.stack->pop();
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestSubProtocol,,)))];
+			});
+			XCTAssertTrue({
+				[track.stack->top().methodName
+				 xct_isEqualToString:
+				 @"setStringValue:"];
+			});
+		}
 	}
 }
 
 - (void)testCase2 {
-	// NNTestClassCase20
+	// NNTestClassCase21
 	{
-		NSString *className = NSStringFromClass([NNTestClassCase20 class]);
+		Class clazz = [NNTestClassCase21 class];
+		NSString *clazzName = NSStringFromClass(clazz);
+		// + nameOfClass
 		{
-			NSString *v = [NNTestClassCase20 nameOfClass];
-			XCTAssertTrue([className isEqualToString:v]);
+			NSString *v = [clazz nameOfClass];
+			XCTAssertTrue([clazzName isEqualToString:v]);
 			NNTestTrack *track = v.track;
 			XCTAssertTrue({
-				[^{
-					NSString *c = track.stack->top().implmentClass;
-					return c;
-				}()
-				 isEqualToString:
-				 ^{
-					NSString *v = @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)));
-					return v;
-				}()];
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
 			});
+		}
+		// - nameOfClass
+		{
+			NSString *v = [[clazz new] nameOfClass];
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
 			XCTAssertTrue({
-				[^{
-					NSString *c = track.stack->top().implmentClass;
-					return c;
-				}()
-				 isEqualToString:
-				 ^{
-					NSString *v = @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)));
-					return v;
-				}()];
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
 			});
 		}
 		{
-			
-			NNTestClassCase20 *obj = [NNTestClassCase20 new];
-			obj.stringValue = className;
+			id<NNTestSubProtocol> obj = [clazz new];
+			obj.stringValue = clazzName;
 			NSString *v = obj.stringValue;
-			XCTAssertTrue([className isEqualToString:v]);
+			XCTAssertTrue([clazzName isEqualToString:v]);
 			NNTestTrack *track = v.track;
 			XCTAssertTrue({
-				[^{
-					NSString *c = track.stack->top().implmentClass;
-					return c;
-				}()
-				 isEqualToString:
-				 ^{
-					NSString *v = @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestSubProtocol,,)));
-					return v;
-				}()];
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestSubProtocol,,)))];
 			});
 			XCTAssertTrue({
-				[^{
-					NSString *c = track.stack->top().methodName;
-					return c;
-				}()
-				 isEqualToString:
-				 ^{
-					NSString *v = @"stringValue";
-					return v;
-				}()];
+				[track.stack->top().methodName
+				 xct_isEqualToString:
+				 @"stringValue"];
 			});
 			track.stack->pop();
 			XCTAssertTrue({
-				[^{
-					NSString *c = track.stack->top().implmentClass;
-					return c;
-				}()
-				 isEqualToString:
-				 ^{
-					NSString *v = @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestSubProtocol,,)));
-					return v;
-				}()];
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestSubProtocol,,)))];
 			});
 			XCTAssertTrue({
-				[^{
-					NSString *c = track.stack->top().methodName;
-					return c;
-				}()
-				 isEqualToString:
-				 ^{
-					NSString *v = @"setStringValue:";
-					return v;
-				}()];
+				[track.stack->top().methodName
+				 xct_isEqualToString:
+				 @"setStringValue:"];
 			});
 		}
 	}
-	// NNTestClassCase21
+}
+
+- (void)testCase3 {
+	// NNTestClassCase30
 	{
-		NSString *className = NSStringFromClass([NNTestClassCase21 class]);
+		Class clazz = [NNTestClassCase30 class];
+		NSString *clazzName = NSStringFromClass(clazz);
+		// + nameOfClass
 		{
-			NSString *v = [NNTestClassCase21 nameOfClass];
-			XCTAssertTrue([className isEqualToString:v]);
+			NSString *v = [clazz nameOfClass];
+			XCTAssertTrue([clazzName isEqualToString:v]);
 			NNTestTrack *track = v.track;
 			XCTAssertTrue({
-				[^{
-					NSString *c = track.stack->top().implmentClass;
-					return c;
-				}()
-				 isEqualToString:
-				 ^{
-					NSString *v = @"NNTestClassCase21";
-					return v;
-				}()];
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 clazzName];
 			});
+		}
+		// - nameOfClass
+		{
+			NSString *v = [[clazz new] nameOfClass];
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
 			XCTAssertTrue({
-				[^{
-					NSString *c = track.stack->top().implmentClass;
-					return c;
-				}()
-				 isEqualToString:
-				 ^{
-					NSString *v = @"NNTestClassCase21";
-					return v;
-				}()];
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 clazzName];
 			});
 		}
 		{
-			
-			NNTestClassCase21 *obj = [NNTestClassCase21 new];
-			obj.stringValue = className;
+			id<NNTestSubProtocol> obj = [clazz new];
+			obj.stringValue = clazzName;
 			NSString *v = obj.stringValue;
-			XCTAssertTrue([className isEqualToString:v]);
+			XCTAssertTrue([clazzName isEqualToString:v]);
 			NNTestTrack *track = v.track;
 			XCTAssertTrue({
-				[^{
-					NSString *c = track.stack->top().implmentClass;
-					return c;
-				}()
-				 isEqualToString:
-				 ^{
-					NSString *v = @"NNTestClassCase21";
-					return v;
-				}()];
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 clazzName];
 			});
 			XCTAssertTrue({
-				[^{
-					NSString *c = track.stack->top().methodName;
-					return c;
-				}()
-				 isEqualToString:
-				 ^{
-					NSString *v = @"stringValue";
-					return v;
-				}()];
+				[track.stack->top().methodName
+				 xct_isEqualToString:
+				 @"stringValue"];
 			});
 			track.stack->pop();
 			XCTAssertTrue({
-				[^{
-					NSString *c = track.stack->top().implmentClass;
-					return c;
-				}()
-				 isEqualToString:
-				 ^{
-					NSString *v = @"NNTestClassCase21";
-					return v;
-				}()];
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 clazzName];
 			});
 			XCTAssertTrue({
-				[^{
-					NSString *c = track.stack->top().methodName;
-					return c;
-				}()
-				 isEqualToString:
-				 ^{
-					NSString *v = @"setStringValue:";
-					return v;
-				}()];
+				[track.stack->top().methodName
+				 xct_isEqualToString:
+				 @"setStringValue:"];
+			});
+		}
+	}
+	// NNTestClassCase31
+	{
+		Class clazz = [NNTestClassCase31 class];
+		NSString *clazzName = NSStringFromClass(clazz);
+		// + nameOfClass
+		{
+			NSString *v = [clazz nameOfClass];
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
+			});
+		}
+		// - nameOfClass
+		{
+			NSString *v = [[clazz new] nameOfClass];
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 clazzName];
+			});
+		}
+		{
+			id<NNTestSubProtocol> obj = [clazz new];
+			obj.stringValue = clazzName;
+			NSString *v = obj.stringValue;
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 clazzName];
+			});
+			XCTAssertTrue({
+				[track.stack->top().methodName
+				 xct_isEqualToString:
+				 @"stringValue"];
+			});
+			track.stack->pop();
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestSubProtocol,,)))];
+			});
+			XCTAssertTrue({
+				[track.stack->top().methodName
+				 xct_isEqualToString:
+				 @"setStringValue:"];
+			});
+		}
+	}
+}
+
+- (void)testCase4 {
+	// NNTestClassCase40
+	{
+		Class clazz = [NNTestClassCase40 class];
+		NSString *clazzName = NSStringFromClass(clazz);
+		// + nameOfClass
+		{
+			NSString *v = [clazz nameOfClass];
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestSubProtocol, NNTestClassCase40Protocol,)))];
+			});
+		}
+		// - nameOfClass
+		{
+			NSString *v = [[clazz new] nameOfClass];
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
+			});
+		}
+		{
+			id<NNTestSubProtocol> obj = [clazz new];
+			obj.stringValue = clazzName;
+			NSString *v = obj.stringValue;
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 clazzName];
+			});
+			XCTAssertTrue({
+				[track.stack->top().methodName
+				 xct_isEqualToString:
+				 @"stringValue"];
+			});
+			track.stack->pop();
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestSubProtocol, NNTestClassCase40Protocol,)))];
+			});
+			XCTAssertTrue({
+				[track.stack->top().methodName
+				 xct_isEqualToString:
+				 @"setStringValue:"];
 			});
 		}
 	}

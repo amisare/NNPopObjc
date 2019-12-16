@@ -1,19 +1,19 @@
 //
-//  NNTestProtocol.mm
+//  NNTestClassCase3.mm
 //  NNPopObjcTests
 //
-//  Created by GuHaijun on 2019/12/8.
+//  Created by 顾海军 on 2019/12/12.
 //  Copyright © 2019 GuHaiJun. All rights reserved.
 //
 
-#import "NNTestProtocol.h"
+#import "NNTestClassCase3.h"
 #import <objc/runtime.h>
-#import <NNPopObjc/NNPopObjc.h>
 
-@nn_extension(NNTestProtocol)
+@implementation NNTestClassCase30 {
+	NSMutableString *_stringValue;
+}
 
 + (NSString *)nameOfClass {
-	
 	NSMutableString *value = [NSMutableString new];
 	[value appendString:NSStringFromClass(self)];
 	NNTestFunctionParse *parse = [NNTestFunctionParse parseWithFunctionInfo:@(__FUNCTION__)];
@@ -35,13 +35,8 @@
     return value;
 }
 
-@end
-
-
-@nn_extension(NNTestSubProtocol)
-
 - (NSString *)stringValue {
-	NSMutableString *value = objc_getAssociatedObject(self, @selector(stringValue));
+	NSMutableString *value = _stringValue;
 	if (value.length == 0) {
 		value = [NSMutableString new];
 	}
@@ -60,7 +55,36 @@
 													 methodTypd:parse.methodType
 												  implmentClass:parse.implmentClass
 													invokeClass:NSStringFromClass([self class])]);
-    objc_setAssociatedObject(self, @selector(stringValue), value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+	_stringValue = value;
+}
+
+@end
+
+
+@implementation NNTestClassCase31
+
+- (NSString *)nameOfClass {
+	NSMutableString *value = [NSMutableString new];
+	[value appendString:NSStringFromClass([self class])];
+	NNTestFunctionParse *parse = [NNTestFunctionParse parseWithFunctionInfo:@(__FUNCTION__)];
+	value.track.stack->push([NNTestTrackItem itemWithMethodName:parse.methodName
+													 methodTypd:parse.methodType
+												  implmentClass:parse.implmentClass
+													invokeClass:NSStringFromClass([self class])]);
+    return value;
+}
+
+- (NSString *)stringValue {
+	NSMutableString *value = objc_getAssociatedObject(self, @selector(stringValue));
+	if (value.length == 0) {
+		value = [NSMutableString new];
+	}
+	NNTestFunctionParse *parse = [NNTestFunctionParse parseWithFunctionInfo:@(__FUNCTION__)];
+	value.track.stack->push([NNTestTrackItem itemWithMethodName:parse.methodName
+													 methodTypd:parse.methodType
+												  implmentClass:parse.implmentClass
+													invokeClass:NSStringFromClass([self class])]);
+	return value;
 }
 
 @end

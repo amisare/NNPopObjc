@@ -2,19 +2,19 @@
 //  NNTestClassCase1.h
 //  NNPopObjcTests
 //
-//  Created by 顾海军 on 2019/12/12.
+//  Created by GuHaijun on 2019/12/8.
 //  Copyright © 2019 GuHaiJun. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import "NNTestClassCase0.h"
 #import "NNTestProtocol.h"
 
-@interface NNTestClassCase1 : NSObject<NNTestSubProtocol>
+@interface NNTestClassCase10 : NNTestClassCase0<NNTestProtocol>
 
 @end
 
 
-@interface NNTestClassCase10 : NNTestClassCase1
+@interface NNTestClassCase11 : NNTestClassCase0<NNTestSubProtocol>
 
 @end
-
