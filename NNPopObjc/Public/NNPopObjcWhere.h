@@ -41,7 +41,7 @@ typedef enum : NSUInteger {
 #define nn_pop_extension_where_(prefix, protocol, where_keywordify, where_unique_id, where_block, ...) \
         static nn_pop_where_value_def nn_pop_extension_where_name_(prefix, protocol, where_unique_id, __VA_ARGS__)(Class self) { \
             where_keywordify \
-            return where_block(self); \
+            return where_block(self, nn_pop_argcount(__VA_ARGS__)); \
         } \
 
 /**
@@ -66,7 +66,7 @@ typedef enum : NSUInteger {
  * nn_pop_where_block_ expansions
  */
 #define nn_pop_where_block_(expression, as_default) \
-        ^nn_pop_where_value_def(__unsafe_unretained Class self){ \
+        ^nn_pop_where_value_def(__unsafe_unretained Class self, NSUInteger confrom_protocol_count){ \
             if (self == nil) { \
                 return nn_pop_where_value_unmatched; \
             } \
@@ -74,7 +74,7 @@ typedef enum : NSUInteger {
             if (is_match == false) { \
                 return nn_pop_where_value_unmatched; \
             } \
-            return as_default ? nn_pop_where_value_matched_default : nn_pop_where_value_matched_constrained; \
+            return (as_default && (confrom_protocol_count == 0)) ? nn_pop_where_value_matched_default : nn_pop_where_value_matched_constrained; \
         } \
 
 /**
