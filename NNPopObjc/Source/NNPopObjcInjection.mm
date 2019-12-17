@@ -224,6 +224,8 @@ void injectProtocolExtension(Class clazz, ProtocolExtension *protocolExtension) 
 /// Injects each protocols extension in to the corresponding class
 /// @param protocolExtensions nn_pop_protocol_extension_t list
 void injectProtocolExtensions(std::vector<ProtocolExtension *> protocolExtensions) {
+
+	POP_DLOG(INFO) << "Inject protocol extensions begin";
     
     std::sort(protocolExtensions.begin(), protocolExtensions.end(), [=](const ProtocolExtension *a, const ProtocolExtension *b) {
         
@@ -290,6 +292,8 @@ void injectProtocolExtensions(std::vector<ProtocolExtension *> protocolExtension
     }
     
     free(clazzes);
+	
+	POP_DLOG(INFO) << "Inject protocol extensions end";
 }
 
 /// Loads protocol extensions info from image segment
@@ -313,6 +317,8 @@ void loadSection(const nn_pop_mach_header *mhp,
     
     @autoreleasepool {
         
+        POP_DLOG(INFO) << "Load protocol extensions begin";
+		
         unsigned long sectionItemCount = size / sizeof(ExtensionDescription);
         ExtensionDescription *sectionItems = (ExtensionDescription *)sectionData;
         
@@ -344,13 +350,19 @@ void loadSection(const nn_pop_mach_header *mhp,
             }
         }
         
+        POP_DLOG(INFO) << "Load protocol extensions end";
+		
         if (loaded) {
             loaded(protocolExtensions);
         }
         
+        POP_DLOG(INFO) << "Free protocol extensions begin";
+		
         for (auto protocolExtension : protocolExtensions) {
             delete protocolExtension;
         }
+		
+        POP_DLOG(INFO) << "Free protocol extensions end";
     }
     
     pthread_mutex_unlock(&injectLock);

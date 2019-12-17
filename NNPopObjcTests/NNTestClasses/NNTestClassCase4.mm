@@ -9,6 +9,7 @@
 #import "NNTestClassCase4.h"
 #import <objc/runtime.h>
 
+
 @implementation NNTestClassCase40
 
 - (NSString *)stringValue {
@@ -26,6 +27,7 @@
 
 @end
 
+
 @implementation NNTestClassCase41
 
 - (void)setStringValue:(NSString *)stringValue {
@@ -41,3 +43,6 @@
 @end
 
 
+@implementation NNTestClassCase42
+
+@end

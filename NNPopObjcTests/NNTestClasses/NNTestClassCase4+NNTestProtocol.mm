@@ -37,7 +37,7 @@
 @end
 
 
-@nn_extension(NNTestSubProtocol, @nn_where(), NNTestClassCase41Protocol)
+@nn_extension(NNTestSubProtocol, @nn_where(self = [NNTestClassCase41 class]), NNTestClassCase41Protocol)
 
 - (NSString *)nameOfClass {
 	NSMutableString *value = [NSMutableString new];
@@ -61,6 +61,35 @@
 												  implmentClass:parse.implmentClass
 													invokeClass:NSStringFromClass([self class])]);
 	return value;
+}
+
+@end
+
+@nn_extension(NNTestSubProtocol, @nn_where(self = [NNTestClassCase42 class]), NNTestClassCase420Protocol, NNTestClassCase421Protocol)
+
+- (NSString *)stringValue {
+	NSMutableString *value = objc_getAssociatedObject(self, @selector(stringValue));
+	if (value.length == 0) {
+		value = [NSMutableString new];
+	}
+	NNTestFunctionParse *parse = [NNTestFunctionParse parseWithFunctionInfo:@(__FUNCTION__)];
+	value.track.stack->push([NNTestTrackItem itemWithMethodName:parse.methodName
+													 methodTypd:parse.methodType
+												  implmentClass:parse.implmentClass
+													invokeClass:NSStringFromClass([self class])]);
+	self.case42 = value;
+	return value;
+}
+
+- (void)setStringValue:(NSString *)stringValue {
+	NSMutableString *value = [NSMutableString stringWithString:stringValue];
+	NNTestFunctionParse *parse = [NNTestFunctionParse parseWithFunctionInfo:@(__FUNCTION__)];
+	value.track.stack->push([NNTestTrackItem itemWithMethodName:parse.methodName
+													 methodTypd:parse.methodType
+												  implmentClass:parse.implmentClass
+													invokeClass:NSStringFromClass([self class])]);
+    objc_setAssociatedObject(self, @selector(stringValue), value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+	self.case42 = stringValue;
 }
 
 @end
