@@ -27,4 +27,19 @@
 
 @end
 
+@protocol NNTestClassCase420Protocol <NSObject>
 
+@optional
+@property (nonatomic, strong) NSString *case42;
+
+@end
+
+@protocol NNTestClassCase421Protocol <NSObject>
+
+@end
+
+@interface NNTestClassCase42 : NNTestClassCase0<NNTestSubProtocol, NNTestClassCase420Protocol, NNTestClassCase421Protocol>
+
+@property (nonatomic, strong) NSString *case42;
+
+@end

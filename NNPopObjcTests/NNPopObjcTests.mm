@@ -422,6 +422,61 @@
 			});
 		}
 	}
+	// NNTestClassCase42
+	{
+		Class clazz = [NNTestClassCase42 class];
+		NSString *clazzName = NSStringFromClass(clazz);
+		// + nameOfClass
+		{
+			NSString *v = [clazz nameOfClass];
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
+			});
+		}
+		// - nameOfClass
+		{
+			NSString *v = [[clazz new] nameOfClass];
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
+			});
+		}
+		{
+			id<NNTestSubProtocol, NNTestClassCase420Protocol> obj = [clazz new];
+			obj.stringValue = clazzName;
+			__unused NSString *v = obj.stringValue;
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestSubProtocol,, NNTestClassCase420Protocol, NNTestClassCase421Protocol)))];
+			});
+			XCTAssertTrue({
+				[track.stack->top().methodName
+				 xct_isEqualToString:
+				 @"stringValue"];
+			});
+			track.stack->pop();
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestSubProtocol,, NNTestClassCase420Protocol, NNTestClassCase421Protocol)))];
+			});
+			XCTAssertTrue({
+				[track.stack->top().methodName
+				 xct_isEqualToString:
+				 @"setStringValue:"];
+			});
+		}
+	}
 }
 
 - (void)testCase5 {
