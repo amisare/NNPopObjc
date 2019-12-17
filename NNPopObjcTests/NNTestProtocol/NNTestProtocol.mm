@@ -13,7 +13,6 @@
 @nn_extension(NNTestProtocol)
 
 + (NSString *)nameOfClass {
-	
 	NSMutableString *value = [NSMutableString new];
 	[value appendString:NSStringFromClass(self)];
 	NNTestFunctionParse *parse = [NNTestFunctionParse parseWithFunctionInfo:@(__FUNCTION__)];

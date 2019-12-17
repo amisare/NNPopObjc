@@ -19,4 +19,12 @@
 
 @end
 
+@protocol NNTestClassCase41Protocol <NSObject>
+
+@end
+
+@interface NNTestClassCase41 : NNTestClassCase0<NNTestSubProtocol, NNTestClassCase41Protocol>
+
+@end
+
 

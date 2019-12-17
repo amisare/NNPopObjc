@@ -26,4 +26,18 @@
 
 @end
 
+@implementation NNTestClassCase41
+
+- (void)setStringValue:(NSString *)stringValue {
+	NSMutableString *value = [NSMutableString stringWithString:stringValue];
+	NNTestFunctionParse *parse = [NNTestFunctionParse parseWithFunctionInfo:@(__FUNCTION__)];
+	value.track.stack->push([NNTestTrackItem itemWithMethodName:parse.methodName
+													 methodTypd:parse.methodType
+												  implmentClass:parse.implmentClass
+													invokeClass:NSStringFromClass([self class])]);
+    objc_setAssociatedObject(self, @selector(stringValue), value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+@end
+
 

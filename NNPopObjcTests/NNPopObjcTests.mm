@@ -14,6 +14,7 @@
 #import "NNTestClassCase2.h"
 #import "NNTestClassCase3.h"
 #import "NNTestClassCase4.h"
+#import "NNTestClassCase5.h"
 
 @interface NSString (XCTAssert)
 
@@ -365,6 +366,111 @@
 				 @"setStringValue:"];
 			});
 		}
+	}
+	// NNTestClassCase41
+	{
+		Class clazz = [NNTestClassCase41 class];
+		NSString *clazzName = NSStringFromClass(clazz);
+		// + nameOfClass
+		{
+			NSString *v = [clazz nameOfClass];
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
+			});
+		}
+		// - nameOfClass
+		{
+			NSString *v = [[clazz new] nameOfClass];
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestSubProtocol,, NNTestClassCase41Protocol)))];
+			});
+		}
+		{
+			id<NNTestSubProtocol> obj = [clazz new];
+			obj.stringValue = clazzName;
+			NSString *v = obj.stringValue;
+			XCTAssertTrue([clazzName isEqualToString:v]);
+			NNTestTrack *track = v.track;
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestSubProtocol,, NNTestClassCase41Protocol)))];
+			});
+			XCTAssertTrue({
+				[track.stack->top().methodName
+				 xct_isEqualToString:
+				 @"stringValue"];
+			});
+			track.stack->pop();
+			XCTAssertTrue({
+				[track.stack->top().implmentClass
+				 xct_isEqualToString:
+				 clazzName];
+			});
+			XCTAssertTrue({
+				[track.stack->top().methodName
+				 xct_isEqualToString:
+				 @"setStringValue:"];
+			});
+		}
+	}
+}
+
+- (void)testCase5 {
+	// NNTestClassCase50
+	{
+		__unused id obj = [NNTestClassCase50 new];
+		NNTestTrack *track = case50Track.track;
+		XCTAssertTrue({
+			[track.stack->top().invokeClass
+			 xct_isEqualToString:
+			 @"NNTestClassCase50"];
+		});
+		XCTAssertTrue({
+			[track.stack->top().implmentClass
+			 xct_isEqualToString:
+			 @"NNTestClassCase50"];
+		});
+		XCTAssertTrue({
+			track.stack->top().methodType == NNTestMethodTypeClass;
+		});
+		XCTAssertTrue({
+			[track.stack->top().methodName
+			 xct_isEqualToString:
+			 @"initialize"];
+		});
+	}
+	// NNTestClassCase51
+	{
+		// initialize method does not need injection
+		__unused id obj = [NNTestClassCase51 new];
+		NNTestTrack *track = case51Track.track;
+		XCTAssertTrue({
+			[track.stack->top().invokeClass
+			 xct_isEqualToString:
+			 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestSubProtocol, NNTestClassCase50,)))];
+		});
+		XCTAssertTrue({
+			[track.stack->top().implmentClass
+			 xct_isEqualToString:
+			 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestSubProtocol, NNTestClassCase50,)))];
+		});
+		XCTAssertTrue({
+			track.stack->top().methodType == NNTestMethodTypeClass;
+		});
+		XCTAssertTrue({
+			[track.stack->top().methodName
+			 xct_isEqualToString:
+			 @"initialize"];
+		});
 	}
 }
 
