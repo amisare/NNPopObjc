@@ -68,3 +68,5 @@ fastlane/test_output
 iOSInjectionProject/
 
 .idea/
+
+*.coverage.txt
