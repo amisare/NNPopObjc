@@ -46,10 +46,10 @@ env:
 
 before_install:
   # Bundler 2.0
-  - gem update
-  - gem install bundler
-  - brew update
-  - brew outdated carthage || brew upgrade carthage
+  - travis_wait travis_retry gem update
+  - travis_wait travis_retry gem install bundler
+  - travis_wait travis_retry brew update
+  - travis_wait travis_retry brew outdated carthage || travis_wait travis_retry brew upgrade carthage
 
 jobs:
   include:
