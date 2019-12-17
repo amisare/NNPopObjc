@@ -37,7 +37,7 @@
 @end
 
 
-@nn_extension(NNTestSubProtocol, @nn_where(), NNTestClassCase41Protocol)
+@nn_extension(NNTestSubProtocol, @nn_where(self = [NNTestClassCase41 class]), NNTestClassCase41Protocol)
 
 - (NSString *)nameOfClass {
 	NSMutableString *value = [NSMutableString new];
