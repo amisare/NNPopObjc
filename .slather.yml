@@ -1,6 +1,0 @@
-ci_service: travis_ci
-coverage_service: cobertura_xml
-xcodeproj: NNPopObjc.xcodeproj
-workspace: NNPopObjc.xcworkspace
-scheme: NNPopObjc
-source_directory: NNPopObjc
