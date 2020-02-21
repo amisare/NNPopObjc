@@ -19,7 +19,7 @@
 
 #import <iostream>
 #import <vector>
-#import <set>
+#import <unordered_set>
 
 #import "NNPopObjcMemory.h"
 #import "NNPopObjcProtocol.h"
@@ -85,7 +85,7 @@ BOOL classConformsToProtocol(Class clazz, Protocol *protocol)  {
 /// Returns a Boolean value that indicates whether clazz is in protocol implements.
 /// @param clazz A class
 /// @param protocolExtensions nn_pop_protocol_extension_t list
-BOOL classIsExtensionClass(Class clazz, std::vector<ProtocolExtension *> protocolExtensions) {
+BOOL classIsExtensionClass(Class clazz, std::vector<ProtocolExtension *> &protocolExtensions) {
     
     NSCAssert(clazz != nil, @"Parameter clazz cannot be nil");
     
@@ -112,6 +112,8 @@ BOOL classIsExtensionClass(Class clazz, std::vector<ProtocolExtension *> protoco
 /// @param checkSupserImplement Whether the injection should check super implemention,
 /// if a instance mathod has been implemented by super class, then jump over the injection.
 void injectImplementions(Class clazz, Class extentionClazz, BOOL checkSupserImplement) {
+    
+    NSLog(@"clazz==%@   class==%@", NSStringFromClass(clazz), NSStringFromClass(extentionClazz));
     
     NSCAssert(clazz != nil, @"Parameter clazz cannot be nil");
     NSCAssert(extentionClazz != nil, @"Parameter extentionClazz cannot be nil");
@@ -228,28 +230,9 @@ void injectProtocolExtension(Class clazz, ProtocolExtension *protocolExtension) 
 
 /// Injects each protocols extension in to the corresponding class
 /// @param protocolExtensions nn_pop_protocol_extension_t list
-void injectProtocolExtensions(std::vector<ProtocolExtension *> protocolExtensions) {
+void injectProtocolExtensions(std::vector<ProtocolExtension *> &protocolExtensions) {
     
     POP_DLOG(INFO) << "Inject protocol extensions begin";
-    
-    std::sort(protocolExtensions.begin(), protocolExtensions.end(), [=](const ProtocolExtension *a, const ProtocolExtension *b) {
-        
-        std::function<int(const ProtocolExtension *)> protocolInjectionPriority = [=](const ProtocolExtension *protocolExtension) {
-            
-            int runningTotal = 0;
-            
-            for (auto _protocolExtension : protocolExtensions) {
-                if (protocolExtension == _protocolExtension)
-                    continue;
-                
-                if (protocol_conformsToProtocol(protocolExtension->protocol, _protocolExtension->protocol))
-                    runningTotal++;
-            }
-            return runningTotal;
-        };
-        
-        return protocolInjectionPriority(b) - protocolInjectionPriority(a);
-    });
     
     int classCount = objc_getClassList(NULL, 0);
     if (!classCount) {
@@ -267,30 +250,26 @@ void injectProtocolExtensions(std::vector<ProtocolExtension *> protocolExtension
     
     @autoreleasepool {
         
-        for (auto protocolExtension : protocolExtensions) {
+        // Loop all clazzes
+        for (unsigned int i = 0; i < classCount; i++) {
             
-            std::set<const char *> injected;
+            Class clazz = clazzes[i];
             
-            // loop all clazzes
-            for (unsigned int i = 0; i < classCount; i++) {
-                
-                Class clazz = clazzes[i];
-                
+            if (classIsExtensionClass(clazz, protocolExtensions) == true) {
+                continue;
+            }
+            
+            for (auto protocolExtension : protocolExtensions) {
+                     
                 if (classConformsToProtocol(clazz, protocolExtension->protocol) == false) {
-                    continue;
-                }
-                if (classIsExtensionClass(clazz, protocolExtensions) == true) {
                     continue;
                 }
                 
                 Class rootClazz = classRootProtocolClass(clazz, protocolExtension->protocol);
-                if (injected.find(class_getName(rootClazz)) == injected.end()) {
-                    injectProtocolExtension(rootClazz, protocolExtension);
-                    injected.insert(class_getName(rootClazz));
-                }
+                injectProtocolExtension(rootClazz, protocolExtension);
+
                 if (clazz !=  rootClazz) {
                     injectProtocolExtension(clazz, protocolExtension);
-                    injected.insert(class_getName(clazz));
                 }
             }
         }
@@ -306,7 +285,7 @@ void injectProtocolExtensions(std::vector<ProtocolExtension *> protocolExtension
 /// @param sectname A section name in __DATA segment
 void loadSection(const nn_pop_mach_header *mhp,
                  const char *sectname,
-                 std::function<void (std::vector<ProtocolExtension *> protocolExtensions)> loaded) {
+                 std::function<void (std::vector<ProtocolExtension *> &protocolExtensions)> loaded) {
     
     if (pthread_mutex_lock(&injectLock) != 0) {
         POP_LOG(FATAL) << "Lock injection thread failed";
@@ -355,6 +334,30 @@ void loadSection(const nn_pop_mach_header *mhp,
             }
         }
         
+        // Sort by protocol's dependencies
+        std::sort(protocolExtensions.begin(), protocolExtensions.end(), [=](const ProtocolExtension *a, const ProtocolExtension *b) {
+            
+            std::function<int(const ProtocolExtension *)> protocolPriority = [=](const ProtocolExtension *protocolExtension) {
+                
+                int runningTotal = 0;
+                
+                for (auto _protocolExtension : protocolExtensions) {
+                    if (protocolExtension == _protocolExtension)
+                        continue;
+                    
+                    if (protocol_conformsToProtocol(protocolExtension->protocol, _protocolExtension->protocol))
+                        runningTotal++;
+                }
+                return runningTotal;
+            };
+            
+            return protocolPriority(b) - protocolPriority(a);
+        });
+        
+        for (auto v : protocolExtensions) {
+            NSLog(@"%s", protocol_getName(v->protocol));
+        }
+        
         POP_DLOG(INFO) << "Load protocol extensions end";
         
         if (loaded) {
@@ -382,7 +385,7 @@ void imageLoadedCallback(const struct mach_header *mhp, intptr_t vmaddr_slide) {
     
     loadSection(_mhp,
                 nn_pop_metamacro_stringify(nn_pop_section_name),
-                [](std::vector<ProtocolExtension *> protocolExtensions) {
+                [](std::vector<ProtocolExtension *> &protocolExtensions) {
         injectProtocolExtensions(protocolExtensions);
     });
 }
