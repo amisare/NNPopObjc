@@ -70,7 +70,7 @@ typedef enum : NSUInteger {
             if (self == nil) { \
                 return nn_pop_where_value_unmatched; \
             } \
-            BOOL is_match = (expression); \
+            BOOL is_match = ((expression) == true); \
             if (is_match == false) { \
                 return nn_pop_where_value_unmatched; \
             } \
