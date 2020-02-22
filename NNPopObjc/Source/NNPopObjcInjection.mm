@@ -298,6 +298,8 @@ void imageLoadedCallback(const struct mach_header *mhp, intptr_t vmaddr_slide) {
 }
 
 /// Initializer function is called by ImageLoaderMachO::doModInitFunctions at dyld project.
+/// @note This function is called only in library as a dynamic framework. So the library
+/// needs be integrated as a dynamic framework.
 /// @note dyld project: https://opensource.apple.com/tarballs/dyld/
 /// @note fix: mach_header is used to load the section which records the protocol extensions.
 /// In a library, vars paramater of __attribute__((constructor)) function can only get
@@ -308,19 +310,7 @@ __attribute__((constructor)) void initializer(int argc,
                                               const char **envp,
                                               const char **apple,
                                               const void* vars) {
-    
     _dyld_register_func_for_add_image(imageLoadedCallback);
 }
 
 } // namespace popobjc
-
-
-/// @note fix: Integration as static library, the __attribute__((constructor)) function will
-/// not be called. In .mm file, must define a Objective-C Class.
-@interface NNPopObjcInjection : NSObject
-
-@end
-
-@implementation NNPopObjcInjection
-
-@end
