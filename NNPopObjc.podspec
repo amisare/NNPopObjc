@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name          = "NNPopObjc"
-  s.version       = "1.0.2"
+  s.version       = "1.0.3"
   s.summary       = "Implement protocol extensions for protocol-oriented programming."
 
   s.description   = <<-DESC

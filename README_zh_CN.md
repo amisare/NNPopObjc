@@ -143,7 +143,7 @@ $ brew install carthage
 通过 Carthage 将 NNPopObjc 集成到 Xcode 项目中，需要在 `Cartfile` 中添加：
 
 ```ogdl
-github "amisare/NNPopObjc" ~> 1.0.2
+github "amisare/NNPopObjc" ~> 1.0.3
 ```
 
 执行 `carthage` 构建 Framework ，并将 `NNPopObjc.framework` 添加到 Xcode 项目中。
