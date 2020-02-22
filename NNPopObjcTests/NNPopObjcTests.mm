@@ -15,6 +15,7 @@
 #import "NNTestClassCase3.h"
 #import "NNTestClassCase4.h"
 #import "NNTestClassCase5.h"
+#import "NNTestClassCase6.h"
 
 @interface NSString (XCTAssert)
 
@@ -529,62 +530,89 @@
 	}
 }
 
-//- (void)testCase6 {
-//    // NNTestClassCase60
-//    {
-//        Class clazz = [NNTestClassCase60 class];
-//        NSString *clazzName = NSStringFromClass(clazz);
-//        // + nameOfClass
-//        {
-//            NSString *v = [clazz nameOfClass];
-//            XCTAssertTrue([clazzName isEqualToString:v]);
-//            NNTestTrack *track = v.track;
-//            XCTAssertTrue({
-//                [track.stack->top().implmentClass
-//                 xct_isEqualToString:
-//                 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
-//            });
-//        }
-//        // - nameOfClass
-//        {
-//            NSString *v = [[clazz new] nameOfClass];
-//            XCTAssertTrue([clazzName isEqualToString:v]);
-//            NNTestTrack *track = v.track;
-//            XCTAssertTrue({
-//                [track.stack->top().implmentClass
-//                 xct_isEqualToString:
-//                 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
-//            });
-//        }
-//    }
-//    // NNTestClassCase61
-//    {
-//        Class clazz = [NNTestClassCase61 class];
-//        NSString *clazzName = NSStringFromClass(clazz);
-//        // + nameOfClass
-//        {
-//            NSString *v = [clazz nameOfClass];
-//            XCTAssertTrue([clazzName isEqualToString:v]);
-//            NNTestTrack *track = v.track;
-//            XCTAssertTrue({
-//                [track.stack->top().implmentClass
-//                 xct_isEqualToString:
-//                 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
-//            });
-//        }
-//        // - nameOfClass
-//        {
-//            NSString *v = [[clazz new] nameOfClass];
-//            XCTAssertTrue([clazzName isEqualToString:v]);
-//            NNTestTrack *track = v.track;
-//            XCTAssertTrue({
-//                [track.stack->top().implmentClass
-//                 xct_isEqualToString:
-//                 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
-//            });
-//        }
-//    }
-//}
+- (void)testCase6 {
+    // NNTestClassCase60
+    {
+        Class clazz = [NNTestClassCase60 class];
+        NSString *clazzName = NSStringFromClass(clazz);
+        // + nameOfClass
+        {
+            NSString *v = [clazz nameOfClass];
+            XCTAssertTrue([clazzName isEqualToString:v]);
+            NNTestTrack *track = v.track;
+            XCTAssertTrue({
+                [track.stack->top().implmentClass
+                 xct_isEqualToString:
+                 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
+            });
+        }
+        // - nameOfClass
+        {
+            NSString *v = [[clazz new] nameOfClass];
+            XCTAssertTrue([clazzName isEqualToString:v]);
+            NNTestTrack *track = v.track;
+            XCTAssertTrue({
+                [track.stack->top().implmentClass
+                 xct_isEqualToString:
+                 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
+            });
+        }
+    }
+    // NNTestClassCase61
+    {
+        Class clazz = [NNTestClassCase61 class];
+        NSString *clazzName = NSStringFromClass(clazz);
+        // + nameOfClass
+        {
+            NSString *v = [clazz nameOfClass];
+            XCTAssertTrue([clazzName isEqualToString:v]);
+            NNTestTrack *track = v.track;
+            XCTAssertTrue({
+                [track.stack->top().implmentClass
+                 xct_isEqualToString:
+                 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
+            });
+        }
+        // - nameOfClass
+        {
+            NSString *v = [[clazz new] nameOfClass];
+            XCTAssertTrue([clazzName isEqualToString:v]);
+            NNTestTrack *track = v.track;
+            XCTAssertTrue({
+                [track.stack->top().implmentClass
+                 xct_isEqualToString:
+                 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol,,)))];
+            });
+        }
+    }
+    // NNTestClassCase62
+    {
+        Class clazz = [NNTestClassCase62 class];
+        NSString *clazzName = NSStringFromClass(clazz);
+        // + nameOfClass
+        {
+            NSString *v = [clazz nameOfClass];
+            XCTAssertTrue([clazzName isEqualToString:v]);
+            NNTestTrack *track = v.track;
+            XCTAssertTrue({
+                [track.stack->top().implmentClass
+                 xct_isEqualToString:
+                 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol, NNTestClassCase62,)))];
+            });
+        }
+        // - nameOfClass
+        {
+            NSString *v = [[clazz new] nameOfClass];
+            XCTAssertTrue([clazzName isEqualToString:v]);
+            NNTestTrack *track = v.track;
+            XCTAssertTrue({
+                [track.stack->top().implmentClass
+                 xct_isEqualToString:
+                 @(nn_pop_metamacro_stringify(nn_pop_extension_name_(nn_pop_extension_prefix, NNTestProtocol, NNTestClassCase62,)))];
+            });
+        }
+    }
+}
 
 - (void)testPerformanceExample {
 	// This is an example of a performance test case.

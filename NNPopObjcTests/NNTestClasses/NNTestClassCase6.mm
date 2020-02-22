@@ -15,3 +15,7 @@
 @implementation NNTestClassCase61
 
 @end
+
+@implementation NNTestClassCase62
+
+@end

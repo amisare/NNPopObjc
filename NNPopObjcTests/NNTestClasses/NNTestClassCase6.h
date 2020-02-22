@@ -12,12 +12,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NNTestClassCase60 : NNTestClassCase0
+@interface NNTestClassCase60 : NNTestClassCase0<NNTestProtocol>
 
 @end
 
+@interface NNTestClassCase61 : NNTestClassCase60
 
-@interface NNTestClassCase61 : NNTestClassCase60<NNTestProtocol>
+@end
+
+@interface NNTestClassCase62 : NNTestClassCase61<NNTestProtocol>
 
 @end
 

@@ -10,7 +10,7 @@
 #import "NNTestProtocol.h"
 #import <NNPopObjc/NNPopObjc.h>
 
-@nn_extension(NNTestProtocol, @nn_where(NNTestClassCase61, self = [NNTestClassCase61 class]))
+@nn_extension(NNTestProtocol, @nn_where(NNTestClassCase62, self == [NNTestClassCase62 class]))
 
 + (NSString *)nameOfClass {
     NSMutableString *value = [NSMutableString new];

@@ -37,7 +37,7 @@
 @end
 
 
-@nn_extension(NNTestSubProtocol, @nn_where(self = [NNTestClassCase41 class]), NNTestClassCase41Protocol)
+@nn_extension(NNTestSubProtocol, @nn_where(self == [NNTestClassCase41 class]), NNTestClassCase41Protocol)
 
 - (NSString *)nameOfClass {
 	NSMutableString *value = [NSMutableString new];
@@ -65,7 +65,7 @@
 
 @end
 
-@nn_extension(NNTestSubProtocol, @nn_where(self = [NNTestClassCase42 class]), NNTestClassCase420Protocol, NNTestClassCase421Protocol)
+@nn_extension(NNTestSubProtocol, @nn_where(self == [NNTestClassCase42 class]), NNTestClassCase420Protocol, NNTestClassCase421Protocol)
 
 - (NSString *)stringValue {
 	NSMutableString *value = objc_getAssociatedObject(self, @selector(stringValue));

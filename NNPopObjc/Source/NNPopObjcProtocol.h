@@ -11,72 +11,32 @@
 
 #import <Foundation/Foundation.h>
 #import <functional>
+#import <vector>
+#import <unordered_map>
 
 #import "NNPopObjcDescription.h"
+
+using namespace std;
 
 namespace popobjc {
 
 /// Extension description struct.
 typedef nn_pop_extension_description_t ExtensionDescription;
 
-
-/// Extension list node.
-struct ExtensionNode {
-        
-public:
-    /// Prefix of extension implementation class name.
-    const char *prefix;
-    /// Extension implemention Class.
-    Class clazz;
-    /// Where clause function pointer.
-    where_fp where_fp;
-    /// Count of protocols that the adopted class should be confrom to.
-    unsigned int confromProtocolCount;
-    /// Protocols that the adopted class should be confrom to.
-    Protocol *confromProtocols[20];
-    /// Next extension list node.
-    ExtensionNode *next;
-    
-    ExtensionNode() = default;
-    ExtensionNode(const ExtensionDescription *extensionDescription);
-    ExtensionNode(const ExtensionNode *extensionNode);
-    ~ExtensionNode();
-    
-};
-
-
-struct ExtensionList {
-
-private:
-    ExtensionNode *_head;
-
-public:
-    ExtensionList() = default;
-    ~ExtensionList();
-    
-    unsigned int count();
-    ExtensionNode *head();
-    void head(ExtensionNode *node);
-    void append(ExtensionNode *entry);
-    void foreach(std::function<void(ExtensionNode *item, BOOL *stop)> enumerater);
-    void clear();
-    
-};
-
-
 /// Protocol extension struct.
-struct ProtocolExtension{
+struct ProtocolExtension {
 
 public:
     /// Protocol be extended.
-    Protocol *protocol;
+    vector<const char *> protocols;
     /// Protocol extension descriptions.
-    ExtensionList extension;
+    unordered_map<const char *, vector<ExtensionDescription *>> extensions;
+    /// All protocol extension classes.
+    vector<const char *> clazzes;
     
     ProtocolExtension() = default;
-    ProtocolExtension(const ExtensionDescription *extensionDescription);
+    ProtocolExtension(ExtensionDescription *extensionDescription, unsigned int count);
     ~ProtocolExtension();
-    
 };
 
 }

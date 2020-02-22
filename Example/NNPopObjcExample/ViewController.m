@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "NNCodeLog.h"
 #import "NNCodeProtocol.h"
+#import "NNCode.h"
 #import "NNCodeC.h"
 #import "NNCodeObjc.h"
 #import "NNCodeCpp.h"
@@ -39,33 +40,36 @@
     
     DLog(@"");
     
+    [NNCode sayHelloPop];
     [NNCodeC sayHelloPop];
-    [NNCodeObjc sayHelloPop];
     [NNCodeCpp sayHelloPop];
+    [NNCodeObjc sayHelloPop];
     [NNCodeSwift sayHelloPop];
     
     DLog(@"");
     
-    NNCodeC *c = [NNCodeC new];
-    NNCodeObjc *objc = [NNCodeObjc new];
-    NNCodeCpp *cpp = [NNCodeCpp new];
-    NNCodeSwift *swift = [NNCodeSwift new];
+    NNCode *code = [NNCode new];
+    NNCodeC *codeC = [NNCodeC new];
+    NNCodeCpp *codeCpp = [NNCodeCpp new];
+    NNCodeObjc *codeObjc = [NNCodeObjc new];
+    NNCodeSwift *codeSwift = [NNCodeSwift new];
     
-    [c sayHelloPop];
-    [objc sayHelloPop];
-    [cpp sayHelloPop];
-    [swift sayHelloPop];
+    [code sayHelloPop];
+    [codeC sayHelloPop];
+    [codeCpp sayHelloPop];
+    [codeObjc sayHelloPop];
+    [codeSwift sayHelloPop];
     
     DLog(@"");
     
-    c.who = @"c";
-    DLog(@"%@", c.who);
-    objc.who = @"objc";
-    DLog(@"%@", objc.who);
-    cpp.who = @"cpp";
-    DLog(@"%@", cpp.who);
-    swift.who = @"swift";
-    DLog(@"%@", swift.who);
+    codeC.who = @"c";
+    DLog(@"%@", codeC.who);
+    codeCpp.who = @"cpp";
+    DLog(@"%@", codeCpp.who);
+    codeObjc.who = @"objc";
+    DLog(@"%@", codeObjc.who);
+    codeSwift.who = @"swift";
+    DLog(@"%@", codeSwift.who);
 }
 
 - (void)redirectNotificationHandle:(NSNotification *)notification{

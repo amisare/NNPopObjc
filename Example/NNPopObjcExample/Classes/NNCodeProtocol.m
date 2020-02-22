@@ -40,6 +40,20 @@
 @end
 
 
+@nn_extension(NNCodeWhoProtocol, @nn_where(NNCodeCpp, self == [NNCodeCpp class]), NNCodeNameProtocol)
+
+- (void)sayHelloPop {
+    DLog(@"-[%@ %s] cpp says hello pop", [self class], sel_getName(_cmd));
+}
+
+- (NSString *)who {
+    NSString *who = [NSString stringWithFormat:@"-[%@ %s] cpp says I am %@", [self class], sel_getName(_cmd), self.name];
+    return who;
+}
+
+@end
+
+
 @nn_extension(NNCodeWhoProtocol, @nn_where(a_where_unique_id, self == [NNCodeObjc class]), NNCodeNameProtocol)
 
 + (void)sayHelloPop {
@@ -60,20 +74,6 @@
 		@nn_inscope(NNCodeObjc *, self)
 		self.name = who;
 	}
-}
-
-@end
-
-
-@nn_extension(NNCodeWhoProtocol, @nn_where(NNCodeCpp, self == [NNCodeCpp class]), NNCodeNameProtocol)
-
-- (void)sayHelloPop {
-    DLog(@"-[%@ %s] cpp says hello pop", [self class], sel_getName(_cmd));
-}
-
-- (NSString *)who {
-    NSString *who = [NSString stringWithFormat:@"-[%@ %s] cpp says I am %@", [self class], sel_getName(_cmd), self.name];
-    return who;
 }
 
 @end

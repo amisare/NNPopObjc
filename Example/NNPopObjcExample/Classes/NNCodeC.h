@@ -7,13 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NNCodeProtocol.h"
+#import "NNCode.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NNCodeC : NSObject <NNCodeWhoProtocol, NNCodeNameProtocol>
-
-@property (nonatomic, strong) NSString *name;
+@interface NNCodeC : NNCode <NNCodeWhoProtocol>
 
 @end
 
