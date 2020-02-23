@@ -5,6 +5,9 @@
       location = "group:NNPopObjc.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Example/NNPopObjcExample.xcodeproj">
+      location = "group:Example/NNPopObjcExample/NNPopObjcExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Example/NNPopObjcDynamicExample/NNPopObjcDynamicExample.xcodeproj">
    </FileRef>
 </Workspace>

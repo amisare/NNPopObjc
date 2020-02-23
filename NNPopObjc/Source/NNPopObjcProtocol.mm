@@ -12,13 +12,14 @@
 
 namespace popobjc {
 
-ProtocolExtension::ProtocolExtension(ExtensionDescription *extensionDescription, unsigned int count) : ProtocolExtension() {
-
+void ProtocolExtension::append(ExtensionDescription *extensionDescription, unsigned int count) {
+    
     for (unsigned int i = 0; i < count; i++) {
         ExtensionDescription *_extensionDescription = &extensionDescription[i];
         this->extensions[_extensionDescription->protocol].push_back(_extensionDescription);
         this->clazzes.push_back(_extensionDescription->clazz);
     }
+    this->protocols.clear();
     for (auto extension : this->extensions) {
         this->protocols.push_back(extension.first);
     }

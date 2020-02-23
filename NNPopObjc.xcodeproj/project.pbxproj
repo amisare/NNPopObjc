@@ -13,6 +13,8 @@
 		676979A72345C78300E13282 /* NNPopObjcTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 676979A62345C78300E13282 /* NNPopObjcTests.mm */; };
 		67832E04239C834E0096DCCE /* NNTestProtocol.mm in Sources */ = {isa = PBXBuildFile; fileRef = 67832E03239C834E0096DCCE /* NNTestProtocol.mm */; };
 		67832E0C239C8D290096DCCE /* NNTestClassCase1.mm in Sources */ = {isa = PBXBuildFile; fileRef = 67832E0B239C8D290096DCCE /* NNTestClassCase1.mm */; };
+		6795E4972402178F00FE6AD5 /* NNPopObjcTickTock.h in Headers */ = {isa = PBXBuildFile; fileRef = 6795E4952402178F00FE6AD5 /* NNPopObjcTickTock.h */; };
+		6795E4982402178F00FE6AD5 /* NNPopObjcTickTock.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6795E4962402178F00FE6AD5 /* NNPopObjcTickTock.mm */; };
 		7A67D44B2398D26200EEDF5B /* NNPopObjcScope.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A67D44A2398D1C100EEDF5B /* NNPopObjcScope.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7A81856523A72B800070DBAD /* NNTestClassCase4.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A81856423A72B800070DBAD /* NNTestClassCase4.mm */; };
 		7A81856823A72CD00070DBAD /* NNTestClassCase4+NNTestProtocol.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A81856723A72CD00070DBAD /* NNTestClassCase4+NNTestProtocol.mm */; };
@@ -64,6 +66,8 @@
 		67832E03239C834E0096DCCE /* NNTestProtocol.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = NNTestProtocol.mm; sourceTree = "<group>"; };
 		67832E0A239C8D290096DCCE /* NNTestClassCase1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNTestClassCase1.h; sourceTree = "<group>"; };
 		67832E0B239C8D290096DCCE /* NNTestClassCase1.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = NNTestClassCase1.mm; sourceTree = "<group>"; };
+		6795E4952402178F00FE6AD5 /* NNPopObjcTickTock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNPopObjcTickTock.h; sourceTree = "<group>"; };
+		6795E4962402178F00FE6AD5 /* NNPopObjcTickTock.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = NNPopObjcTickTock.mm; sourceTree = "<group>"; };
 		7A67D44A2398D1C100EEDF5B /* NNPopObjcScope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNPopObjcScope.h; sourceTree = "<group>"; };
 		7A81856323A72B800070DBAD /* NNTestClassCase4.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNTestClassCase4.h; sourceTree = "<group>"; };
 		7A81856423A72B800070DBAD /* NNTestClassCase4.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = NNTestClassCase4.mm; sourceTree = "<group>"; };
@@ -226,6 +230,8 @@
 				7A82685D237E7ED600FF9359 /* NNPopObjcProtocol.mm */,
 				7A82688D238244D300FF9359 /* NNPopObjcLogging.h */,
 				7A82688E238244D300FF9359 /* NNPopObjcLogging.mm */,
+				6795E4952402178F00FE6AD5 /* NNPopObjcTickTock.h */,
+				6795E4962402178F00FE6AD5 /* NNPopObjcTickTock.mm */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -259,6 +265,7 @@
 				7A67D44B2398D26200EEDF5B /* NNPopObjcScope.h in Headers */,
 				7A826871237E8A5A00FF9359 /* NNPopObjcWhere.h in Headers */,
 				7A826873237E8B2800FF9359 /* NNPopObjcMetaMacros.h in Headers */,
+				6795E4972402178F00FE6AD5 /* NNPopObjcTickTock.h in Headers */,
 				7A826874237E8B3500FF9359 /* NNPopObjcInjection.h in Headers */,
 				7A826875237E8B3500FF9359 /* NNPopObjcMemory.h in Headers */,
 				7A826876237E8B3500FF9359 /* NNPopObjcProtocol.h in Headers */,
@@ -363,6 +370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A826867237E7ED600FF9359 /* NNPopObjcMemory.mm in Sources */,
+				6795E4982402178F00FE6AD5 /* NNPopObjcTickTock.mm in Sources */,
 				7A826868237E7ED600FF9359 /* NNPopObjcInjection.mm in Sources */,
 				7A82686A237E7ED600FF9359 /* NNPopObjcProtocol.mm in Sources */,
 				7A826890238244D300FF9359 /* NNPopObjcLogging.mm in Sources */,
@@ -529,8 +537,10 @@
 		676979AD2345C78300E13282 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -544,6 +554,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nn.NNPopObjc;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -555,8 +566,10 @@
 		676979AE2345C78300E13282 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -570,6 +583,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nn.NNPopObjc;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";

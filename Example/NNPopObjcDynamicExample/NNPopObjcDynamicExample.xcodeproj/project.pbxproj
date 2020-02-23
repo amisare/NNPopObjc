@@ -1,0 +1,496 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6795E4B02402355D00FE6AD5 /* NNPopObjcDynamicExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6795E4A62402355D00FE6AD5 /* NNPopObjcDynamicExample.framework */; };
+		6795E4B52402355D00FE6AD5 /* NNPopObjcDynamicExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795E4B42402355D00FE6AD5 /* NNPopObjcDynamicExampleTests.m */; };
+		6795E4C82402368D00FE6AD5 /* NNDynamicProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 6795E4C32402368C00FE6AD5 /* NNDynamicProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6795E4C92402368D00FE6AD5 /* NNPopObjcDynamicExample.h in Headers */ = {isa = PBXBuildFile; fileRef = 6795E4C42402368C00FE6AD5 /* NNPopObjcDynamicExample.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6795E4CA2402368D00FE6AD5 /* NNDynamicProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795E4C52402368D00FE6AD5 /* NNDynamicProtocol.m */; };
+		6795E4CB2402368D00FE6AD5 /* NNDynamic.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795E4C62402368D00FE6AD5 /* NNDynamic.m */; };
+		6795E4CC2402368D00FE6AD5 /* NNDynamic.h in Headers */ = {isa = PBXBuildFile; fileRef = 6795E4C72402368D00FE6AD5 /* NNDynamic.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6795E4D2240236E900FE6AD5 /* NNPopObjc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6795E4D1240236E900FE6AD5 /* NNPopObjc.framework */; };
+		6795E4D3240236E900FE6AD5 /* NNPopObjc.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6795E4D1240236E900FE6AD5 /* NNPopObjc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6795E4B12402355D00FE6AD5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6795E49D2402355D00FE6AD5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6795E4A52402355D00FE6AD5;
+			remoteInfo = NNPopObjcDynamicExample;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6795E4D4240236E900FE6AD5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6795E4D3240236E900FE6AD5 /* NNPopObjc.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		6795E4A62402355D00FE6AD5 /* NNPopObjcDynamicExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NNPopObjcDynamicExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6795E4AA2402355D00FE6AD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6795E4AF2402355D00FE6AD5 /* NNPopObjcDynamicExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NNPopObjcDynamicExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6795E4B42402355D00FE6AD5 /* NNPopObjcDynamicExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNPopObjcDynamicExampleTests.m; sourceTree = "<group>"; };
+		6795E4B62402355D00FE6AD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6795E4C32402368C00FE6AD5 /* NNDynamicProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNDynamicProtocol.h; sourceTree = "<group>"; };
+		6795E4C42402368C00FE6AD5 /* NNPopObjcDynamicExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNPopObjcDynamicExample.h; sourceTree = "<group>"; };
+		6795E4C52402368D00FE6AD5 /* NNDynamicProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNDynamicProtocol.m; sourceTree = "<group>"; };
+		6795E4C62402368D00FE6AD5 /* NNDynamic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNDynamic.m; sourceTree = "<group>"; };
+		6795E4C72402368D00FE6AD5 /* NNDynamic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNDynamic.h; sourceTree = "<group>"; };
+		6795E4D1240236E900FE6AD5 /* NNPopObjc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NNPopObjc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6795E4A32402355D00FE6AD5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6795E4D2240236E900FE6AD5 /* NNPopObjc.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6795E4AC2402355D00FE6AD5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6795E4B02402355D00FE6AD5 /* NNPopObjcDynamicExample.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6795E49C2402355D00FE6AD5 = {
+			isa = PBXGroup;
+			children = (
+				6795E4A82402355D00FE6AD5 /* NNPopObjcDynamicExample */,
+				6795E4B32402355D00FE6AD5 /* NNPopObjcDynamicExampleTests */,
+				6795E4A72402355D00FE6AD5 /* Products */,
+				6795E4D0240236E900FE6AD5 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		6795E4A72402355D00FE6AD5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6795E4A62402355D00FE6AD5 /* NNPopObjcDynamicExample.framework */,
+				6795E4AF2402355D00FE6AD5 /* NNPopObjcDynamicExampleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6795E4A82402355D00FE6AD5 /* NNPopObjcDynamicExample */ = {
+			isa = PBXGroup;
+			children = (
+				6795E4C42402368C00FE6AD5 /* NNPopObjcDynamicExample.h */,
+				6795E4C72402368D00FE6AD5 /* NNDynamic.h */,
+				6795E4C62402368D00FE6AD5 /* NNDynamic.m */,
+				6795E4C32402368C00FE6AD5 /* NNDynamicProtocol.h */,
+				6795E4C52402368D00FE6AD5 /* NNDynamicProtocol.m */,
+				6795E4AA2402355D00FE6AD5 /* Info.plist */,
+			);
+			path = NNPopObjcDynamicExample;
+			sourceTree = "<group>";
+		};
+		6795E4B32402355D00FE6AD5 /* NNPopObjcDynamicExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				6795E4B42402355D00FE6AD5 /* NNPopObjcDynamicExampleTests.m */,
+				6795E4B62402355D00FE6AD5 /* Info.plist */,
+			);
+			path = NNPopObjcDynamicExampleTests;
+			sourceTree = "<group>";
+		};
+		6795E4D0240236E900FE6AD5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6795E4D1240236E900FE6AD5 /* NNPopObjc.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		6795E4A12402355D00FE6AD5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6795E4C92402368D00FE6AD5 /* NNPopObjcDynamicExample.h in Headers */,
+				6795E4C82402368D00FE6AD5 /* NNDynamicProtocol.h in Headers */,
+				6795E4CC2402368D00FE6AD5 /* NNDynamic.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		6795E4A52402355D00FE6AD5 /* NNPopObjcDynamicExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6795E4BA2402355D00FE6AD5 /* Build configuration list for PBXNativeTarget "NNPopObjcDynamicExample" */;
+			buildPhases = (
+				6795E4A12402355D00FE6AD5 /* Headers */,
+				6795E4A22402355D00FE6AD5 /* Sources */,
+				6795E4A32402355D00FE6AD5 /* Frameworks */,
+				6795E4A42402355D00FE6AD5 /* Resources */,
+				6795E4D4240236E900FE6AD5 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NNPopObjcDynamicExample;
+			productName = NNPopObjcDynamicExample;
+			productReference = 6795E4A62402355D00FE6AD5 /* NNPopObjcDynamicExample.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		6795E4AE2402355D00FE6AD5 /* NNPopObjcDynamicExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6795E4BD2402355D00FE6AD5 /* Build configuration list for PBXNativeTarget "NNPopObjcDynamicExampleTests" */;
+			buildPhases = (
+				6795E4AB2402355D00FE6AD5 /* Sources */,
+				6795E4AC2402355D00FE6AD5 /* Frameworks */,
+				6795E4AD2402355D00FE6AD5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6795E4B22402355D00FE6AD5 /* PBXTargetDependency */,
+			);
+			name = NNPopObjcDynamicExampleTests;
+			productName = NNPopObjcDynamicExampleTests;
+			productReference = 6795E4AF2402355D00FE6AD5 /* NNPopObjcDynamicExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6795E49D2402355D00FE6AD5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = GuHaiJun;
+				TargetAttributes = {
+					6795E4A52402355D00FE6AD5 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+					6795E4AE2402355D00FE6AD5 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 6795E4A02402355D00FE6AD5 /* Build configuration list for PBXProject "NNPopObjcDynamicExample" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6795E49C2402355D00FE6AD5;
+			productRefGroup = 6795E4A72402355D00FE6AD5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6795E4A52402355D00FE6AD5 /* NNPopObjcDynamicExample */,
+				6795E4AE2402355D00FE6AD5 /* NNPopObjcDynamicExampleTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6795E4A42402355D00FE6AD5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6795E4AD2402355D00FE6AD5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6795E4A22402355D00FE6AD5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6795E4CA2402368D00FE6AD5 /* NNDynamicProtocol.m in Sources */,
+				6795E4CB2402368D00FE6AD5 /* NNDynamic.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6795E4AB2402355D00FE6AD5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6795E4B52402355D00FE6AD5 /* NNPopObjcDynamicExampleTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6795E4B22402355D00FE6AD5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6795E4A52402355D00FE6AD5 /* NNPopObjcDynamicExample */;
+			targetProxy = 6795E4B12402355D00FE6AD5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		6795E4B82402355D00FE6AD5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		6795E4B92402355D00FE6AD5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		6795E4BB2402355D00FE6AD5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = NNPopObjcDynamicExample/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = mh_dylib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nn.NNPopObjcDynamicExample;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6795E4BC2402355D00FE6AD5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = NNPopObjcDynamicExample/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = mh_dylib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nn.NNPopObjcDynamicExample;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6795E4BE2402355D00FE6AD5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = NNPopObjcDynamicExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nn.NNPopObjcDynamicExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6795E4BF2402355D00FE6AD5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = NNPopObjcDynamicExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nn.NNPopObjcDynamicExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6795E4A02402355D00FE6AD5 /* Build configuration list for PBXProject "NNPopObjcDynamicExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6795E4B82402355D00FE6AD5 /* Debug */,
+				6795E4B92402355D00FE6AD5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6795E4BA2402355D00FE6AD5 /* Build configuration list for PBXNativeTarget "NNPopObjcDynamicExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6795E4BB2402355D00FE6AD5 /* Debug */,
+				6795E4BC2402355D00FE6AD5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6795E4BD2402355D00FE6AD5 /* Build configuration list for PBXNativeTarget "NNPopObjcDynamicExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6795E4BE2402355D00FE6AD5 /* Debug */,
+				6795E4BF2402355D00FE6AD5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6795E49D2402355D00FE6AD5 /* Project object */;
+}

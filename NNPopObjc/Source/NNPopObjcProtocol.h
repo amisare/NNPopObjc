@@ -34,8 +34,9 @@ public:
     /// All protocol extension classes.
     vector<const char *> clazzes;
     
+    void append(ExtensionDescription *extensionDescription, unsigned int count);
+    
     ProtocolExtension() = default;
-    ProtocolExtension(ExtensionDescription *extensionDescription, unsigned int count);
     ~ProtocolExtension();
 };
 

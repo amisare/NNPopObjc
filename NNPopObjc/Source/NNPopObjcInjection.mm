@@ -22,6 +22,7 @@
 #import "NNPopObjcMemory.h"
 #import "NNPopObjcProtocol.h"
 #import "NNPopObjcLogging.h"
+#import "NNPopObjcTickTock.h"
 
 
 namespace popobjc {
@@ -34,7 +35,6 @@ mach_header
 #endif
 nn_pop_mach_header;
 
-static pthread_mutex_t injectLock = PTHREAD_MUTEX_INITIALIZER;
 
 /// Returns a Boolean value that indicates whether a class conforms to a given protocol.
 /// It is same as: + (BOOL)conformsToProtocol:(Protocol *)protocol
@@ -195,12 +195,9 @@ void injectProtocolExtension(Class clazz, vector<ExtensionDescription *> &extens
     return;
 }
 
-#define TICK   NSDate *startTime = [NSDate date]
-#define TOCK   NSLog(@"==============Time: %f", -[startTime timeIntervalSinceNow])
-
 /// Injects each protocols extension in to the corresponding class
-/// @param protocolExtensions ProtocolExtension
-void injectProtocolExtensions(ProtocolExtension &protocolExtensions) {
+/// @param protocolExtension ProtocolExtension
+void injectProtocolExtensions(ProtocolExtension &protocolExtension) {
 
     POP_DLOG(INFO) << "Inject protocol extensions begin";
 
@@ -220,19 +217,28 @@ void injectProtocolExtensions(ProtocolExtension &protocolExtensions) {
     
     unordered_map<const char *, vector<pair<const char *, int>>>protocolClazzesMap;
     // Loop all protocols
-    int protocolCount = (int)protocolExtensions.protocols.size();
+    int protocolCount = (int)protocolExtension.protocols.size();
     for (int i = protocolCount - 1; i >= 0 ; i--) {
-        const char *protocolName = protocolExtensions.protocols[i];
+        const char *protocolName = protocolExtension.protocols[i];
         Protocol *protocol = objc_getProtocol(protocolName);
-        if (i <= protocolCount - 2 && protocol_conformsToProtocol(protocol, objc_getProtocol(protocolExtensions.protocols[i + 1]))) {
-            const char *preProtocolName = protocolExtensions.protocols[i + 1];
+        
+        const char *lastConformProtocolName = NULL;
+        for (int j = i + 1; j < protocolCount; j++) {
+            const char *_lastConformProtocolName = protocolExtension.protocols[j];
+            if (protocol_conformsToProtocol(protocol, objc_getProtocol(_lastConformProtocolName))) {
+                lastConformProtocolName = _lastConformProtocolName;
+            }
+        }
+        
+        if (lastConformProtocolName != NULL) {
             // Loop all clazzes
-            for (int i = 0; i < protocolClazzesMap[preProtocolName].size(); i++) {
-                const char *clazzName = protocolClazzesMap[preProtocolName][i].first;
+            int lastConformProtocolClazzCount = (int)protocolClazzesMap[lastConformProtocolName].size();
+            for (int i = 0; i < lastConformProtocolClazzCount; i++) {
+                const char *clazzName = protocolClazzesMap[lastConformProtocolName][i].first;
                 Class clazz = objc_getClass(clazzName);
                 unsigned int inheritLevel = 0;
                 if (classConformsToProtocol(clazz, protocol, &inheritLevel)) {
-                    if (classIsExtensionClass(clazz, protocolExtensions.clazzes)) {
+                    if (classIsExtensionClass(clazz, protocolExtension.clazzes)) {
                         continue;
                     }
                     protocolClazzesMap[protocolName].push_back(make_pair(clazzName, inheritLevel));
@@ -245,7 +251,7 @@ void injectProtocolExtensions(ProtocolExtension &protocolExtensions) {
                 const char *clazzName = class_getName(clazz);
                 unsigned int inheritLevel = 0;
                 if (classConformsToProtocol(clazz, protocol, &inheritLevel)) {
-                    if (classIsExtensionClass(clazz, protocolExtensions.clazzes)) {
+                    if (classIsExtensionClass(clazz, protocolExtension.clazzes)) {
                         continue;
                     }
                     protocolClazzesMap[protocolName].push_back(make_pair(clazzName, inheritLevel));
@@ -259,9 +265,9 @@ void injectProtocolExtensions(ProtocolExtension &protocolExtensions) {
     }
     // Inject
     for (int i = 0; i < protocolCount; i++) {
-        const char *protocolName = protocolExtensions.protocols[i];
+        const char *protocolName = protocolExtension.protocols[i];
         for (auto clazzName : protocolClazzesMap[protocolName]) {
-            vector<ExtensionDescription *>extensions = protocolExtensions.extensions[protocolName];
+            vector<ExtensionDescription *>extensions = protocolExtension.extensions[protocolName];
             Class clazz = objc_getClass(clazzName.first);
             injectProtocolExtension(clazz, extensions);
         }
@@ -273,56 +279,40 @@ void injectProtocolExtensions(ProtocolExtension &protocolExtensions) {
 }
 
 /// Loads protocol extensions info from image segment
-/// @param mhp A mach header appears at the very beginning of the object file
 /// @param loaded A section loaded callback
-void loadSection(const nn_pop_mach_header *mhp, std::function<void (ProtocolExtension &protocolExtensions)> loaded) {
+void loadSection(std::function<void (ProtocolExtension &protocolExtensions)> loaded) {
     
     const char *segment = nn_pop_metamacro_stringify(nn_pop_segment_name);
     const char *section = nn_pop_metamacro_stringify(nn_pop_section_name);
     
-    if (pthread_mutex_lock(&injectLock) != 0) {
-        POP_LOG(FATAL) << "Lock injection thread failed";
-        return;
-    }
-    
-    unsigned long size = 0;
-    uintptr_t *sectionData = (uintptr_t*)getsectiondata(mhp, segment, section, &size);
-    if (size == 0) {
-        pthread_mutex_unlock(&injectLock);
-        return;
-    }
-    
-    POP_DLOG(INFO) << "Load protocol extensions begin";
-           
-    unsigned int sectionItemCount = (int)size / sizeof(ExtensionDescription);
-    ExtensionDescription *sectionItems = (ExtensionDescription *)sectionData;
-    ProtocolExtension protocolExtension(sectionItems, sectionItemCount);
+    ProtocolExtension protocolExtension;
 
+    POP_DLOG(INFO) << "Load protocol extensions begin";
+    
+    uint32_t c = _dyld_image_count();
+    for (uint32_t i = 0; i < c; i++) {
+        nn_pop_mach_header *mhp = (nn_pop_mach_header *)_dyld_get_image_header(i);
+        unsigned long size = 0;
+        uintptr_t *sectionData = (uintptr_t*)getsectiondata(mhp, segment, section, &size);
+        if (size == 0) {
+            continue;
+        }
+        unsigned int sectionItemCount = (int)size / sizeof(ExtensionDescription);
+        ExtensionDescription *sectionItems = (ExtensionDescription *)sectionData;
+        protocolExtension.append(sectionItems, sectionItemCount);
+    }
+    
     POP_DLOG(INFO) << "Load protocol extensions end";
 
     if (loaded) {
         loaded(protocolExtension);
     }
-    
-    pthread_mutex_unlock(&injectLock);
-}
-
-/// Image loaded callback function.
-/// @param mhp mhp
-/// @param vmaddr_slide vmaddr_slide
-void imageLoadedCallback(const struct mach_header *mhp, intptr_t vmaddr_slide) {
-    
-    nn_pop_mach_header *_mhp = (nn_pop_mach_header *)mhp;
-    
-    loadSection(_mhp, [](ProtocolExtension &protocolExtensions) {
-        injectProtocolExtensions(protocolExtensions);
-    });
 }
 
 /// Initializer function is called by ImageLoaderMachO::doModInitFunctions at dyld project.
-/// @note This function is called only in library as a dynamic framework. So the library
-/// needs be integrated as a dynamic framework.
 /// @note dyld project: https://opensource.apple.com/tarballs/dyld/
+/// @note This function is called only in library as a dynamic framework. So the library
+/// must be integrated as a dynamic framework.
 /// @note fix: mach_header is used to load the section which records the protocol extensions.
 /// In a library, vars paramater of __attribute__((constructor)) function can only get
 /// mach_header of current library. Here we need to get the mach_header from all libraries through
@@ -332,7 +322,9 @@ __attribute__((constructor)) void initializer(int argc,
                                               const char **envp,
                                               const char **apple,
                                               const void* vars) {
-    _dyld_register_func_for_add_image(imageLoadedCallback);
+    loadSection([](ProtocolExtension &protocolExtensions) {
+        injectProtocolExtensions(protocolExtensions);
+    });
 }
 
 } // namespace popobjc

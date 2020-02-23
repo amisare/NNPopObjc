@@ -15,6 +15,8 @@
 #import "NNCodeCpp.h"
 #import "NNPopObjcExample-Swift.h"
 
+#import <NNPopObjcDynamicExample/NNPopObjcDynamicExample.h>
+
 @interface ViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextView *logTextView;
@@ -70,6 +72,11 @@
     DLog(@"%@", codeObjc.who);
     codeSwift.who = @"swift";
     DLog(@"%@", codeSwift.who);
+    
+    DLog(@"");
+    
+    [NNDynamic sayHelloPop];
+    [[NNDynamic new] sayHelloPop];
 }
 
 - (void)redirectNotificationHandle:(NSNotification *)notification{
