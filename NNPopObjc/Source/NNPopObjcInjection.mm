@@ -195,6 +195,9 @@ void injectProtocolExtension(Class clazz, vector<ExtensionDescription *> &extens
     return;
 }
 
+#define TICK   NSDate *startTime = [NSDate date]
+#define TOCK   NSLog(@"==============Time: %f", -[startTime timeIntervalSinceNow])
+
 /// Injects each protocols extension in to the corresponding class
 /// @param protocolExtensions ProtocolExtension
 void injectProtocolExtensions(ProtocolExtension &protocolExtensions) {
@@ -214,28 +217,49 @@ void injectProtocolExtensions(ProtocolExtension &protocolExtensions) {
     }
 
     classCount = objc_getClassList(clazzes, classCount);
-
+    
     unordered_map<const char *, vector<pair<const char *, int>>>protocolClazzesMap;
     // Loop all protocols
-    for (unsigned int i = 0; i < protocolExtensions.protocols.size(); i++) {
+    int protocolCount = (int)protocolExtensions.protocols.size();
+    for (int i = protocolCount - 1; i >= 0 ; i--) {
         const char *protocolName = protocolExtensions.protocols[i];
         Protocol *protocol = objc_getProtocol(protocolName);
-        // Loop all clazzes
-        for (unsigned int i = 0; i < classCount; i++) {
-            Class clazz = clazzes[i];
-            const char *clazzName = class_getName(clazz);
-            unsigned int inheritLevel = 0;
-            if (classConformsToProtocol(clazz, protocol, &inheritLevel)) {
-                if (classIsExtensionClass(clazz, protocolExtensions.clazzes)) {
-                    continue;
+        if (i <= protocolCount - 2 && protocol_conformsToProtocol(protocol, objc_getProtocol(protocolExtensions.protocols[i + 1]))) {
+            const char *preProtocolName = protocolExtensions.protocols[i + 1];
+            // Loop all clazzes
+            for (int i = 0; i < protocolClazzesMap[preProtocolName].size(); i++) {
+                const char *clazzName = protocolClazzesMap[preProtocolName][i].first;
+                Class clazz = objc_getClass(clazzName);
+                unsigned int inheritLevel = 0;
+                if (classConformsToProtocol(clazz, protocol, &inheritLevel)) {
+                    if (classIsExtensionClass(clazz, protocolExtensions.clazzes)) {
+                        continue;
+                    }
+                    protocolClazzesMap[protocolName].push_back(make_pair(clazzName, inheritLevel));
                 }
-                protocolClazzesMap[protocolName].push_back(make_pair(clazzName, inheritLevel));
+            }
+        }
+        else { // Loop all clazzes
+            for (int i = 0; i < classCount; i++) {
+                Class clazz = clazzes[i];
+                const char *clazzName = class_getName(clazz);
+                unsigned int inheritLevel = 0;
+                if (classConformsToProtocol(clazz, protocol, &inheritLevel)) {
+                    if (classIsExtensionClass(clazz, protocolExtensions.clazzes)) {
+                        continue;
+                    }
+                    protocolClazzesMap[protocolName].push_back(make_pair(clazzName, inheritLevel));
+                }
             }
         }
         // A higher inheritLevel has a higher priority
         sort(protocolClazzesMap[protocolName].begin(), protocolClazzesMap[protocolName].end(), [=](pair<const char *, int> &lhs, pair<const char *, int> &rhs) {
             return lhs.second > rhs.second;
         });
+    }
+    // Inject
+    for (int i = 0; i < protocolCount; i++) {
+        const char *protocolName = protocolExtensions.protocols[i];
         for (auto clazzName : protocolClazzesMap[protocolName]) {
             vector<ExtensionDescription *>extensions = protocolExtensions.extensions[protocolName];
             Class clazz = objc_getClass(clazzName.first);
@@ -250,11 +274,11 @@ void injectProtocolExtensions(ProtocolExtension &protocolExtensions) {
 
 /// Loads protocol extensions info from image segment
 /// @param mhp A mach header appears at the very beginning of the object file
-/// @param sectname A section name in __DATA segment
 /// @param loaded A section loaded callback
-void loadSection(const nn_pop_mach_header *mhp,
-                 const char *sectname,
-                 std::function<void (ProtocolExtension &protocolExtensions)> loaded) {
+void loadSection(const nn_pop_mach_header *mhp, std::function<void (ProtocolExtension &protocolExtensions)> loaded) {
+    
+    const char *segment = nn_pop_metamacro_stringify(nn_pop_segment_name);
+    const char *section = nn_pop_metamacro_stringify(nn_pop_section_name);
     
     if (pthread_mutex_lock(&injectLock) != 0) {
         POP_LOG(FATAL) << "Lock injection thread failed";
@@ -262,7 +286,7 @@ void loadSection(const nn_pop_mach_header *mhp,
     }
     
     unsigned long size = 0;
-    uintptr_t *sectionData = (uintptr_t*)getsectiondata(mhp, nn_pop_metamacro_stringify(nn_pop_segment_name), sectname, &size);
+    uintptr_t *sectionData = (uintptr_t*)getsectiondata(mhp, segment, section, &size);
     if (size == 0) {
         pthread_mutex_unlock(&injectLock);
         return;
@@ -290,9 +314,7 @@ void imageLoadedCallback(const struct mach_header *mhp, intptr_t vmaddr_slide) {
     
     nn_pop_mach_header *_mhp = (nn_pop_mach_header *)mhp;
     
-    loadSection(_mhp,
-                nn_pop_metamacro_stringify(nn_pop_section_name),
-                [](ProtocolExtension &protocolExtensions) {
+    loadSection(_mhp, [](ProtocolExtension &protocolExtensions) {
         injectProtocolExtensions(protocolExtensions);
     });
 }
