@@ -143,7 +143,7 @@ $ brew install carthage
 To integrate NNPopObjc into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "amisare/NNPopObjc" ~> 1.0.3
+github "amisare/NNPopObjc" ~> 1.0.4
 ```
 
 Run `carthage` to build the framework and drag the built `NNPopObjc.framework` into your Xcode project.
