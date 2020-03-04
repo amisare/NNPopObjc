@@ -12,7 +12,8 @@
 		67014DA324024049009B8234 /* NNPopObjc.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7A67D44623989B5500EEDF5B /* NNPopObjc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		67014DA52402404B009B8234 /* NNPopObjcDynamicExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67014D9F24023C55009B8234 /* NNPopObjcDynamicExample.framework */; };
 		67014DA62402404B009B8234 /* NNPopObjcDynamicExample.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 67014D9F24023C55009B8234 /* NNPopObjcDynamicExample.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7A67D3FA2398977500EEDF5B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A67D3F92398977500EEDF5B /* AppDelegate.m */; };
+		7A0D5D2B240F8EBA00BF2EC0 /* libNNPopObjcStaticExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A0D5D2A240F8EBA00BF2EC0 /* libNNPopObjcStaticExample.a */; };
+		7A67D3FA2398977500EEDF5B /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A67D3F92398977500EEDF5B /* AppDelegate.mm */; };
 		7A67D4002398977500EEDF5B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A67D3FF2398977500EEDF5B /* ViewController.m */; };
 		7A67D4032398977500EEDF5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A67D4012398977500EEDF5B /* Main.storyboard */; };
 		7A67D4052398977500EEDF5B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A67D4042398977500EEDF5B /* Assets.xcassets */; };
@@ -63,9 +64,10 @@
 		67014D9C24023C25009B8234 /* NNCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNCode.m; sourceTree = "<group>"; };
 		67014D9D24023C25009B8234 /* NNCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNCode.h; sourceTree = "<group>"; };
 		67014D9F24023C55009B8234 /* NNPopObjcDynamicExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NNPopObjcDynamicExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A0D5D2A240F8EBA00BF2EC0 /* libNNPopObjcStaticExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libNNPopObjcStaticExample.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A67D3F52398977500EEDF5B /* NNPopObjcExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NNPopObjcExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A67D3F82398977500EEDF5B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		7A67D3F92398977500EEDF5B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		7A67D3F92398977500EEDF5B /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		7A67D3FE2398977500EEDF5B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		7A67D3FF2398977500EEDF5B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		7A67D4022398977500EEDF5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A0D5D2B240F8EBA00BF2EC0 /* libNNPopObjcStaticExample.a in Frameworks */,
 				67014DA224024049009B8234 /* NNPopObjc.framework in Frameworks */,
 				67014DA52402404B009B8234 /* NNPopObjcDynamicExample.framework in Frameworks */,
 			);
@@ -147,7 +150,7 @@
 			children = (
 				7A67D4352398998500EEDF5B /* Classes */,
 				7A67D3F82398977500EEDF5B /* AppDelegate.h */,
-				7A67D3F92398977500EEDF5B /* AppDelegate.m */,
+				7A67D3F92398977500EEDF5B /* AppDelegate.mm */,
 				7A67D3FE2398977500EEDF5B /* ViewController.h */,
 				7A67D3FF2398977500EEDF5B /* ViewController.m */,
 				7A67D4012398977500EEDF5B /* Main.storyboard */,
@@ -209,6 +212,7 @@
 		7A67D44523989B5500EEDF5B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7A0D5D2A240F8EBA00BF2EC0 /* libNNPopObjcStaticExample.a */,
 				67014D9F24023C55009B8234 /* NNPopObjcDynamicExample.framework */,
 				7A67D44623989B5500EEDF5B /* NNPopObjc.framework */,
 			);
@@ -352,7 +356,7 @@
 				7A67D4412398998500EEDF5B /* NNCodeC.m in Sources */,
 				7A67D4422398998500EEDF5B /* NNCodeObjc.m in Sources */,
 				7A67D4442398998500EEDF5B /* NNCodeProtocol.m in Sources */,
-				7A67D3FA2398977500EEDF5B /* AppDelegate.m in Sources */,
+				7A67D3FA2398977500EEDF5B /* AppDelegate.mm in Sources */,
 				67014D9E24023C25009B8234 /* NNCode.m in Sources */,
 				7A67D432239898BB00EEDF5B /* main.m in Sources */,
 			);
@@ -532,12 +536,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nn.NNPopObjcExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "NNPopObjcExample/Supporting Files/NNPopObjcExample-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 			};
 			name = Debug;
 		};
@@ -554,12 +560,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nn.NNPopObjcExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "NNPopObjcExample/Supporting Files/NNPopObjcExample-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 			};
 			name = Release;
 		};

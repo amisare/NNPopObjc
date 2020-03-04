@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name          = "NNPopObjc"
-  s.version       = "1.0.4"
+  s.version       = "1.0.5"
   s.summary       = "Implement protocol extensions for protocol-oriented programming."
 
   s.description   = <<-DESC
@@ -19,6 +19,8 @@ Pod::Spec.new do |s|
   s.requires_arc  = true
   s.libraries     = 'c++'
 
+  s.user_target_xcconfig = {'OTHER_LDFLAGS' => '-all_load'}
+  
   s.osx.deployment_target       = '10.7'
   s.ios.deployment_target       = '6.0'
   s.tvos.deployment_target      = '9.0'

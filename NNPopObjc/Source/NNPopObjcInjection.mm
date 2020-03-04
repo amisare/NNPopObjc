@@ -311,12 +311,14 @@ void loadSection(std::function<void (ProtocolExtension &protocolExtensions)> loa
 
 /// Initializer function is called by ImageLoaderMachO::doModInitFunctions at dyld project.
 /// @note dyld project: https://opensource.apple.com/tarballs/dyld/
-/// @note This function is called only in library as a dynamic framework. So the library
-/// must be integrated as a dynamic framework.
-/// @note fix: mach_header is used to load the section which records the protocol extensions.
+/// @note mach_header is used to load the section which records the protocol extensions.
 /// In a library, vars paramater of __attribute__((constructor)) function can only get
-/// mach_header of current library. Here we need to get the mach_header from all libraries through
-/// _dyld_register_func_for_add_image function.
+/// mach_header of current library. Here we need to get the mach_header from all libraries
+/// through _dyld_get_image_header function.
+/// @note Integration using the static library pattern, in the linking process, this function
+/// is not referenced, so it will be entirely ignored.
+/// To prevent this, you need add '-all_load' or '-force_load (path_to_static_archive_library)'
+/// parameter for Xcode > Build Settings > Other Linker Flags.
 __attribute__((constructor)) void initializer(int argc,
                                               const char **argv,
                                               const char **envp,

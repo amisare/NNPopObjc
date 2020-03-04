@@ -16,6 +16,7 @@
 #import "NNPopObjcExample-Swift.h"
 
 #import <NNPopObjcDynamicExample/NNPopObjcDynamicExample.h>
+#import "NNPopObjcStaticExample.h"
 
 @interface ViewController ()
 
@@ -77,6 +78,9 @@
     
     [NNDynamic sayHelloPop];
     [[NNDynamic new] sayHelloPop];
+    
+    [NNStatic sayHelloPop];
+    [[NNStatic new] sayHelloPop];
 }
 
 - (void)redirectNotificationHandle:(NSNotification *)notification{

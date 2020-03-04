@@ -10,4 +10,7 @@
    <FileRef
       location = "group:Example/NNPopObjcDynamicExample/NNPopObjcDynamicExample.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Example/NNPopObjcStaticExample/NNPopObjcStaticExample.xcodeproj">
+   </FileRef>
 </Workspace>
