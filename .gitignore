@@ -70,3 +70,5 @@ iOSInjectionProject/
 .idea/
 
 *.coverage.txt
+
+Gemfile.lock
