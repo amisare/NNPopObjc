@@ -32,9 +32,9 @@ env:
    - SDK_TVOS=appletvsimulator12.2
 
    # iOS Destinations
-   - DESTINATION_IOS_13="OS=13.2.2,name=iPhone 11 Pro Max"
-   - DESTINATION_IOS_12="OS=12.2,name=iPhone Xʀ"
    - DESTINATION_IOS_11="OS=11.3,name=iPhone X"
+   - DESTINATION_IOS_12="OS=12.2,name=iPhone Xʀ"
+   - DESTINATION_IOS_13="OS=13.2.2,name=iPhone 11 Pro Max"
 
    # macOS Destinations
    - DESTINATION_MACOS="arch=x86_64"
@@ -66,8 +66,8 @@ jobs:
     # Build example projects
     - &build-examples
       stage: build examples
-      name: "iOS 13.2"
-      env: DESTINATION="$DESTINATION_IOS_13" WORKSPACE="$POP_OBJC_WORKSPACE" SDK="$SDK_IOS" SCHEME="$POP_OBJC_SCHEME_EXAMPLE"
+      name: "iOS 11.3"
+      env: DESTINATION="$DESTINATION_IOS_11" WORKSPACE="$POP_OBJC_WORKSPACE" SDK="$SDK_IOS" SCHEME="$POP_OBJC_SCHEME_EXAMPLE"
       script:
         - set -o pipefail
         - xcodebuild -version -sdk
@@ -78,14 +78,14 @@ jobs:
       env: DESTINATION="$DESTINATION_IOS_12" WORKSPACE="$POP_OBJC_WORKSPACE" SDK="$SDK_IOS" SCHEME="$POP_OBJC_SCHEME_EXAMPLE"
 
     - <<: *build-examples
-      name: "iOS 11.3"
-      env: DESTINATION="$DESTINATION_IOS_11" WORKSPACE="$POP_OBJC_WORKSPACE" SDK="$SDK_IOS" SCHEME="$POP_OBJC_SCHEME_EXAMPLE"
+      name: "iOS 13.2"
+      env: DESTINATION="$DESTINATION_IOS_13" WORKSPACE="$POP_OBJC_WORKSPACE" SDK="$SDK_IOS" SCHEME="$POP_OBJC_SCHEME_EXAMPLE"
 
     # Unit Tests
     - &unit-tests
       stage: tests
-      name: "Tests: iOS 13.2"
-      env: DESTINATION="$DESTINATION_IOS_13" PROJECT="$POP_OBJC_PROJECT" SDK="$SDK_IOS" SCHEME="$POP_OBJC_SCHEME_SDK"
+      name: "Tests: iOS 11.3"
+      env: DESTINATION="$DESTINATION_IOS_11" PROJECT="$POP_OBJC_PROJECT" SDK="$SDK_IOS" SCHEME="$POP_OBJC_SCHEME_SDK"
       script:
         - set -o pipefail
         - xcodebuild build build-for-testing -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES ONLY_ACTIVE_ARCH=YES | bundle exec xcpretty -c;
@@ -98,8 +98,8 @@ jobs:
       env: DESTINATION="$DESTINATION_IOS_12" PROJECT="$POP_OBJC_PROJECT" SDK="$SDK_IOS" SCHEME="$POP_OBJC_SCHEME_SDK"
 
     - <<: *unit-tests
-      name: "Tests: iOS 11.3"
-      env: DESTINATION="$DESTINATION_IOS_11" PROJECT="$POP_OBJC_PROJECT" SDK="$SDK_IOS" SCHEME="$POP_OBJC_SCHEME_SDK"
+      name: "Tests: iOS 13.2"
+      env: DESTINATION="$DESTINATION_IOS_13" PROJECT="$POP_OBJC_PROJECT" SDK="$SDK_IOS" SCHEME="$POP_OBJC_SCHEME_SDK"
 
 stages:
   - pod lint
