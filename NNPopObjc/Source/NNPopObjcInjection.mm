@@ -324,9 +324,11 @@ __attribute__((constructor)) void initializer(int argc,
                                               const char **envp,
                                               const char **apple,
                                               const void* vars) {
+    POP_DLOG(INFO) << "Tick: " << (long)(TickTock::Tick() * 1000);
     loadSection([](ProtocolExtension &protocolExtensions) {
         injectProtocolExtensions(protocolExtensions);
     });
+    POP_DLOG(INFO) << "Tock: " << TickTock::Tock();
 }
 
 } // namespace popobjc

@@ -15,20 +15,27 @@ namespace popobjc {
 
 namespace TickTock {
 
-stack<NSDate *> startDates;
+stack<NSTimeInterval> ticks;
 
-void Tick() {
-    startDates.push([NSDate date]);
+NSTimeInterval Tick() {
+    NSTimeInterval tick = [[NSDate date] timeIntervalSince1970];
+    ticks.push(tick);
+    return tick;
 }
 
-NSTimeInterval Tock() {
-    NSDate *startDate = startDates.top(); startDates.pop();
-    if (startDate) {
-        return -[startDate timeIntervalSinceNow];
-    }
-    else {
-        return -1;
-    }
+TickTock Tock() {
+    NSTimeInterval tock = [[NSDate date] timeIntervalSince1970];
+    NSTimeInterval tick = ({
+        NSTimeInterval _tick;
+        if (!ticks.empty()) {
+            _tick = ticks.top(); ticks.pop();
+        }
+        else {
+            _tick = -1.0;
+        }
+        _tick;
+    });
+    return TickTock(tick, tock);
 }
 
 }  // namespace TickTock
