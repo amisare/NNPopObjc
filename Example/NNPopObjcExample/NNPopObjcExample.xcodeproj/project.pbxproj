@@ -44,6 +44,48 @@
 			remoteGlobalIDString = 7A67D3F42398977500EEDF5B;
 			remoteInfo = NNPopObjcExample;
 		};
+		7A85E7A12411085C00D491DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7A934EF12411082E000A8F1F /* NNPopObjcDynamicExample.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6795E4A62402355D00FE6AD5;
+			remoteInfo = NNPopObjcDynamicExample;
+		};
+		7A85E7A32411085C00D491DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7A934EF12411082E000A8F1F /* NNPopObjcDynamicExample.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6795E4AF2402355D00FE6AD5;
+			remoteInfo = NNPopObjcDynamicExampleTests;
+		};
+		7AE666DD241108BB003E8DBC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7AE666D6241108BB003E8DBC /* NNPopObjcStaticExample.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7A934ECC2410E043000A8F1F;
+			remoteInfo = NNPopObjcStaticExample;
+		};
+		7AE666DF241108BB003E8DBC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7AE666D6241108BB003E8DBC /* NNPopObjcStaticExample.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7A934ED52410E044000A8F1F;
+			remoteInfo = NNPopObjcStaticExampleTests;
+		};
+		7AE666E1241108D0003E8DBC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7AE666D6241108BB003E8DBC /* NNPopObjcStaticExample.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7A934ECB2410E043000A8F1F;
+			remoteInfo = NNPopObjcStaticExample;
+		};
+		7AE666E3241108D0003E8DBC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7A934EF12411082E000A8F1F /* NNPopObjcDynamicExample.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 6795E4A52402355D00FE6AD5;
+			remoteInfo = NNPopObjcDynamicExample;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -97,6 +139,8 @@
 		7A67D43F2398998500EEDF5B /* NNCodeObjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNCodeObjc.h; sourceTree = "<group>"; };
 		7A67D44623989B5500EEDF5B /* NNPopObjc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NNPopObjc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A934EEE2410E10A000A8F1F /* NNPopObjcStaticExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NNPopObjcStaticExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A934EF12411082E000A8F1F /* NNPopObjcDynamicExample.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NNPopObjcDynamicExample.xcodeproj; path = ../NNPopObjcDynamicExample/NNPopObjcDynamicExample.xcodeproj; sourceTree = "<group>"; };
+		7AE666D6241108BB003E8DBC /* NNPopObjcStaticExample.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NNPopObjcStaticExample.xcodeproj; path = ../NNPopObjcStaticExample/NNPopObjcStaticExample.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +174,8 @@
 		7A67D3EC2398977500EEDF5B = {
 			isa = PBXGroup;
 			children = (
+				7AE666D6241108BB003E8DBC /* NNPopObjcStaticExample.xcodeproj */,
+				7A934EF12411082E000A8F1F /* NNPopObjcDynamicExample.xcodeproj */,
 				7A67D3F72398977500EEDF5B /* NNPopObjcExample */,
 				7A67D4132398977500EEDF5B /* NNPopObjcExampleTests */,
 				7A67D41E2398977600EEDF5B /* NNPopObjcExampleUITests */,
@@ -223,6 +269,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		7A85E79D2411085C00D491DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7A85E7A22411085C00D491DA /* NNPopObjcDynamicExample.framework */,
+				7A85E7A42411085C00D491DA /* NNPopObjcDynamicExampleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7AE666D7241108BB003E8DBC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7AE666DE241108BB003E8DBC /* NNPopObjcStaticExample.framework */,
+				7AE666E0241108BB003E8DBC /* NNPopObjcStaticExampleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -238,6 +302,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				7AE666E2241108D0003E8DBC /* PBXTargetDependency */,
+				7AE666E4241108D0003E8DBC /* PBXTargetDependency */,
 			);
 			name = NNPopObjcExample;
 			productName = NNPopObjcExample;
@@ -313,6 +379,16 @@
 			mainGroup = 7A67D3EC2398977500EEDF5B;
 			productRefGroup = 7A67D3F62398977500EEDF5B /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 7A85E79D2411085C00D491DA /* Products */;
+					ProjectRef = 7A934EF12411082E000A8F1F /* NNPopObjcDynamicExample.xcodeproj */;
+				},
+				{
+					ProductGroup = 7AE666D7241108BB003E8DBC /* Products */;
+					ProjectRef = 7AE666D6241108BB003E8DBC /* NNPopObjcStaticExample.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				7A67D3F42398977500EEDF5B /* NNPopObjcExample */,
@@ -321,6 +397,37 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		7A85E7A22411085C00D491DA /* NNPopObjcDynamicExample.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = NNPopObjcDynamicExample.framework;
+			remoteRef = 7A85E7A12411085C00D491DA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7A85E7A42411085C00D491DA /* NNPopObjcDynamicExampleTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = NNPopObjcDynamicExampleTests.xctest;
+			remoteRef = 7A85E7A32411085C00D491DA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7AE666DE241108BB003E8DBC /* NNPopObjcStaticExample.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = NNPopObjcStaticExample.framework;
+			remoteRef = 7AE666DD241108BB003E8DBC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7AE666E0241108BB003E8DBC /* NNPopObjcStaticExampleTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = NNPopObjcStaticExampleTests.xctest;
+			remoteRef = 7AE666DF241108BB003E8DBC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		7A67D3F32398977500EEDF5B /* Resources */ = {
@@ -394,6 +501,16 @@
 			isa = PBXTargetDependency;
 			target = 7A67D3F42398977500EEDF5B /* NNPopObjcExample */;
 			targetProxy = 7A67D41C2398977600EEDF5B /* PBXContainerItemProxy */;
+		};
+		7AE666E2241108D0003E8DBC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = NNPopObjcStaticExample;
+			targetProxy = 7AE666E1241108D0003E8DBC /* PBXContainerItemProxy */;
+		};
+		7AE666E4241108D0003E8DBC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = NNPopObjcDynamicExample;
+			targetProxy = 7AE666E3241108D0003E8DBC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
