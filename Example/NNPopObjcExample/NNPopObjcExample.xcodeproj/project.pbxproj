@@ -12,7 +12,6 @@
 		67014DA324024049009B8234 /* NNPopObjc.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7A67D44623989B5500EEDF5B /* NNPopObjc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		67014DA52402404B009B8234 /* NNPopObjcDynamicExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67014D9F24023C55009B8234 /* NNPopObjcDynamicExample.framework */; };
 		67014DA62402404B009B8234 /* NNPopObjcDynamicExample.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 67014D9F24023C55009B8234 /* NNPopObjcDynamicExample.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7A0D5D2B240F8EBA00BF2EC0 /* libNNPopObjcStaticExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A0D5D2A240F8EBA00BF2EC0 /* libNNPopObjcStaticExample.a */; };
 		7A67D3FA2398977500EEDF5B /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A67D3F92398977500EEDF5B /* AppDelegate.mm */; };
 		7A67D4002398977500EEDF5B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A67D3FF2398977500EEDF5B /* ViewController.m */; };
 		7A67D4032398977500EEDF5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A67D4012398977500EEDF5B /* Main.storyboard */; };
@@ -26,6 +25,8 @@
 		7A67D4422398998500EEDF5B /* NNCodeObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A67D4392398998500EEDF5B /* NNCodeObjc.m */; };
 		7A67D4432398998500EEDF5B /* NNCodeSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A67D43A2398998500EEDF5B /* NNCodeSwift.swift */; };
 		7A67D4442398998500EEDF5B /* NNCodeProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A67D43D2398998500EEDF5B /* NNCodeProtocol.m */; };
+		7A934EEF2410E10A000A8F1F /* NNPopObjcStaticExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A934EEE2410E10A000A8F1F /* NNPopObjcStaticExample.framework */; };
+		7A934EF02410E10A000A8F1F /* NNPopObjcStaticExample.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7A934EEE2410E10A000A8F1F /* NNPopObjcStaticExample.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 			files = (
 				67014DA324024049009B8234 /* NNPopObjc.framework in Embed Frameworks */,
 				67014DA62402404B009B8234 /* NNPopObjcDynamicExample.framework in Embed Frameworks */,
+				7A934EF02410E10A000A8F1F /* NNPopObjcStaticExample.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -94,6 +96,7 @@
 		7A67D43E2398998500EEDF5B /* NNCodeC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNCodeC.h; sourceTree = "<group>"; };
 		7A67D43F2398998500EEDF5B /* NNCodeObjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNCodeObjc.h; sourceTree = "<group>"; };
 		7A67D44623989B5500EEDF5B /* NNPopObjc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NNPopObjc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A934EEE2410E10A000A8F1F /* NNPopObjcStaticExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NNPopObjcStaticExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,9 +104,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A0D5D2B240F8EBA00BF2EC0 /* libNNPopObjcStaticExample.a in Frameworks */,
 				67014DA224024049009B8234 /* NNPopObjc.framework in Frameworks */,
 				67014DA52402404B009B8234 /* NNPopObjcDynamicExample.framework in Frameworks */,
+				7A934EEF2410E10A000A8F1F /* NNPopObjcStaticExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,6 +215,7 @@
 		7A67D44523989B5500EEDF5B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7A934EEE2410E10A000A8F1F /* NNPopObjcStaticExample.framework */,
 				7A0D5D2A240F8EBA00BF2EC0 /* libNNPopObjcStaticExample.a */,
 				67014D9F24023C55009B8234 /* NNPopObjcDynamicExample.framework */,
 				7A67D44623989B5500EEDF5B /* NNPopObjc.framework */,

@@ -7,97 +7,121 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7A0D5D17240F371F00BF2EC0 /* NNStatic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0D5D13240F371F00BF2EC0 /* NNStatic.m */; };
-		7A0D5D18240F371F00BF2EC0 /* NNStaticProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0D5D16240F371F00BF2EC0 /* NNStaticProtocol.m */; };
-		7A0D5D25240F390E00BF2EC0 /* NNPopObjcStaticExample.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A0D5D23240F383900BF2EC0 /* NNPopObjcStaticExample.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7A0D5D26240F390E00BF2EC0 /* NNStatic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A0D5D14240F371F00BF2EC0 /* NNStatic.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7A0D5D27240F390E00BF2EC0 /* NNStaticProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A0D5D15240F371F00BF2EC0 /* NNStaticProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7A934ED62410E044000A8F1F /* NNPopObjcStaticExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A934ECC2410E043000A8F1F /* NNPopObjcStaticExample.framework */; };
+		7A934EDB2410E044000A8F1F /* NNPopObjcStaticExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A934EDA2410E044000A8F1F /* NNPopObjcStaticExampleTests.m */; };
+		7A934EDD2410E044000A8F1F /* NNPopObjcStaticExample.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A934ECF2410E043000A8F1F /* NNPopObjcStaticExample.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7A934EEA2410E0B4000A8F1F /* NNStatic.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A934EE62410E0B4000A8F1F /* NNStatic.m */; };
+		7A934EEB2410E0B4000A8F1F /* NNStatic.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A934EE72410E0B4000A8F1F /* NNStatic.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7A934EEC2410E0B4000A8F1F /* NNStaticProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A934EE82410E0B4000A8F1F /* NNStaticProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7A934EED2410E0B4000A8F1F /* NNStaticProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A934EE92410E0B4000A8F1F /* NNStaticProtocol.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		7A0D5D05240F36C200BF2EC0 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/$(PRODUCT_NAME)";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
+/* Begin PBXContainerItemProxy section */
+		7A934ED72410E044000A8F1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7A934EC32410E043000A8F1F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7A934ECB2410E043000A8F1F;
+			remoteInfo = NNPopObjcStaticExample;
 		};
-/* End PBXCopyFilesBuildPhase section */
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7A0D5D07240F36C200BF2EC0 /* libNNPopObjcStaticExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNNPopObjcStaticExample.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		7A0D5D13240F371F00BF2EC0 /* NNStatic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNStatic.m; sourceTree = "<group>"; };
-		7A0D5D14240F371F00BF2EC0 /* NNStatic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNStatic.h; sourceTree = "<group>"; };
-		7A0D5D15240F371F00BF2EC0 /* NNStaticProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNStaticProtocol.h; sourceTree = "<group>"; };
-		7A0D5D16240F371F00BF2EC0 /* NNStaticProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNStaticProtocol.m; sourceTree = "<group>"; };
-		7A0D5D23240F383900BF2EC0 /* NNPopObjcStaticExample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNPopObjcStaticExample.h; sourceTree = "<group>"; };
+		7A934ECC2410E043000A8F1F /* NNPopObjcStaticExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NNPopObjcStaticExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A934ECF2410E043000A8F1F /* NNPopObjcStaticExample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNPopObjcStaticExample.h; sourceTree = "<group>"; };
+		7A934ED02410E043000A8F1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7A934ED52410E044000A8F1F /* NNPopObjcStaticExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NNPopObjcStaticExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A934EDA2410E044000A8F1F /* NNPopObjcStaticExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NNPopObjcStaticExampleTests.m; sourceTree = "<group>"; };
+		7A934EDC2410E044000A8F1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7A934EE62410E0B4000A8F1F /* NNStatic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNStatic.m; sourceTree = "<group>"; };
+		7A934EE72410E0B4000A8F1F /* NNStatic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNStatic.h; sourceTree = "<group>"; };
+		7A934EE82410E0B4000A8F1F /* NNStaticProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNStaticProtocol.h; sourceTree = "<group>"; };
+		7A934EE92410E0B4000A8F1F /* NNStaticProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNStaticProtocol.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		7A0D5D04240F36C200BF2EC0 /* Frameworks */ = {
+		7A934EC92410E043000A8F1F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7A934ED22410E044000A8F1F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A934ED62410E044000A8F1F /* NNPopObjcStaticExample.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7A0D5CFE240F36C200BF2EC0 = {
+		7A934EC22410E043000A8F1F = {
 			isa = PBXGroup;
 			children = (
-				7A0D5D09240F36C200BF2EC0 /* NNPopObjcStaticExample */,
-				7A0D5D08240F36C200BF2EC0 /* Products */,
+				7A934ECE2410E043000A8F1F /* NNPopObjcStaticExample */,
+				7A934ED92410E044000A8F1F /* NNPopObjcStaticExampleTests */,
+				7A934ECD2410E043000A8F1F /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		7A0D5D08240F36C200BF2EC0 /* Products */ = {
+		7A934ECD2410E043000A8F1F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7A0D5D07240F36C200BF2EC0 /* libNNPopObjcStaticExample.a */,
+				7A934ECC2410E043000A8F1F /* NNPopObjcStaticExample.framework */,
+				7A934ED52410E044000A8F1F /* NNPopObjcStaticExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7A0D5D09240F36C200BF2EC0 /* NNPopObjcStaticExample */ = {
+		7A934ECE2410E043000A8F1F /* NNPopObjcStaticExample */ = {
 			isa = PBXGroup;
 			children = (
-				7A0D5D23240F383900BF2EC0 /* NNPopObjcStaticExample.h */,
-				7A0D5D14240F371F00BF2EC0 /* NNStatic.h */,
-				7A0D5D13240F371F00BF2EC0 /* NNStatic.m */,
-				7A0D5D15240F371F00BF2EC0 /* NNStaticProtocol.h */,
-				7A0D5D16240F371F00BF2EC0 /* NNStaticProtocol.m */,
+				7A934ECF2410E043000A8F1F /* NNPopObjcStaticExample.h */,
+				7A934EE72410E0B4000A8F1F /* NNStatic.h */,
+				7A934EE62410E0B4000A8F1F /* NNStatic.m */,
+				7A934EE82410E0B4000A8F1F /* NNStaticProtocol.h */,
+				7A934EE92410E0B4000A8F1F /* NNStaticProtocol.m */,
+				7A934ED02410E043000A8F1F /* Info.plist */,
 			);
 			path = NNPopObjcStaticExample;
+			sourceTree = "<group>";
+		};
+		7A934ED92410E044000A8F1F /* NNPopObjcStaticExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				7A934EDA2410E044000A8F1F /* NNPopObjcStaticExampleTests.m */,
+				7A934EDC2410E044000A8F1F /* Info.plist */,
+			);
+			path = NNPopObjcStaticExampleTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		7A0D5D24240F390000BF2EC0 /* Headers */ = {
+		7A934EC72410E043000A8F1F /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A0D5D25240F390E00BF2EC0 /* NNPopObjcStaticExample.h in Headers */,
-				7A0D5D26240F390E00BF2EC0 /* NNStatic.h in Headers */,
-				7A0D5D27240F390E00BF2EC0 /* NNStaticProtocol.h in Headers */,
+				7A934EEC2410E0B4000A8F1F /* NNStaticProtocol.h in Headers */,
+				7A934EEB2410E0B4000A8F1F /* NNStatic.h in Headers */,
+				7A934EDD2410E044000A8F1F /* NNPopObjcStaticExample.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		7A0D5D06240F36C200BF2EC0 /* NNPopObjcStaticExample */ = {
+		7A934ECB2410E043000A8F1F /* NNPopObjcStaticExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7A0D5D10240F36C200BF2EC0 /* Build configuration list for PBXNativeTarget "NNPopObjcStaticExample" */;
+			buildConfigurationList = 7A934EE02410E044000A8F1F /* Build configuration list for PBXNativeTarget "NNPopObjcStaticExample" */;
 			buildPhases = (
-				7A0D5D24240F390000BF2EC0 /* Headers */,
-				7A0D5D03240F36C200BF2EC0 /* Sources */,
-				7A0D5D04240F36C200BF2EC0 /* Frameworks */,
-				7A0D5D05240F36C200BF2EC0 /* CopyFiles */,
+				7A934EC72410E043000A8F1F /* Headers */,
+				7A934EC82410E043000A8F1F /* Sources */,
+				7A934EC92410E043000A8F1F /* Frameworks */,
+				7A934ECA2410E043000A8F1F /* Resources */,
 			);
 			buildRules = (
 			);
@@ -105,24 +129,45 @@
 			);
 			name = NNPopObjcStaticExample;
 			productName = NNPopObjcStaticExample;
-			productReference = 7A0D5D07240F36C200BF2EC0 /* libNNPopObjcStaticExample.a */;
-			productType = "com.apple.product-type.library.static";
+			productReference = 7A934ECC2410E043000A8F1F /* NNPopObjcStaticExample.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		7A934ED42410E044000A8F1F /* NNPopObjcStaticExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7A934EE32410E044000A8F1F /* Build configuration list for PBXNativeTarget "NNPopObjcStaticExampleTests" */;
+			buildPhases = (
+				7A934ED12410E044000A8F1F /* Sources */,
+				7A934ED22410E044000A8F1F /* Frameworks */,
+				7A934ED32410E044000A8F1F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7A934ED82410E044000A8F1F /* PBXTargetDependency */,
+			);
+			name = NNPopObjcStaticExampleTests;
+			productName = NNPopObjcStaticExampleTests;
+			productReference = 7A934ED52410E044000A8F1F /* NNPopObjcStaticExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		7A0D5CFF240F36C200BF2EC0 /* Project object */ = {
+		7A934EC32410E043000A8F1F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "顾海军";
 				TargetAttributes = {
-					7A0D5D06240F36C200BF2EC0 = {
+					7A934ECB2410E043000A8F1F = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+					7A934ED42410E044000A8F1F = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
 				};
 			};
-			buildConfigurationList = 7A0D5D02240F36C200BF2EC0 /* Build configuration list for PBXProject "NNPopObjcStaticExample" */;
+			buildConfigurationList = 7A934EC62410E043000A8F1F /* Build configuration list for PBXProject "NNPopObjcStaticExample" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -130,30 +175,64 @@
 				en,
 				Base,
 			);
-			mainGroup = 7A0D5CFE240F36C200BF2EC0;
-			productRefGroup = 7A0D5D08240F36C200BF2EC0 /* Products */;
+			mainGroup = 7A934EC22410E043000A8F1F;
+			productRefGroup = 7A934ECD2410E043000A8F1F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7A0D5D06240F36C200BF2EC0 /* NNPopObjcStaticExample */,
+				7A934ECB2410E043000A8F1F /* NNPopObjcStaticExample */,
+				7A934ED42410E044000A8F1F /* NNPopObjcStaticExampleTests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		7A934ECA2410E043000A8F1F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A934ED32410E044000A8F1F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
-		7A0D5D03240F36C200BF2EC0 /* Sources */ = {
+		7A934EC82410E043000A8F1F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A0D5D18240F371F00BF2EC0 /* NNStaticProtocol.m in Sources */,
-				7A0D5D17240F371F00BF2EC0 /* NNStatic.m in Sources */,
+				7A934EEA2410E0B4000A8F1F /* NNStatic.m in Sources */,
+				7A934EED2410E0B4000A8F1F /* NNStaticProtocol.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A934ED12410E044000A8F1F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A934EDB2410E044000A8F1F /* NNPopObjcStaticExampleTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		7A934ED82410E044000A8F1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7A934ECB2410E043000A8F1F /* NNPopObjcStaticExample */;
+			targetProxy = 7A934ED72410E044000A8F1F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
-		7A0D5D0E240F36C200BF2EC0 /* Debug */ = {
+		7A934EDE2410E044000A8F1F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -186,6 +265,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -208,10 +288,12 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		7A0D5D0F240F36C200BF2EC0 /* Release */ = {
+		7A934EDF2410E044000A8F1F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -244,6 +326,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -260,27 +343,85 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
-		7A0D5D11240F36C200BF2EC0 /* Debug */ = {
+		7A934EE12410E044000A8F1F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = NNPopObjcStaticExample/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nn.NNPopObjcStaticExample;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		7A0D5D12240F36C200BF2EC0 /* Release */ = {
+		7A934EE22410E044000A8F1F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = NNPopObjcStaticExample/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nn.NNPopObjcStaticExample;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		7A934EE42410E044000A8F1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = NNPopObjcStaticExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nn.NNPopObjcStaticExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7A934EE52410E044000A8F1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = NNPopObjcStaticExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nn.NNPopObjcStaticExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -288,25 +429,34 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7A0D5D02240F36C200BF2EC0 /* Build configuration list for PBXProject "NNPopObjcStaticExample" */ = {
+		7A934EC62410E043000A8F1F /* Build configuration list for PBXProject "NNPopObjcStaticExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7A0D5D0E240F36C200BF2EC0 /* Debug */,
-				7A0D5D0F240F36C200BF2EC0 /* Release */,
+				7A934EDE2410E044000A8F1F /* Debug */,
+				7A934EDF2410E044000A8F1F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7A0D5D10240F36C200BF2EC0 /* Build configuration list for PBXNativeTarget "NNPopObjcStaticExample" */ = {
+		7A934EE02410E044000A8F1F /* Build configuration list for PBXNativeTarget "NNPopObjcStaticExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7A0D5D11240F36C200BF2EC0 /* Debug */,
-				7A0D5D12240F36C200BF2EC0 /* Release */,
+				7A934EE12410E044000A8F1F /* Debug */,
+				7A934EE22410E044000A8F1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7A934EE32410E044000A8F1F /* Build configuration list for PBXNativeTarget "NNPopObjcStaticExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A934EE42410E044000A8F1F /* Debug */,
+				7A934EE52410E044000A8F1F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 7A0D5CFF240F36C200BF2EC0 /* Project object */;
+	rootObject = 7A934EC32410E043000A8F1F /* Project object */;
 }

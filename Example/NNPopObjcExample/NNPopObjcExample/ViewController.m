@@ -16,7 +16,7 @@
 #import "NNPopObjcExample-Swift.h"
 
 #import <NNPopObjcDynamicExample/NNPopObjcDynamicExample.h>
-#import "NNPopObjcStaticExample.h"
+#import <NNPopObjcStaticExample/NNPopObjcStaticExample.h>
 
 @interface ViewController ()
 
