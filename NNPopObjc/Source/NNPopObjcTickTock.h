@@ -32,8 +32,8 @@ inline ostream &operator<< (ostream &output, const TickTock &thiz) {
     NSTimeInterval tock = thiz.tock * 1000;
     output << fixed << setprecision(2);
     output << "total time: " << tock - tick << " milliseconds" << " ";
-    output << "tock: " << (long)tock << " ";
-    output << "tick: " << (long)tick;
+    output << "tick: " << (long)tick << " ";
+    output << "tock: " << (long)tock;
     return output;
 }
 

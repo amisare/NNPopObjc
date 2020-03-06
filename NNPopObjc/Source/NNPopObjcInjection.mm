@@ -222,19 +222,27 @@ void injectProtocolExtensions(ProtocolExtension &protocolExtension) {
         const char *protocolName = protocolExtension.protocols[i];
         Protocol *protocol = objc_getProtocol(protocolName);
         
-        const char *lastConformProtocolName = NULL;
+        /*
+         protocols: { protocol_a, protocol_b, protocol_c<protocol_a, protocol_b>}
+         classes  : { class_0<protocol_a>, class_1<protocol_b>, class_2<protocol_c>, class_3<protocol_c> }
+         classes conforms to protocol_a: A = { class_0, class_2, class_3 }
+         classes conforms to protocol_b: B = { class_1, class_2, class_3 }
+         classes conforms to protocol_c: C = { class_2, class_3 }
+         ∵ ∀c∈C, c∈A, c∈B ∴ C⊆A, C⊆B
+         */
+        const char *nearestConformedProtocolName = NULL;
         for (int j = i + 1; j < protocolCount; j++) {
-            const char *_lastConformProtocolName = protocolExtension.protocols[j];
-            if (protocol_conformsToProtocol(protocol, objc_getProtocol(_lastConformProtocolName))) {
-                lastConformProtocolName = _lastConformProtocolName;
+            const char *_conformedProtocolName = protocolExtension.protocols[j];
+            if (protocol_conformsToProtocol(protocol, objc_getProtocol(_conformedProtocolName))) {
+                nearestConformedProtocolName = _conformedProtocolName;
+                break;
             }
         }
         
-        if (lastConformProtocolName != NULL) {
-            // Loop all clazzes
-            int lastConformProtocolClazzCount = (int)protocolClazzesMap[lastConformProtocolName].size();
-            for (int i = 0; i < lastConformProtocolClazzCount; i++) {
-                const char *clazzName = protocolClazzesMap[lastConformProtocolName][i].first;
+        if (nearestConformedProtocolName != NULL) { // Loop clazzes that confirm nearestConformedProtocolName
+            int nearestConformedProtocolClazzCount = (int)protocolClazzesMap[nearestConformedProtocolName].size();
+            for (int i = 0; i < nearestConformedProtocolClazzCount; i++) {
+                const char *clazzName = protocolClazzesMap[nearestConformedProtocolName][i].first;
                 Class clazz = objc_getClass(clazzName);
                 unsigned int inheritLevel = 0;
                 if (classConformsToProtocol(clazz, protocol, &inheritLevel)) {
