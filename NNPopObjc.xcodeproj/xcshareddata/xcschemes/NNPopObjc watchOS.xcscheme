@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "676979972345C78200E13282"
+               BlueprintIdentifier = "67B1B656241A77B600EB5ECF"
                BuildableName = "NNPopObjc.framework"
-               BlueprintName = "NNPopObjc"
+               BlueprintName = "NNPopObjc watchOS"
                ReferencedContainer = "container:NNPopObjc.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,16 +29,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       codeCoverageEnabled = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "676979A02345C78300E13282"
-               BuildableName = "NNPopObjcTests.xctest"
-               BlueprintName = "NNPopObjcTests"
-               ReferencedContainer = "container:NNPopObjc.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -61,9 +51,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "676979972345C78200E13282"
+            BlueprintIdentifier = "67B1B656241A77B600EB5ECF"
             BuildableName = "NNPopObjc.framework"
-            BlueprintName = "NNPopObjc"
+            BlueprintName = "NNPopObjc watchOS"
             ReferencedContainer = "container:NNPopObjc.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
