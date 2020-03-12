@@ -1,0 +1,113 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request 
+# events but only for the master branch
+on:
+  push:
+    branches: 
+      - master
+      - develop
+      - develop-**
+  pull_request:
+    branches: 
+      - master
+      - develop
+      - develop-**
+
+env:
+   LANG: en_US.UTF-8
+
+   POP_OBJC_WORKSPACE: "NNPopObjc.xcworkspace"
+   POP_OBJC_PROJECT: "NNPopObjc.xcodeproj"
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  Cocoapods_Lint:
+    runs-on: macos
+    steps:
+      - uses: actions/checkout@master
+        with:
+          ref: ${{ github.sha }}
+      - name: cocoapods_lint
+        run: pod lib lint --allow-warnings --verbose
+  
+  Carthage_Lint:
+    runs-on: macos
+    steps:
+      - uses: actions/checkout@master
+        with:
+          ref: ${{ github.sha }}
+      - name: carthage_lint
+        run: carthage build --no-skip-current
+     
+  Build_Examples:
+    runs-on: macos
+    strategy:
+      matrix:
+        sdk: [ iOS13.0 ]
+        include:
+          - sdk: iOS13.0
+            developer_dir: /Applications/Xcode_11.app
+            sdk_name: iphonesimulator13.0
+            destination: OS=13.0,name=iPhone 11 Pro Max
+            scheme: NNPopObjcExample
+    steps:
+      - uses: actions/checkout@master
+        with:
+          ref: ${{ github.sha }}
+      - name: bundle_install
+        run: bundle install
+      - name: build_examples
+        env:
+          DEVELOPER_DIR: ${{ matrix.developer_dir }}
+        run: |
+          echo ""
+          set -o pipefail
+          xcodebuild -version -sdk
+          xcodebuild build -workspace "${{ env.POP_OBJC_WORKSPACE }}" -scheme "${{ matrix.POP_OBJC_SCHEME_EXAMPLE }}" -sdk "${{ matrix.sdk_name }}" -destination "${{ matrix.destination }}" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | bundle exec xcpretty -c;
+    
+  Unit_Tests_iOS:
+    runs-on: macos
+    strategy:
+      matrix:
+        sdk: [ macOS10.15, iOS13.0, tvOS13.0, watchOS6.0 ]
+        include:
+          - sdk: macOS10.15
+            developer_dir: /Applications/Xcode_11.app
+            sdk_name: macosx10.15
+            destination: arch=x86_64
+            scheme: NNPopObjc macOS
+          - sdk: iOS13.0
+            developer_dir: /Applications/Xcode_11.app
+            sdk_name: iphonesimulator13.0
+            destination: OS=13.0,name=iPhone 11 Pro Max
+            scheme: NNPopObjc iOS
+          - sdk: tvOS13.0
+            developer_dir: /Applications/Xcode_11.app
+            sdk_name: appletvsimulator13.0
+            destination: OS=13.0,name=Apple TV 1080p
+            scheme: NNPopObjc tvOS
+          - sdk: watchOS6.0
+            developer_dir: /Applications/Xcode_11.app
+            sdk_name: watchsimulator6.0
+            destination: OS=6.0,name=Apple Watch Series 4 - 40mm
+            scheme: NNPopObjc watchOS
+    steps:
+      - uses: actions/checkout@master
+        with:
+          ref: ${{ github.sha }}
+      - uses: codecov/codecov-action@v1
+        with:
+          file: ./coverage.xml
+      - name: bundle_install
+        run: bundle install
+      - name: unit_tests
+        env:
+          DEVELOPER_DIR: ${{ matrix.developer_dir }}
+        run: |
+          set -o pipefail
+          xcodebuild build build-for-testing -project "${{ env.POP_OBJC_PROJECT }}" -scheme "${{ matrix.scheme }}" -sdk "${{ matrix.sdk_name }}" -destination "${{ matrix.destination }}" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES ONLY_ACTIVE_ARCH=YES | bundle exec xcpretty -c;
+          xcodebuild analyze test-without-building -project "${{ env.POP_OBJC_PROJECT }}" -scheme "${{ matrix.scheme }}" -sdk "${{ matrix.sdk_name }}" -destination "${{ matrix.destination }}" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES ONLY_ACTIVE_ARCH=YES | bundle exec xcpretty -c;
+
