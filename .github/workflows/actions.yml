@@ -99,5 +99,3 @@ jobs:
           xcodebuild build build-for-testing -project "${{ env.POP_OBJC_PROJECT }}" -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES ONLY_ACTIVE_ARCH=YES | bundle exec xcpretty -c;
           xcodebuild analyze test-without-building -project "${{ env.POP_OBJC_PROJECT }}" -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES ONLY_ACTIVE_ARCH=YES | bundle exec xcpretty -c;
       - uses: codecov/codecov-action@v1
-        with:
-          file: ./.coverage.xml
