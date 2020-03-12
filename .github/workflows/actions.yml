@@ -46,12 +46,12 @@ jobs:
     runs-on: macos
     strategy:
       matrix:
-        sdk: [ iOS13.3 ]
+        sdk: [ iOS13.2 ]
         include:
-          - sdk: iOS13.3
+          - sdk: iOS13.2
             developer_dir: /Applications/Xcode_11.3.1.app
-            sdk_name: iphonesimulator13.3
-            destination: OS=13.3,name=iPhone 11 Pro Max
+            sdk_name: iphonesimulator13.2
+            destination: OS=13.2,name=iPhone 11 Pro Max
             scheme: NNPopObjcExample
     steps:
       - uses: actions/checkout@master
@@ -72,22 +72,22 @@ jobs:
     runs-on: macos
     strategy:
       matrix:
-        sdk: [ macOS10.15, iOS13.3, tvOS13.3 ]
+        sdk: [ macOS10.15, iOS13.2, tvOS13.2 ]
         include:
           - sdk: macOS10.15
             developer_dir: /Applications/Xcode_11.3.1.app
             sdk_name: macosx10.15
             destination: arch=x86_64
             scheme: NNPopObjc macOS
-          - sdk: iOS13.3
+          - sdk: iOS13.2
             developer_dir: /Applications/Xcode_11.3.1.app
-            sdk_name: iphonesimulator13.3
-            destination: OS=13.3,name=iPhone 11 Pro Max
+            sdk_name: iphonesimulator13.2
+            destination: OS=13.2,name=iPhone 11 Pro Max
             scheme: NNPopObjc iOS
-          - sdk: tvOS13.3
+          - sdk: tvOS13.2
             developer_dir: /Applications/Xcode_11.3.1.app
-            sdk_name: appletvsimulator13.3
-            destination: OS=13.3,name=Apple TV 4K
+            sdk_name: appletvsimulator13.2
+            destination: OS=13.2,name=Apple TV 4K
             scheme: NNPopObjc tvOS
     steps:
       - uses: actions/checkout@master
