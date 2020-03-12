@@ -46,12 +46,11 @@ jobs:
     runs-on: macos
     strategy:
       matrix:
-        sdk: [ iOS13.2 ]
+        sdk: [ iOS13.3 ]
         include:
-          - sdk: iOS13.2
+          - sdk: iOS13.3
             developer_dir: /Applications/Xcode_11.3.1.app
-            sdk_name: iphonesimulator13.2
-            destination: OS=13.2,name=iPhone 11 Pro Max
+            destination: OS=13.3,name=iPhone 11 Pro Max
             scheme: NNPopObjcExample
     steps:
       - uses: actions/checkout@master
@@ -66,28 +65,25 @@ jobs:
           echo ""
           set -o pipefail
           xcodebuild -version -sdk
-          xcodebuild build -workspace "${{ env.POP_OBJC_WORKSPACE }}" -scheme "${{ matrix.scheme }}" -sdk "${{ matrix.sdk_name }}" -destination "${{ matrix.destination }}" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | bundle exec xcpretty -c;
+          xcodebuild build -workspace "${{ env.POP_OBJC_WORKSPACE }}" -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | bundle exec xcpretty -c;
     
   Unit_Tests:
     runs-on: macos
     strategy:
       matrix:
-        sdk: [ macOS10.15, iOS13.2, tvOS13.2 ]
+        sdk: [ macOS, iOS13.3, tvOS13.3 ]
         include:
-          - sdk: macOS10.15
+          - sdk: macOS
             developer_dir: /Applications/Xcode_11.3.1.app
-            sdk_name: macosx10.15
             destination: arch=x86_64
             scheme: NNPopObjc macOS
-          - sdk: iOS13.2
+          - sdk: iOS13.3
             developer_dir: /Applications/Xcode_11.3.1.app
-            sdk_name: iphonesimulator13.2
-            destination: OS=13.2,name=iPhone 11 Pro Max
+            destination: OS=13.3,name=iPhone 11 Pro Max
             scheme: NNPopObjc iOS
-          - sdk: tvOS13.2
+          - sdk: tvOS13.3
             developer_dir: /Applications/Xcode_11.3.1.app
-            sdk_name: appletvsimulator13.2
-            destination: OS=13.2,name=Apple TV 4K
+            destination: OS=13.3,name=Apple TV 4K
             scheme: NNPopObjc tvOS
     steps:
       - uses: actions/checkout@master
@@ -103,6 +99,6 @@ jobs:
           DEVELOPER_DIR: ${{ matrix.developer_dir }}
         run: |
           set -o pipefail
-          xcodebuild build build-for-testing -project "${{ env.POP_OBJC_PROJECT }}" -scheme "${{ matrix.scheme }}" -sdk "${{ matrix.sdk_name }}" -destination "${{ matrix.destination }}" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES ONLY_ACTIVE_ARCH=YES | bundle exec xcpretty -c;
-          xcodebuild analyze test-without-building -project "${{ env.POP_OBJC_PROJECT }}" -scheme "${{ matrix.scheme }}" -sdk "${{ matrix.sdk_name }}" -destination "${{ matrix.destination }}" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES ONLY_ACTIVE_ARCH=YES | bundle exec xcpretty -c;
+          xcodebuild build build-for-testing -project "${{ env.POP_OBJC_PROJECT }}" -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES ONLY_ACTIVE_ARCH=YES | bundle exec xcpretty -c;
+          xcodebuild analyze test-without-building -project "${{ env.POP_OBJC_PROJECT }}" -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES ONLY_ACTIVE_ARCH=YES | bundle exec xcpretty -c;
 
