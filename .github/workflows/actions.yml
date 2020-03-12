@@ -72,7 +72,7 @@ jobs:
     runs-on: macos
     strategy:
       matrix:
-        sdk: [ macOS10.15, iOS13.0, tvOS13.0, watchOS6.0 ]
+        sdk: [ macOS10.15, iOS13.0, tvOS13.0 ]
         include:
           - sdk: macOS10.15
             developer_dir: /Applications/Xcode_11.app
@@ -87,13 +87,8 @@ jobs:
           - sdk: tvOS13.0
             developer_dir: /Applications/Xcode_11.app
             sdk_name: appletvsimulator13.0
-            destination: OS=13.0,name=Apple TV 1080p
+            destination: OS=13.0,name=Apple TV 4K
             scheme: NNPopObjc tvOS
-          - sdk: watchOS6.0
-            developer_dir: /Applications/Xcode_11.app
-            sdk_name: watchsimulator6.0
-            destination: OS=6.0,name=Apple Watch Series 4 - 40mm
-            scheme: NNPopObjc watchOS
     steps:
       - uses: actions/checkout@master
         with:
