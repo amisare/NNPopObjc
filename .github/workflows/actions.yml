@@ -51,7 +51,7 @@ jobs:
           - sdk: iOS13.0
             developer_dir: /Applications/Xcode_11.app
             sdk_name: iphonesimulator13.0
-            destination: OS=13.0
+            destination: OS=13.0,name=iPhone 11 Pro Max
             scheme: NNPopObjcExample
     steps:
       - uses: actions/checkout@master
@@ -68,7 +68,7 @@ jobs:
           xcodebuild -version -sdk
           xcodebuild build -workspace "${{ env.POP_OBJC_WORKSPACE }}" -scheme "${{ matrix.scheme }}" -sdk "${{ matrix.sdk_name }}" -destination "${{ matrix.destination }}" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | bundle exec xcpretty -c;
     
-  Unit_Tests_iOS:
+  Unit_Tests:
     runs-on: macos
     strategy:
       matrix:
@@ -82,17 +82,17 @@ jobs:
           - sdk: iOS13.0
             developer_dir: /Applications/Xcode_11.app
             sdk_name: iphonesimulator13.0
-            destination: OS=13.0
+            destination: OS=13.0,name=iPhone 11 Pro Max
             scheme: NNPopObjc iOS
           - sdk: tvOS13.0
             developer_dir: /Applications/Xcode_11.app
             sdk_name: appletvsimulator13.0
-            destination: OS=13.0
+            destination: OS=13.0,name=Apple TV 1080p
             scheme: NNPopObjc tvOS
           - sdk: watchOS6.0
             developer_dir: /Applications/Xcode_11.app
             sdk_name: watchsimulator6.0
-            destination: OS=6.0
+            destination: OS=6.0,name=Apple Watch Series 4 - 40mm
             scheme: NNPopObjc watchOS
     steps:
       - uses: actions/checkout@master
