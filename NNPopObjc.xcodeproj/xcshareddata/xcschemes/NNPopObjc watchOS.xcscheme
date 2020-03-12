@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "67B1B656241A77B600EB5ECF"
+               BlueprintIdentifier = "67E4F2CD241A918800A4469E"
                BuildableName = "NNPopObjc.framework"
                BlueprintName = "NNPopObjc watchOS"
                ReferencedContainer = "container:NNPopObjc.xcodeproj">
@@ -51,7 +51,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "67B1B656241A77B600EB5ECF"
+            BlueprintIdentifier = "67E4F2CD241A918800A4469E"
             BuildableName = "NNPopObjc.framework"
             BlueprintName = "NNPopObjc watchOS"
             ReferencedContainer = "container:NNPopObjc.xcodeproj">

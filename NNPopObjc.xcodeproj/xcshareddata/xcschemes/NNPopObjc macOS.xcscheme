@@ -33,7 +33,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "67B1B5FC241A750400EB5ECF"
+               BlueprintIdentifier = "67E4F349241A985200A4469E"
                BuildableName = "NNPopObjc macOS Tests.xctest"
                BlueprintName = "NNPopObjc macOS Tests"
                ReferencedContainer = "container:NNPopObjc.xcodeproj">

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "67B1B61B241A76A200EB5ECF"
+               BlueprintIdentifier = "67E4F2EC241A922700A4469E"
                BuildableName = "NNPopObjc.framework"
                BlueprintName = "NNPopObjc tvOS"
                ReferencedContainer = "container:NNPopObjc.xcodeproj">
@@ -33,7 +33,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "67B1B637241A76B400EB5ECF"
+               BlueprintIdentifier = "67E4F329241A96EC00A4469E"
                BuildableName = "NNPopObjc tvOS Tests.xctest"
                BlueprintName = "NNPopObjc tvOS Tests"
                ReferencedContainer = "container:NNPopObjc.xcodeproj">
@@ -61,7 +61,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "67B1B61B241A76A200EB5ECF"
+            BlueprintIdentifier = "67E4F2EC241A922700A4469E"
             BuildableName = "NNPopObjc.framework"
             BlueprintName = "NNPopObjc tvOS"
             ReferencedContainer = "container:NNPopObjc.xcodeproj">
