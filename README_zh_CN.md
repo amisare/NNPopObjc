@@ -1,11 +1,11 @@
 <h1 align = "center">NNPopObjc</h1>
 
+[![CI](https://github.com/amisare/NNPopObjc/workflows/CI/badge.svg)](https://github.com/amisare/NNPopObjc/actions)
+[![codecov](https://codecov.io/gh/amisare/NNPopObjc/branch/master/graph/badge.svg)](https://codecov.io/gh/amisare/NNPopObjc)
 [![GitHub release](https://img.shields.io/github/release/amisare/NNPopObjc.svg)](https://github.com/amisare/NNPopObjc/releases)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/NNPopObjc.svg)](https://cocoapods.org/pods/NNPopObjc)
-[![Platform](https://img.shields.io/cocoapods/p/NNPopObjc.svg)](https://cocoapods.org/pods/NNPopObjc)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Build Status](https://www.travis-ci.org/amisare/NNPopObjc.svg?branch=master)](https://travis-ci.org/github/amisare/NNPopObjc)
-[![codecov](https://codecov.io/gh/amisare/NNPopObjc/branch/master/graph/badge.svg)](https://codecov.io/gh/amisare/NNPopObjc)
+[![Platform](https://img.shields.io/cocoapods/p/NNPopObjc.svg)]()
 [![GitHub license](https://img.shields.io/github/license/amisare/NNPopObjc.svg)](https://github.com/amisare/NNPopObjc/blob/master/LICENSE)
 
 
@@ -143,7 +143,7 @@ $ brew install carthage
 通过 Carthage 将 NNPopObjc 集成到 Xcode 项目中，需要在 `Cartfile` 中添加：
 
 ```ogdl
-github "amisare/NNPopObjc" ~> 1.0.5
+github "amisare/NNPopObjc" ~> 1.0.6
 ```
 
 执行 `carthage` 构建 Framework ，并将 `NNPopObjc.framework` 添加到 Xcode 项目中。
