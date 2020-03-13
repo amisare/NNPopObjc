@@ -27,7 +27,7 @@ jobs:
   Cocoapods_Lint:
     runs-on: macos
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
         with:
           ref: ${{ github.sha }}
       - name: cocoapods_lint
@@ -36,7 +36,7 @@ jobs:
   Carthage_Lint:
     runs-on: macos
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
         with:
           ref: ${{ github.sha }}
       - name: carthage_lint
@@ -53,7 +53,7 @@ jobs:
             destination: OS=13.3,name=iPhone 11 Pro Max
             scheme: NNPopObjcExample
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
         with:
           ref: ${{ github.sha }}
       - name: bundle_install
@@ -86,7 +86,7 @@ jobs:
             destination: OS=13.3,name=Apple TV 4K
             scheme: NNPopObjc tvOS
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
         with:
           ref: ${{ github.sha }}
       - name: bundle_install
