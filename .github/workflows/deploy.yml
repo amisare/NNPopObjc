@@ -10,12 +10,12 @@ jobs:
     runs-on: macos
     steps:
     - uses: actions/checkout@v2
-    - name: Deploy to Cocoapods
+    - name: deploy_to_cocoapods
       env:
         COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
       run: |
         set -eo pipefail
         export BUMP_VERSION=$(git describe --tags `git rev-list --tags --max-count=1`)
-        pod lib lint --allow-warnings
-        pod trunk push --allow-warnings
+        pod lib lint --allow-warnings --verbose
+        pod trunk push --allow-warnings --verbose
 
