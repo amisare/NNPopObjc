@@ -43,7 +43,7 @@ jobs:
         run: carthage build --no-skip-current
      
   Build_Examples:
-    runs-on: macos-10.15.4
+    runs-on: macos
     strategy:
       matrix:
         sdk: [ iOS13.3, iOS13.4 ]
