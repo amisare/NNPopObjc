@@ -46,11 +46,15 @@ jobs:
     runs-on: macos
     strategy:
       matrix:
-        sdk: [ iOS13.3 ]
+        sdk: [ iOS13.3, iOS13.4 ]
         include:
           - sdk: iOS13.3
             developer_dir: /Applications/Xcode_11.3.1.app
             destination: OS=13.3,name=iPhone 11 Pro Max
+            scheme: NNPopObjcExample
+          - sdk: iOS13.4
+            developer_dir: /Applications/Xcode_11.4.app
+            destination: OS=13.4,name=iPhone 11 Pro Max
             scheme: NNPopObjcExample
     steps:
       - uses: actions/checkout@v2
@@ -71,7 +75,7 @@ jobs:
     runs-on: macos
     strategy:
       matrix:
-        sdk: [ macOS, iOS13.3, tvOS13.3 ]
+        sdk: [ macOS, iOS13.3, tvOS13.3, iOS13.4, tvOS13.4 ]
         include:
           - sdk: macOS
             developer_dir: /Applications/Xcode_11.3.1.app
@@ -84,6 +88,14 @@ jobs:
           - sdk: tvOS13.3
             developer_dir: /Applications/Xcode_11.3.1.app
             destination: OS=13.3,name=Apple TV 4K
+            scheme: NNPopObjc tvOS
+          - sdk: iOS13.4
+            developer_dir: /Applications/Xcode_11.4.app
+            destination: OS=13.4,name=iPhone 11 Pro Max
+            scheme: NNPopObjc iOS
+          - sdk: tvOS13.4
+            developer_dir: /Applications/Xcode_11.4.app
+            destination: OS=13.4,name=Apple TV 4K
             scheme: NNPopObjc tvOS
     steps:
       - uses: actions/checkout@v2
