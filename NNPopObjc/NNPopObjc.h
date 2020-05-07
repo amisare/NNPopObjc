@@ -122,9 +122,9 @@ FOUNDATION_EXPORT const unsigned char NNPopObjcVersionString[];
 #define nn_where(...)                   nn_pop_where_(__VA_ARGS__)
 
 /**
- * Simplify the type cast
+ * Simplify type cast
  *
- * @discussion  The type of \c self is lost in the implementation of protocol extension
+ * @discussion Used to resolve type lost in \c self at the implementation of protocol extension
  *
  * @code
  
