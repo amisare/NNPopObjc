@@ -7,6 +7,7 @@
 //
 
 #import "NNCodeProtocol.h"
+#import <objc/runtime.h>
 #import "NNCodeObjc.h"
 #import "NNCodeCpp.h"
 #import "NNPopObjcExample-Swift.h"
@@ -26,6 +27,19 @@
 @end
 
 
+@nn_extension(NNCodeNameProtocol)
+
+- (void)setName:(NSString *)name {
+    objc_setAssociatedObject(self, @selector(name), name, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSString *)name {
+    return objc_getAssociatedObject(self, @selector(name));
+}
+
+@end
+
+
 @nn_extension(NNCodeWhoProtocol, @nn_where(), NNCodeNameProtocol)
 
 - (NSString *)who {
@@ -33,14 +47,14 @@
     return who;
 }
 
-- (void)setWho:(NSString *)who {
-    self.name = who;
-}
-
 @end
 
 
 @nn_extension(NNCodeWhoProtocol, @nn_where(NNCodeCpp, self == [NNCodeCpp class]), NNCodeNameProtocol)
+
++ (void)sayHelloPop {
+    DLog(@"+[%@ %s] cpp says hello pop", self, sel_getName(_cmd));
+}
 
 - (void)sayHelloPop {
     DLog(@"-[%@ %s] cpp says hello pop", [self class], sel_getName(_cmd));
@@ -60,20 +74,18 @@
     DLog(@"+[%@ %s] objc says hello pop", self, sel_getName(_cmd));
 }
 
-- (void)sayHelloPop {
-    DLog(@"-[%@ %s] objc says hello pop", [self class], sel_getName(_cmd));
-}
-
 - (NSString *)who {
     NSString *who = [NSString stringWithFormat:@"-[%@ %s] objc says I am %@", [self class], sel_getName(_cmd), self.name];
     return who;
 }
 
-- (void)setWho:(NSString *)who {
-	@nn_exscope(self) {
-		@nn_inscope(NNCodeObjc *, self)
-		self.name = who;
-	}
+- (void)setName:(NSString *)name {
+    objc_setAssociatedObject(self, @selector(name), [NSString stringWithFormat:@"[%@]", name], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSString *)name {
+    NSString *_name = objc_getAssociatedObject(self, @selector(name));
+    return [NSString stringWithFormat:@"%@!", _name];
 }
 
 @end

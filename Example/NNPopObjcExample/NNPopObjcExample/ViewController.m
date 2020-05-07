@@ -65,13 +65,13 @@
     
     DLog(@"");
     
-    codeC.who = @"c";
+    codeC.name = @"c";
     DLog(@"%@", codeC.who);
-    codeCpp.who = @"cpp";
+    codeCpp.name = @"cpp";
     DLog(@"%@", codeCpp.who);
-    codeObjc.who = @"objc";
+    codeObjc.name = @"objc";
     DLog(@"%@", codeObjc.who);
-    codeSwift.who = @"swift";
+    codeSwift.name = @"swift";
     DLog(@"%@", codeSwift.who);
     
     DLog(@"");

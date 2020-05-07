@@ -18,17 +18,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@protocol NNCodeWhoProtocol <NNCodeProtocol>
-
-@optional
-@property (nonatomic, strong) NSString* who;
-
-@end
 
 @protocol NNCodeNameProtocol <NSObject>
 
 @optional
 @property (nonatomic, strong) NSString* name;
+
+@end
+
+
+@protocol NNCodeWhoProtocol <NNCodeProtocol>
+
+@optional
+@property (nonatomic, strong, readonly) NSString* who;
 
 @end
 
