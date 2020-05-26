@@ -26,7 +26,9 @@
 		TYPE VAR = (TYPE)nn_pop_metamacro_concat(VAR, _scope_); \
 		_Pragma("clang diagnostic pop")
 		
-
+/**
+* Inspired by libextobjc: https://github.com/jspahrsummers/libextobjc
+*/
 #if defined(DEBUG) && !defined(NDEBUG)
 #define nn_pop_scope_keywordify autoreleasepool {}
 #else

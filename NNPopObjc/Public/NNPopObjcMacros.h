@@ -71,7 +71,7 @@
         nn_pop_metamacro_concat(nn_pop_if_less_or_equal, A)(B)
 
 /**
- * Concat all args wiht SEP.
+ * Concat all args with SEP.
  */
 #define nn_pop_args_concat(SEP, ...) \
         nn_pop_metamacro_concat(nn_pop_args_concat_, nn_pop_argcount(__VA_ARGS__))(SEP, __VA_ARGS__)
