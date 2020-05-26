@@ -25,7 +25,7 @@ env:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   Cocoapods_Lint:
-    runs-on: macos
+    runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
         with:
@@ -34,7 +34,7 @@ jobs:
         run: pod lib lint --allow-warnings --verbose
   
   Carthage_Lint:
-    runs-on: macos
+    runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
         with:
@@ -43,7 +43,7 @@ jobs:
         run: carthage build --no-skip-current
      
   Build_Examples:
-    runs-on: macos
+    runs-on: macos-10.15
     strategy:
       matrix:
         sdk: [ iOS13.3, iOS13.4 ]
@@ -72,7 +72,7 @@ jobs:
           xcodebuild build -workspace "${{ env.POP_OBJC_WORKSPACE }}" -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | bundle exec xcpretty -c;
     
   Unit_Tests:
-    runs-on: macos
+    runs-on: macos-10.15
     strategy:
       matrix:
         sdk: [ macOS, iOS13.3, tvOS13.3, iOS13.4, tvOS13.4 ]
