@@ -92,12 +92,12 @@ FOUNDATION_EXPORT const unsigned char NNPopObjcVersionString[];
  * @nn_where()
  * it is equivalent to @nn_where(_, nn_where_block_default_)
  *
- * @param unique_id An unique id for where clause, When implementing multiple extensions
+ * @param unique_id An unique id for where clause. When implementing multiple extensions
  * for a protocol, the unique_id is used to differentiate extensions. The unique_id will
  * be concat into the name of the extension struct variable in section, function and extension
  * class.
- * @param expression An expression that returns a bool value. You can use a variable named
- * `self` in expression, the variable is the class that adopt to the extended protocol.
+ * @param expression An expression that returns a bool value. In expression, You can use `self`
+ * variable, which is the class may adopt to the extended protocol.
  *
  * @code
  
