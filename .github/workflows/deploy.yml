@@ -7,7 +7,7 @@ on:
 
 jobs:
   Deploy_To_Cocoapods:
-    runs-on: macos
+    runs-on: macos-10.15
     steps:
     - uses: actions/checkout@v2
     - name: deploy_to_cocoapods
