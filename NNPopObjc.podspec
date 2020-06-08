@@ -26,6 +26,11 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target      = '9.0'
   s.watchos.deployment_target   = '2.0'
 
+  s.osx.pod_target_xcconfig = { 'PRODUCT_BUNDLE_IDENTIFIER' => 'com.nn.NNPopObjc' }
+  s.ios.pod_target_xcconfig = { 'PRODUCT_BUNDLE_IDENTIFIER' => 'com.nn.NNPopObjc' }
+  s.tvos.pod_target_xcconfig = { 'PRODUCT_BUNDLE_IDENTIFIER' => 'com.nn.NNPopObjc' }
+  s.watchos.pod_target_xcconfig = { 'PRODUCT_BUNDLE_IDENTIFIER' => 'com.nn.NNPopObjc-watchOS' }
+
   s.source_files            = 'NNPopObjc/*.{h,m,mm}'
   
   s.subspec 'extobjc' do |ss|
